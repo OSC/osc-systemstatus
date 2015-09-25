@@ -10,10 +10,8 @@ body {
   @extend .awesim-banner-background-img;
 }
 
-
 // Your custom css styles below (must be manually added)
 @import "pages";
-
 
 // Font Awesome Stylesheets
 @import "font-awesome-sprockets";
@@ -28,6 +26,7 @@ body {
   padding: 15px 30px 15px 15px;
   border-left: 5px solid #eee;
 }
+
 .bs-callout h1,
 .bs-callout h2,
 .bs-callout h3,
@@ -76,7 +75,6 @@ body {
 .bs-callout p:last-child {
   margin-bottom: 0;
 }
-
 .bs-callout code,
 .bs-callout .highlight {
   background-color: #fff;
@@ -87,14 +85,17 @@ body {
   background-color: #fcf2f2;
   border-color: #dFb5b4;
 }
+
 .bs-callout-warning {
   background-color: #fefbed;
   border-color: #f1e7bc;
 }
+
 .bs-callout-info {
   background-color: #f0f7fd;
   border-color: #d0e3f0;
 }
+
 .bs-callout-success {
   background-color: #dff0d8;
   border-color: #d6e9c6;
@@ -102,4 +103,14 @@ body {
 
 .img-responsive {
   min-width: 100%;
+}
+
+.panel-clickable:hover {
+  background-color: #c1cdf0;
+  border-color: #6c75f0;
+}
+
+.panel-clickable:active {
+  background-color: #6c75f0;
+  border-color: #6c75f0;
 }

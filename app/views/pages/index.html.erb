@@ -1,14 +1,18 @@
 
 <div class="col-lg-8 pull-right">
-    <h3 class="text-center">OSC Message of the Day</h3>
-    <pre>
-        <%= auto_link(@motd) %>
-    </pre>
+    <div class="panel panel-default bs-callout bs-callout-info">
+        <div class="panel-body">
+            <h3 class="text-center">OSC Message of the Day</h3>
+        </div>
+        <pre>
+            <%= auto_link(@motd) %>
+        </pre>
+    </div>
 </div>
 
 <div class="col-lg-4">
     <%= link_to(oakley_url) do %>
-        <div class="panel panel-default bs-callout bs-callout-info text-center">
+        <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
             <h4>Oakley Cluster Status</h4>
             <div class="panel-body">
                 <img src="<%= @ganglia.oakley.small.img %>" class="img-responsive center-block">
@@ -20,7 +24,7 @@
 
 <div class="col-lg-4">
     <%= link_to(ruby_url) do %>
-        <div class="panel panel-default bs-callout bs-callout-info text-center">
+        <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
             <h4>Ruby Cluster Status</h4>
             <div class="panel-body">
                 <img src="<%= @ganglia.ruby.small.img %>" class="img-responsive center-block">
@@ -31,7 +35,7 @@
 
 <div class="col-lg-4">
     <%= link_to(filesystem_url) do %>
-        <div class="panel panel-default bs-callout bs-callout-info text-center">
+        <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
             <h4>File System Status</h4>
             <div class="panel-body">
                 <div>
