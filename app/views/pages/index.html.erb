@@ -1,36 +1,45 @@
-<div class="col-md-8">
+
+<div class="col-lg-8 pull-right">
+    <h3 class="text-center">OSC Message of the Day</h3>
     <pre>
-        <%= @motd %>
+        <%= auto_link(@motd) %>
     </pre>
 </div>
 
-<div class="col-md-4">
-    <div class="panel panel-default bs-callout bs-callout-info text-center">
-        <h4>Oakley Cluster Status</h4>
-        <div class="panel-body">
-            <img src="<%= @ganglia.oakley.small.img %>" class="img-responsive center-block">
-        </div>
-    </div>
-</div>
-
-<div class="col-md-4">
-    <div class="panel panel-default bs-callout bs-callout-info text-center">
-        <h4>Ruby Cluster Status</h4>
-        <div class="panel-body">
-            <img src="<%= @ganglia.ruby.small.img %>" class="img-responsive center-block">
-        </div>
-    </div>
-</div>
-
-<div class="col-md-4">
-    <div class="panel panel-default bs-callout bs-callout-info text-center">
-        <h4>File System Status</h4>
-        <div class="panel-body">
-            <div>
-                <img src="<%= @ganglia.fileserver.report_load.small.img %>" class="img-responsive center-block">
+<div class="col-lg-4">
+    <%= link_to(oakley_url) do %>
+        <div class="panel panel-default bs-callout bs-callout-info text-center">
+            <h4>Oakley Cluster Status</h4>
+            <div class="panel-body">
+                <img src="<%= @ganglia.oakley.small.img %>" class="img-responsive center-block">
             </div>
         </div>
-    </div>
+    <% end %>
+</div>
+
+
+<div class="col-lg-4">
+    <%= link_to(ruby_url) do %>
+        <div class="panel panel-default bs-callout bs-callout-info text-center">
+            <h4>Ruby Cluster Status</h4>
+            <div class="panel-body">
+                <img src="<%= @ganglia.ruby.small.img %>" class="img-responsive center-block">
+            </div>
+        </div>
+    <% end %>
+</div>
+
+<div class="col-lg-4">
+    <%= link_to(filesystem_url) do %>
+        <div class="panel panel-default bs-callout bs-callout-info text-center">
+            <h4>File System Status</h4>
+            <div class="panel-body">
+                <div>
+                    <img src="<%= @ganglia.fileserver.report_load.small.img %>" class="img-responsive center-block">
+                </div>
+            </div>
+        </div>
+    <% end %>
 </div>
 
 
