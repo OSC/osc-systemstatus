@@ -40,3 +40,4 @@ gem "awesim_rails", "~> 0.6.0"
 gem "awesim_rails_logging", "~> 0.0.3"
 gem "font-awesome-sass"
 gem "turbolinks"
+gem "rails_autolink", :git => 'https://github.com/tenderlove/rails_autolink.git'
