@@ -1,0 +1,31 @@
+#
+# Server data used by ganglia
+#
+oakley:
+  hostname:       oakley.osc.edu
+  pbshost:        oak-batch.osc.edu
+  cluster_code:   Oakley+nodes
+ruby:
+  hostname:       ruby.osc.edu
+  pbshost:        ruby-batch.ten.osc.edu
+  cluster_code:   Ruby
+fileserver:
+  cluster_code:   XIO
+  fs01:           xio37.ten.osc.edu
+  fs02:           xio38.ten.osc.edu
+  fs03:           xio39.ten.osc.edu
+  fs04:           xio41.ten.osc.edu
+  fs05:           xio47.ten.osc.edu
+  fs06:           xio43.ten.osc.edu
+  fs07:           xio44.ten.osc.edu
+  fs08:           xio45.ten.osc.edu
+  fs09:           xio46.ten.osc.edu
+  fs10:           xio42.ten.osc.edu
+  fs11:           xio49.ten.osc.edu
+  fs12:           xio50.ten.osc.edu
+  fs13:           xio51.ten.osc.edu
+  fs14:           xio52.ten.osc.edu
+  fs15:           xio53.ten.osc.edu
+  fs16:           xio40.ten.osc.edu
+  fs17:           xio55.ten.osc.edu
+  fs18:           xio56.ten.osc.edu

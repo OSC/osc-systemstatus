@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class=" panel panel-default">
+            <div class="panel-body">
+                <%= image_tag @ganglia.report_cpu.large.img, class: "img-responsive center-block" %>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 panel panel-default">
+        <div class="panel-body">
+            <%= image_tag @ganglia.report_mem.large.img, class: "img-responsive center-block" %>
+        </div>
+    </div>
+    <div class="col-md-6 panel panel-default">
+        <div class="panel-body">
+            <%= image_tag @ganglia.report_load.large.img, class: "img-responsive center-block" %>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 panel panel-default">
+        <div class="panel-body">
+            <%= image_tag @ganglia.report_network.large.img, class: "img-responsive center-block" %>
+        </div>
+    </div>
+    <div class="col-md-6 panel panel-default">
+        <div class="panel-body">
+            <%= image_tag @ganglia.report_packet.large.img, class: "img-responsive center-block" %>
+        </div>
+    </div>
+</div>

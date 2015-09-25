@@ -1,0 +1,38 @@
+<div class="col-sm-6 col-lg-4">
+    <div class="panel panel-default bs-callout bs-callout-info text-center">
+        <h4>Oakley Cluster Status</h4>
+        <div class="panel-body">
+            <img src="<%= @ganglia.oakley.small.img %>" class="img-responsive center-block">
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6 col-lg-4">
+    <div class="panel panel-default bs-callout bs-callout-info text-center">
+        <h4>Ruby Cluster Status</h4>
+        <div class="panel-body">
+            <img src="<%= @ganglia.ruby.small.img %>" class="img-responsive center-block">
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6 col-lg-4">
+    <div class="panel panel-default bs-callout bs-callout-info text-center">
+        <h4>File System Status</h4>
+        <div class="panel-body">
+            <div>
+                <img src="<%= @ganglia.fileserver.report_load.small.img %>" class="img-responsive center-block">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 well">
+    DEBUG<br>
+    User: <%= ENV['REMOTE_USER'] %><br>
+    Path: <%= ENV['PWD'] %><br>
+    Server YML: <%= OSC_Servers.to_s %><br>
+    Ganglia Img: <%= @ganglia.img %><br>
+    JSON: <%= @ganglia.json %><br>
+    Home: <%= ENV['HOME'] %>
+</div>
