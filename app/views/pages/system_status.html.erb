@@ -1,15 +1,5 @@
 <div>
-
-    <script type="text/javascript">
-        var hour = "<%= render partial: 'system_large', locals: {ganglia: @ganglia.hour} %>";
-        var two_hours = "<%= render partial: 'system_large', locals: {ganglia: @ganglia.two_hours} %>";
-        var four_hours = "<%= render partial: 'system_large', locals: {ganglia: @ganglia.four_hours} %>";
-        var day = "<%= render partial: 'system_large', locals: {ganglia: @ganglia.day} %>";
-        var week = "<%= render partial: 'system_large', locals: {ganglia: @ganglia.week} %>";
-        var month = "<%= render partial: 'system_large', locals: {ganglia: @ganglia.month} %>";
-        var year = "<%= render partial: 'system_large', locals: {ganglia: @ganglia.year} %>";
-    </script>
-
+    
     <!-- Nav tabs -->
     <div id="time-tabs">
         <ul class="nav nav-tabs nav-justified" id="hour-tabs" role="tablist">
@@ -22,7 +12,6 @@
             <li role="presentation"><a href="#year" aria-controls="year" role="tab" data-toggle="tab">Year</a></li>
         </ul>
         <div class="tab-content">
-
         </div>
     </div>
 
@@ -50,13 +39,4 @@
             <%= render partial: 'system_large', locals: {ganglia: @ganglia.year} %>
         </div>
     </div>
-
-</div>
-
-<div class="col-md-12 well">
-    DEBUG<br>
-    User: <%= ENV['USER'] %><br>
-    Path: <%= ENV['PWD'] %><br>
-    Server YML: <%= OSC_Servers.to_s %><br>
-    Ganglia IMG: <%= @ganglia.img %>
 </div>
