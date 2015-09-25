@@ -148,7 +148,7 @@ class Ganglia
   end
 
   def large
-    @chart_size = 'large&width=800&height=400'
+    @chart_size = 'large&width=800&height=300'
     self
   end
 
