@@ -2,6 +2,7 @@ class PagesController < ApplicationController
 
   def index
     @ganglia = Ganglia.new
+    @motd = %x{ cat /etc/motd }
   end
 
   def oakley
