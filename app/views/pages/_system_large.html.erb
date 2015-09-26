@@ -1,28 +1,28 @@
 <% @count.nil? ? @count = 0 : @count+=1 %>
 <div class="row">&nbsp;</div>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable">
             <div class="panel-body">
                 <%= image_tag @ganglia.report_cpu.small.img, class: "img-responsive center-block", :onclick=>"$('#large-image#{@count}').replaceWith('"+(image_tag @ganglia.report_cpu.large.img, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable">
             <div class="panel-body">
                 <%= image_tag @ganglia.report_mem.small.img, class: "img-responsive center-block" , :onclick=>"$('#large-image#{@count}').replaceWith('"+(image_tag @ganglia.report_mem.large.img, class: "img-responsive center-block", id: "large-image#{@count}")+"');"%>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable">
             <div class="panel-body">
                 <%= image_tag @ganglia.report_load.small.img, class: "img-responsive center-block", :onclick=>"$('#large-image#{@count}').replaceWith('"+(image_tag @ganglia.report_load.large.img, class: "img-responsive center-block", id: "large-image#{@count}")+"');"%>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable">
             <div class="panel-body">
                 <%= image_tag @ganglia.report_network.small.img, class: "img-responsive center-block", :onclick=>"$('#large-image#{@count}').replaceWith('"+(image_tag @ganglia.report_network.large.img, class: "img-responsive center-block", id: "large-image#{@count}")+"');"%>
@@ -31,7 +31,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
         <div class=" panel panel-default">
             <div class="panel-body" id="large-status">
                 <%= image_tag @ganglia.report_cpu.large.img, class: "img-responsive center-block", id: "large-image#{@count}" %>
