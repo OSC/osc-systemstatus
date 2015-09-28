@@ -5,7 +5,7 @@
         <div class="panel panel-default panel-clickable">
             <div class="panel-body">
                 <%= image_tag @ganglia.small.report_load.png, class: "img-responsive center-block", :onclick=>"$('#large-image#{@count}').replaceWith('"+
-                                                 (image_tag @ganglia.size(600,200).png, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
+                                                 (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
             </div>
         </div>
     </div>
@@ -13,7 +13,7 @@
         <div class="panel panel-default panel-clickable">
             <div class="panel-body">
                 <%= image_tag @ganglia.small.report_cpu.png, class: "img-responsive center-block", :onclick=>"$('#large-image#{@count}').replaceWith('"+
-                                                 (image_tag @ganglia.size(600,200).png, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
+                                                 (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@
         <div class="panel panel-default panel-clickable">
             <div class="panel-body">
                 <%= image_tag @ganglia.small.report_mem.png, class: "img-responsive center-block", :onclick=>"$('#large-image#{@count}').replaceWith('"+
-                                                 (image_tag @ganglia.size(600,200).png, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
+                                                 (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <div class="panel panel-default panel-clickable">
             <div class="panel-body">
                 <%= image_tag @ganglia.small.report_network.png, class: "img-responsive center-block", :onclick=>"$('#large-image#{@count}').replaceWith('"+
-                                                 (image_tag @ganglia.size(600,200).png, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
+                                                 (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block", id: "large-image#{@count}")+"');" %>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
     <div class="col-sm-12">
         <div class=" panel panel-default">
             <div class="panel-body" id="large-status">
-                <%= image_tag @ganglia.report_load.size(600,200).png, class: "img-responsive center-block", id: "large-image#{@count}" %>
+                <%= image_tag @ganglia.report_load.size(800,250).png, class: "img-responsive center-block", id: "large-image#{@count}" %>
             </div>
         </div>
     </div>
