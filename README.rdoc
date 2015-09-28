@@ -1,3 +1,0 @@
-== README
-
-System Status for Oakley/Ruby
