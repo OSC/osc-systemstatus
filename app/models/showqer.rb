@@ -38,6 +38,10 @@ class Showqer
     @showq.match(/\d+ active jobs/)[0].scan(/\d+/).first.to_i
   end
 
+  def active_percent
+    (active_jobs.to_f / total_jobs.to_f) * 100
+  end
+
   # Return the number of eligible jobs
   #
   # TODO: Error handling.
@@ -48,6 +52,10 @@ class Showqer
 
   end
 
+  def eligible_percent
+    (eligible_jobs.to_f / total_jobs.to_f) * 100
+  end
+
   # Return the number of blocked jobs
   #
   # TODO: Error handling.
@@ -55,6 +63,10 @@ class Showqer
   # @return [Integer] The number of blocked jobs
   def blocked_jobs
     @showq.match(/\d+ blocked jobs/)[0].scan(/\d+/).first.to_i
+  end
+
+  def blocked_percent
+    (blocked_jobs.to_f / total_jobs.to_f) * 100
   end
 
   # Total active + eligible + blocked jobs
