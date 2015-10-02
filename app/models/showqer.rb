@@ -43,21 +43,21 @@ class Showqer
   #
   # @return [Float] The percentage active as float to two precision points
   def active_percent
-    ((active_jobs.to_f / total_jobs.to_f) * 100).round(2)
+    (active_jobs.to_f / total_jobs.to_f) * 100
   end
 
   # Return the eligible jobs as percent of total jobs
   #
   # @return [Float] The percentage eligible as float to two precision points
   def eligible_percent
-    ((eligible_jobs.to_f / total_jobs.to_f) * 100).round(2)
+    (eligible_jobs.to_f / total_jobs.to_f) * 100
   end
 
   # Return the blocked jobs as percent of total jobs
   #
   # @return [Float] The percentage blocked as float to two precision points
   def blocked_percent
-    ((blocked_jobs.to_f / total_jobs.to_f) * 100).round(2)
+    (blocked_jobs.to_f / total_jobs.to_f) * 100
   end
 
   # Total active + eligible + blocked jobs
@@ -71,14 +71,14 @@ class Showqer
   #
   # @return [Float] The number of processors used as float to two precision points
   def procs_percent
-    ((procs_used.to_f / procs_avail.to_f) * 100).round(2)
+    (procs_used.to_f / procs_avail.to_f) * 100
   end
 
   # Return the node usage as percent
   #
   # @return [Float] The number of nodes used as float to two precision points
   def nodes_percent
-    ((nodes_used.to_f / nodes_avail.to_f) * 100).round(2)
+    (nodes_used.to_f / nodes_avail.to_f) * 100
   end
 
   private
