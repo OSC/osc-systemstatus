@@ -12,9 +12,7 @@
     <%= link_to(oakley_url) do %>
         <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
             <h4><strong>Oakley Cluster Status</strong></h4>
-            <div class="panel-body">
-                <img src="<%= @ganglia.oakley.small.png %>" class="img-responsive center-block">
-            </div>
+            <%= render partial: 'node_status', locals: { showqer: @showqoakley } %>
         </div>
     <% end %>
 </div>
@@ -24,9 +22,7 @@
     <%= link_to(ruby_url) do %>
         <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
             <h4><strong>Ruby Cluster Status</strong></h4>
-            <div class="panel-body">
-                <img src="<%= @ganglia.ruby.small.png %>" class="img-responsive center-block">
-            </div>
+            <%= render partial: 'node_status', locals: { showqer: @showqruby } %>
         </div>
     <% end %>
 </div>
