@@ -121,3 +121,7 @@ pre {
   background-color: #6c75f0;
   border-color: #6c75f0;
 }
+
+a:-webkit-any-link{
+  text-decoration:none !important;
+}
