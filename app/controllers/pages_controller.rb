@@ -2,7 +2,7 @@ class PagesController < ApplicationController
 
   def index
     @ganglia = Ganglia.new
-    @motd = %x{ cat /etc/motd }
+    @motd = File.open("/etc/motd","rb").read
   end
 
   def oakley
