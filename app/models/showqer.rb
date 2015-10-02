@@ -6,6 +6,8 @@
 # TODO: parse once and assign instance vars.
 class Showqer
 
+  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
+
   # Set the object to the server.
   #
   # @option 'oakley'
@@ -14,7 +16,15 @@ class Showqer
   # @return [Showqer] self
   def initialize(server)
     self.server(server)
-    @showq = %x{ showq --host=#{@server['pbshost']} }
+    showq = %x{ showq --host=#{@server['pbshost']} }
+    self.active_jobs = showq.match(/\d+ active jobs/)[0].scan(/\d+/).first.to_i
+    self.eligible_jobs = showq.match(/\d+ eligible jobs/)[0].scan(/\d+/).first.to_i
+    self.blocked_jobs = showq.match(/\d+ blocked jobs/)[0].scan(/\d+/).first.to_i
+    self.procs_used = showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).first.to_i
+    self.procs_avail = showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).second.to_i
+    self.nodes_used = showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).first.to_i
+    self.nodes_avail = showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).second.to_i
+    self
   end
 
   # Set the server to a server in servers.yml
@@ -29,44 +39,25 @@ class Showqer
     self
   end
 
-  # Return the number of active jobs
+  # Return the active jobs as percent of total jobs
   #
-  # TODO: Error handling.
-  #
-  # @return [Integer] The number of active jobs
-  def active_jobs
-    @showq.match(/\d+ active jobs/)[0].scan(/\d+/).first.to_i
-  end
-
+  # @return [Float] The percentage active as float to two precision points
   def active_percent
-    (active_jobs.to_f / total_jobs.to_f) * 100
+    ((active_jobs.to_f / total_jobs.to_f) * 100).round(2)
   end
 
-  # Return the number of eligible jobs
+  # Return the eligible jobs as percent of total jobs
   #
-  # TODO: Error handling.
-  #
-  # @return [Integer] The number of eligible jobs
-  def eligible_jobs
-    @showq.match(/\d+ eligible jobs/)[0].scan(/\d+/).first.to_i
-
-  end
-
+  # @return [Float] The percentage eligible as float to two precision points
   def eligible_percent
-    (eligible_jobs.to_f / total_jobs.to_f) * 100
+    ((eligible_jobs.to_f / total_jobs.to_f) * 100).round(2)
   end
 
-  # Return the number of blocked jobs
+  # Return the blocked jobs as percent of total jobs
   #
-  # TODO: Error handling.
-  #
-  # @return [Integer] The number of blocked jobs
-  def blocked_jobs
-    @showq.match(/\d+ blocked jobs/)[0].scan(/\d+/).first.to_i
-  end
-
+  # @return [Float] The percentage blocked as float to two precision points
   def blocked_percent
-    (blocked_jobs.to_f / total_jobs.to_f) * 100
+    ((blocked_jobs.to_f / total_jobs.to_f) * 100).round(2)
   end
 
   # Total active + eligible + blocked jobs
@@ -76,39 +67,11 @@ class Showqer
     active_jobs + eligible_jobs + blocked_jobs
   end
 
-  # Return the number of processors in use
-  #
-  # @return [Integer] The number processors in use
-  def procs_used
-    @showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).first.to_i
-  end
-
-  # Return the number of processors available
-  #
-  # @return [Integer] The number of available processors
-  def procs_avail
-    @showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).second.to_i
-  end
-
   # Return the processor usage as percent
   #
   # @return [Float] The number of processors used as float to two precision points
   def procs_percent
     ((procs_used.to_f / procs_avail.to_f) * 100).round(2)
-  end
-
-  # Return the number of nodes in use
-  #
-  # @return [Integer] The number of nodes in use
-  def nodes_used
-    @showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).first.to_i
-  end
-
-  # Return the number of available nodes
-  #
-  # @return [Integer] The number of available nodes
-  def nodes_avail
-    @showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).second.to_i
   end
 
   # Return the node usage as percent
@@ -118,9 +81,8 @@ class Showqer
     ((nodes_used.to_f / nodes_avail.to_f) * 100).round(2)
   end
 
-  # Show the result of the showq command.
-  def to_s
-    @showq
-  end
+  private
+
+    attr_writer :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
 
 end
