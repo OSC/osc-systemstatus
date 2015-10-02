@@ -3,6 +3,8 @@ class PagesController < ApplicationController
   def index
     @ganglia = Ganglia.new
     @motd = File.open("/etc/motd","rb").read
+    @showqoakley = Showqer.new 'oakley'
+    @showqruby = Showqer.new 'ruby'
   end
 
   def oakley
