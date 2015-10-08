@@ -17,13 +17,13 @@ class Showqer
   def initialize(server)
     self.server(server)
     showq = %x{ showq --host=#{@server['pbshost']} }
-    self.active_jobs = showq.match(/\d+ active jobs/)[0].scan(/\d+/).first.to_i
-    self.eligible_jobs = showq.match(/\d+ eligible jobs/)[0].scan(/\d+/).first.to_i
-    self.blocked_jobs = showq.match(/\d+ blocked jobs/)[0].scan(/\d+/).first.to_i
-    self.procs_used = showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).first.to_i
-    self.procs_avail = showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).second.to_i
-    self.nodes_used = showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).first.to_i
-    self.nodes_avail = showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).second.to_i
+    self.active_jobs = assign showq.match(/\d+ active jobs/)[0].scan(/\d+/).first.to_i
+    self.eligible_jobs = assign showq.match(/\d+ eligible jobs/)[0].scan(/\d+/).first.to_i
+    self.blocked_jobs = assign showq.match(/\d+ blocked jobs/)[0].scan(/\d+/).first.to_i
+    self.procs_used = assign showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).first.to_i
+    self.procs_avail = assign showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).second.to_i
+    self.nodes_used = assign showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).first.to_i
+    self.nodes_avail = assign showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).second.to_i
     self
   end
 
@@ -84,5 +84,10 @@ class Showqer
   private
 
     attr_writer :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
+
+    # assign 0 if the input is nil or empty
+    def assign(match_string)
+      !match_string.blank? ? match_string : 0
+    end
 
 end
