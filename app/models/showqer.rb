@@ -22,10 +22,10 @@ class Showqer
     self.blocked_jobs = showqxdoc.at_xpath('//queue[@option="blocked"]/@count').value.to_i
 
     cluster = showqxdoc.xpath("//cluster")
-    self.procs_used = cluster.attribute('LocalAllocProcs').value
-    self.procs_avail = cluster.attribute('LocalUpProcs').value
-    self.nodes_used = cluster.attribute('LocalActiveNodes').value
-    self.nodes_avail = cluster.attribute('LocalUpNodes').value
+    self.procs_used = cluster.attribute('LocalAllocProcs').value.to_i
+    self.procs_avail = cluster.attribute('LocalUpProcs').value.to_i
+    self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
+    self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
 
     self
   end
