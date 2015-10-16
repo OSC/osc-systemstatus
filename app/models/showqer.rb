@@ -2,8 +2,6 @@
 #
 # @author Brian L. McMichael
 # @version 0.0.1
-#
-# TODO: parse once and assign instance vars.
 class Showqer
 
   attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
@@ -16,14 +14,19 @@ class Showqer
   # @return [Showqer] self
   def initialize(server)
     self.server(server)
-    showq = %x{ showq --host=#{@server['pbshost']} }
-    self.active_jobs = assign showq.match(/\d+ active jobs/)[0].scan(/\d+/).first.to_i
-    self.eligible_jobs = assign showq.match(/\d+ eligible jobs/)[0].scan(/\d+/).first.to_i
-    self.blocked_jobs = assign showq.match(/\d+ blocked jobs/)[0].scan(/\d+/).first.to_i
-    self.procs_used = assign showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).first.to_i
-    self.procs_avail = assign showq.match(/\d+ of \d+ processors/)[0].scan(/\d+/).second.to_i
-    self.nodes_used = assign showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).first.to_i
-    self.nodes_avail = assign showq.match(/\d+ of \d+ nodes/)[0].scan(/\d+/).second.to_i
+    showqx = %x{ showq --xml --host=#{@server['pbshost']} }
+    showqxdoc = Nokogiri::XML(showqx)
+
+    self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i
+    self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i
+    self.blocked_jobs = showqxdoc.at_xpath('//queue[@option="blocked"]/@count').value.to_i
+
+    cluster = showqxdoc.xpath("//cluster")
+    self.procs_used = cluster.attribute('LocalAllocProcs').value
+    self.procs_avail = cluster.attribute('LocalUpProcs').value
+    self.nodes_used = cluster.attribute('LocalActiveNodes').value
+    self.nodes_avail = cluster.attribute('LocalUpNodes').value
+
     self
   end
 

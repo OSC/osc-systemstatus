@@ -6,7 +6,7 @@
 # TODO: Add 'glegend' option to show/hide the legend
 class Ganglia
 
-  # The
+  # The location of the ganglia web interface.
   GANGLIA_HOST = 'https://cts05.osc.edu/od_monitor/graph.php?'
 
   # Initializer for the Ganglia interface object
