@@ -7,7 +7,7 @@
 class Ganglia
 
   # The location of the ganglia web interface.
-  GANGLIA_HOST = 'https://cts05.osc.edu/od_monitor/graph.php?'
+  GANGLIA_HOST = 'https://cts05.osc.edu/gweb/graph.php?'
 
   # Initializer for the Ganglia interface object
   #
@@ -220,7 +220,7 @@ class Ganglia
   end
 
   def to_s
-    "#{GANGLIA_HOST}#{range_type}#{report_type}#{chart_size}#{openid_user}#{cluster}#{time}"
+    "#{GANGLIA_HOST}#{range_type}#{report_type}#{chart_size}#{cluster}#{time}"
   end
 
   # Builds a request that returns a png response from the ganglia server
@@ -256,11 +256,11 @@ class Ganglia
     end
 
     # Pass in the open_id user if available
-    def openid_user
-      if !ENV['REMOTE_USER'].nil?
-        "&openid_identifier=#{ENV['REMOTE_USER']}"
-      end
-    end
+    #def openid_user
+    #  if !ENV['REMOTE_USER'].nil?
+    #    "&openid_identifier=#{ENV['REMOTE_USER']}"
+    #  end
+    #end
 
     def cluster
       "&c=#{@server['cluster_code']}#{fileserver_node}"
