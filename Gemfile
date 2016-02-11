@@ -39,5 +39,4 @@ gem "rails_12factor", group: :production
 gem "awesim_rails", "~> 0.8.0"
 gem "awesim_rails_logging", "~> 0.0.3"
 gem "font-awesome-sass"
-gem "turbolinks"
 gem "rails_autolink"
