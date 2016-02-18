@@ -21,8 +21,10 @@
 /public/.htaccess
 /.env.production
 /.env.local
+/vendor/bundle
 
 RAILS_DATAROOT=$PWD/data
 RAILS_DATABASE=db/development.sqlite3
 
 /.htaccess
+
