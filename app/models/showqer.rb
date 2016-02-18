@@ -1,3 +1,4 @@
+require 'nokogiri'
 # Utility class for getting numerical data from showq
 #
 # @author Brian L. McMichael
@@ -14,10 +15,12 @@ class Showqer
   # @return [Showqer] self
   def initialize(server)
     self.server(server)
-    showqx = %x{ showq --xml --host=#{@server['pbshost']} }
+
+    showqx = %x{ MOABHOMEDIR=/var/spool/batch/moab /usr/local/moab/8.1.1.2-2015080516-eb28ad0-el6/bin/showq --xml --host=#{@server['pbshost']} }
+
     showqxdoc = Nokogiri::XML(showqx)
 
-    self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i
+    self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i 
     self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i
     self.blocked_jobs = showqxdoc.at_xpath('//queue[@option="blocked"]/@count').value.to_i
 
