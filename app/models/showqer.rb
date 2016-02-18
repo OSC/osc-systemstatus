@@ -1,4 +1,3 @@
-require 'nokogiri'
 # Utility class for getting numerical data from showq
 #
 # @author Brian L. McMichael
@@ -16,6 +15,7 @@ class Showqer
   def initialize(server)
     self.server(server)
 
+    # Passenger wipes the PATH so we have to reset it to pull in the moab libraries.
     showqx = %x{ MOABHOMEDIR=/var/spool/batch/moab /usr/local/moab/8.1.1.2-2015080516-eb28ad0-el6/bin/showq --xml --host=#{@server['pbshost']} }
 
     showqxdoc = Nokogiri::XML(showqx)
