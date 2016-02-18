@@ -29,6 +29,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem "nokogiri"
 gem "pbs", :git => "git@github.com:AweSim-OSC/pbs-ruby.git"
 gem "therubyracer", platforms: :ruby
 gem "paperclip", "~> 4.2.2"
