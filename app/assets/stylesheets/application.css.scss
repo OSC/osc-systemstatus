@@ -1,6 +1,7 @@
 // Load bootstrap sprockets first
 @import "bootstrap-sprockets";
 @import "awesim/bootstrap-overrides";
+@import "awesim/awesim-navbar";
 
 // OnDemand uses shorter navbar
 $navbar-height: 40px;
