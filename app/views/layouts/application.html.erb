@@ -26,10 +26,7 @@
           <span class="icon-bar"></span>
         </button>
 
-        <%# FIXME: use AwesimRails.dashboard_url or something more appropriate? and add AwesimRails.dashboard_link_title? %>
-        <%= link_to('OSC OnDemand', '/pun/shared/efranz/dashboard', class: 'navbar-brand navbar-home')%>
-        <%= bootstrap_nav_awesim_breadcrumb_divider %>
-        <%= link_to('System Status', root_path, class: 'navbar-brand') %>
+        <%= ood_breadcrumbs('System Status', root_path) %>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
