@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 
   <title>System Status</title>
-  <%= favicon_link_tag 'favicon.ico' %>
+  <%= favicon_link_tag nil, href: OodAppkit.public.url.join('favicon.ico') %>
 
   <%= stylesheet_link_tag    "application", media: "all" %>
 
@@ -15,7 +15,7 @@
 
 <header>
   <!-- navbar  -->
-  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <nav class="ood-appkit navbar navbar-inverse navbar-static-top" role="navigation">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -26,7 +26,10 @@
           <span class="icon-bar"></span>
         </button>
 
-        <%= ood_breadcrumbs('System Status', root_path) %>
+        <ul class="navbar-breadcrumbs">
+          <li><%= link_to OodAppkit.dashboard.title, OodAppkit.dashboard.url.to_s %></li>
+          <li><%= link_to "System Status", root_path %></li>
+        </ul>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -79,7 +82,7 @@
 <footer>
   <div class="container">
     <hr>
-      <p>&copy; AweSim 2014 - <%= DateTime.now.year %></p>
+      <p>&copy; Ohio Supercomputer Center 2014 - <%= DateTime.now.year %></p>
   </div>
 </footer>
 

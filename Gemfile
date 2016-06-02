@@ -38,8 +38,9 @@ gem "autoprefixer-rails"
 gem "osc-machete", :git => "git@github.com:AweSim-OSC/osc-machete.git"
 gem 'dotenv-rails', '~> 2.0', require: 'dotenv/rails-now'
 gem "rails_12factor", group: :production
-gem "awesim_rails", :git => "git@github.com:AweSim-OSC/awesim_rails.git", :tag => 'v1.2.1'
+# gem "awesim_rails", :git => "git@github.com:AweSim-OSC/awesim_rails.git", :tag => 'v1.2.1'
+gem "ood_appkit", :git => "git@github.com:AweSim-OSC/ood_appkit.git"
 
-gem "awesim_rails_logging", :git => "git@github.com:AweSim-OSC/awesim_rails_logging.git"
+# gem "awesim_rails_logging", :git => "git@github.com:AweSim-OSC/awesim_rails_logging.git"
 gem "font-awesome-sass"
 gem "rails_autolink"
