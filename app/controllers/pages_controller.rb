@@ -16,11 +16,6 @@ class PagesController < ApplicationController
     render "system_status"
   end
 
-  def filesystem
-    @ganglia = Ganglia.new.fileserver
-    render "system_status"
-  end
-
   def about
   end
 end
