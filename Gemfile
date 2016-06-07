@@ -30,14 +30,14 @@ group :doc do
 end
 
 gem "nokogiri"
-gem 'pbs', '~> 1.1'
-gem 'paperclip', '~> 4.2.2'
+# gem 'pbs', '~> 1.1'
+# gem 'paperclip', '~> 4.2.2'
 gem 'bootstrap-sass', '3.3.5'
 gem 'autoprefixer-rails', '~> 6.3'
-gem 'osc-machete', '~> 1.1'
+# gem 'osc-machete', '~> 1.1'
 gem 'dotenv-rails', '~> 2.0', require: 'dotenv/rails-now'
 gem 'rails_12factor', group: :production
 gem 'ood_appkit', '~> 0.0'
 
 gem 'font-awesome-sass'
-gem 'rails_autolink'
+# gem 'rails_autolink'
