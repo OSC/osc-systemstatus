@@ -4,8 +4,7 @@ Systemstatus::Application.routes.draw do
   get "pages/about"
   get "/oakley", to: "pages#oakley"
   get "/ruby", to: "pages#ruby"
-  get "/filesystem", to: "pages#filesystem"
-
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -46,7 +45,7 @@ Systemstatus::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

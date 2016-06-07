@@ -17,8 +17,7 @@ class Ganglia
   # Default size:     Small
   #
   # @option 'oakley'
-  # @option 'ruby'
-  # @option 'fileserver'
+  # @option 'ruby'  #
   #
   # @return [Ganglia] self
   def initialize(server='oakley')
@@ -53,13 +52,6 @@ class Ganglia
   # @return [Ganglia] self
   def ruby
     self.server('ruby')
-  end
-
-  # Set the server to the File Server
-  #
-  # @return [Ganglia] self
-  def fileserver
-    self.server('fileserver')
   end
 
   # Define the time-ago range for the data.
@@ -263,21 +255,7 @@ class Ganglia
     #end
 
     def cluster
-      "&c=#{@server['cluster_code']}#{fileserver_node}"
-    end
-
-    def fileserver_node
-      if @server == OSC_Servers['fileserver']
-        # Get the home path of the user.
-        # This may need to be updated when running outside of the PUA
-        # ex: /nfs/08/bmcmichael
-        path = ENV['HOME']
-        # get the number from the nfs path
-        fileserver_number = path.scan(/^\/nfs\/([0-9]{2})\//).first.first
-        # map to the xio
-        node = OSC_Servers["fileserver"]["fs#{fileserver_number}"]
-        "&h=#{node}"
-      end
+      "&c=#{@server['cluster_code']}"
     end
 
     def time
