@@ -2,7 +2,7 @@
 
 ### System Status for Oakley/Ruby
 
-This app displays the current system status of Oakley Cluster, Ruby Cluster, and the user-specific filesystem node.
+This app displays the current system status of Oakley Cluster and Ruby Cluster.
 
 ### The Ganglia Interface - ganglia.rb
 
@@ -16,11 +16,10 @@ The object will build a string that can be used to request the desired report fr
 
 #### Server
 
-The available host servers are configured in servers.yml. The following methods are provided for configuration of Oakley, Ruby, and the User's filesystem host.
+The available host servers are configured in servers.yml. The following methods are provided for configuration of Oakley and Ruby clusters.
 
 * `Ganglia.oakley` (default) Sets the object to request a report on Oakley Cluster.
 * `Ganglia.ruby` Sets the object to request a report on Ruby Cluster.
-* `Ganglia.fileserver` Sets the object to request a report on the user's file-server node.
 * `Ganglia.server(server)` Sets the object to request a report on a custom server. (Define in servers.yml)
 
 #### Report Range
