@@ -30,17 +30,14 @@ group :doc do
 end
 
 gem "nokogiri"
-gem "pbs", :git => "git@github.com:AweSim-OSC/pbs-ruby.git"
-gem "therubyracer", platforms: :ruby
-gem "paperclip", "~> 4.2.2"
-gem "bootstrap-sass", "3.3.5"
-gem "autoprefixer-rails"
-gem "osc-machete", :git => "git@github.com:AweSim-OSC/osc-machete.git"
+gem 'pbs', '~> 1.1'
+gem 'paperclip', '~> 4.2.2'
+gem 'bootstrap-sass', '3.3.5'
+gem 'autoprefixer-rails', '~> 6.3'
+gem 'osc-machete', '~> 1.1'
 gem 'dotenv-rails', '~> 2.0', require: 'dotenv/rails-now'
-gem "rails_12factor", group: :production
-# gem "awesim_rails", :git => "git@github.com:AweSim-OSC/awesim_rails.git", :tag => 'v1.2.1'
-gem "ood_appkit", :git => "git@github.com:AweSim-OSC/ood_appkit.git"
+gem 'rails_12factor', group: :production
+gem 'ood_appkit', '~> 0.0'
 
-# gem "awesim_rails_logging", :git => "git@github.com:AweSim-OSC/awesim_rails_logging.git"
-gem "font-awesome-sass"
-gem "rails_autolink"
+gem 'font-awesome-sass'
+gem 'rails_autolink'
