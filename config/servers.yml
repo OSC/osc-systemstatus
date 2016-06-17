@@ -2,10 +2,12 @@
 # Server data used by ganglia
 #
 oakley:
+  name:           oakley
   hostname:       oakley.osc.edu
   pbshost:        oak-batch.osc.edu
   cluster_code:   Oakley+nodes
 ruby:
+  name:           ruby
   hostname:       ruby.osc.edu
   pbshost:        ruby-batch.ten.osc.edu
   cluster_code:   Ruby
