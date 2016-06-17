@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
 
   def index
-    @ganglia = Ganglia.new
     @showqoakley = Showqer.new 'oakley'
     @showqruby = Showqer.new 'ruby'
   end
