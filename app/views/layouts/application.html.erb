@@ -36,10 +36,10 @@
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
           <li>
-              <%= link_to icon('area-chart') + ' Oakley Cluster'.html_safe, oakley_url %>
+              <%= link_to icon('area-chart') + ' Oakley Cluster'.html_safe, oakley_url, :id => "#{"active-page" if @ganglia.try(:server_name) == 'oakley'}" %>
           </li>
           <li>
-              <%= link_to icon('area-chart') + ' Ruby Cluster'.html_safe, ruby_url %>
+              <%= link_to icon('area-chart') + ' Ruby Cluster'.html_safe, ruby_url, :id => "#{"active-page" if @ganglia.try(:server_name) == 'ruby'}" %>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
