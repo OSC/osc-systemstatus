@@ -37,7 +37,7 @@ gem 'autoprefixer-rails', '~> 6.3'
 # gem 'osc-machete', '~> 1.1'
 gem 'dotenv-rails', '~> 2.0', require: 'dotenv/rails-now'
 gem 'rails_12factor', group: :production
-gem 'ood_appkit', '~> 0.0'
+gem 'ood_appkit', '~> 0.1'
 
 gem 'font-awesome-sass'
 # gem 'rails_autolink'
