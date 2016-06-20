@@ -54,6 +54,13 @@ class Ganglia
     self.server('ruby')
   end
 
+  # returns the name of the server being managed by this object
+  #
+  # @return [String] server name
+  def server_name
+    @server['name']
+  end
+
   # Define the time-ago range for the data.
   #
   # The following options are the only ranges the ganglia server will accept.

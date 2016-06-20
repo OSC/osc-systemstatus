@@ -35,10 +35,10 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <li>
+          <li class="<%= "active" if @ganglia.try(:server_name) == 'oakley' %>">
               <%= link_to icon('area-chart') + ' Oakley Cluster'.html_safe, oakley_url %>
           </li>
-          <li>
+          <li class="<%= "active" if @ganglia.try(:server_name) == 'ruby'  %>">
               <%= link_to icon('area-chart') + ' Ruby Cluster'.html_safe, ruby_url %>
           </li>
         </ul>
