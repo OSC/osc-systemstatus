@@ -15,26 +15,20 @@ class Showqer
   def initialize(server)
     self.server(server)
 
-    begin
+    # Passenger wipes the PATH so we have to reset it to pull in the moab libraries.
+    showqx = %x{ MOABHOMEDIR=/var/spool/batch/moab /usr/local/moab/8.1.1.2-2015080516-eb28ad0-el6/bin/showq --xml --host=#{@server['pbshost']} }
 
-      # Passenger wipes the PATH so we have to reset it to pull in the moab libraries.
-      showqx = %x{ MOABHOMEDIR=/var/spool/batch/moab /usr/local/moab/8.1.1.2-2015080516-eb28ad0-el6/bin/showq --xml --host=#{@server['pbshost']} }
+    showqxdoc = Nokogiri::XML(showqx)
 
-      showqxdoc = Nokogiri::XML(showqx)
+    self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i 
+    self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i
+    self.blocked_jobs = showqxdoc.at_xpath('//queue[@option="blocked"]/@count').value.to_i
 
-      self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i
-      self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i
-      self.blocked_jobs = showqxdoc.at_xpath('//queue[@option="blocked"]/@count').value.to_i
-
-      cluster = showqxdoc.xpath("//cluster")
-      self.procs_used = cluster.attribute('LocalAllocProcs').value.to_i
-      self.procs_avail = cluster.attribute('LocalUpProcs').value.to_i
-      self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
-      self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
-
-    rescue Exception
-      self.active_jobs = self.eligible_jobs = self.blocked_jobs = self.procs_used = self.procs_avail = self.nodes_used = self.nodes_avail = 0
-    end
+    cluster = showqxdoc.xpath("//cluster")
+    self.procs_used = cluster.attribute('LocalAllocProcs').value.to_i
+    self.procs_avail = cluster.attribute('LocalUpProcs').value.to_i
+    self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
+    self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
 
     self
   end
