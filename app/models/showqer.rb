@@ -14,13 +14,17 @@ class Showqer
   # @return [Showqer] self
   def initialize(server)
     self.server(server)
+    self
+  end
+
+  def setup
 
     # Passenger wipes the PATH so we have to reset it to pull in the moab libraries.
     showqx = %x{ MOABHOMEDIR=/var/spool/batch/moab /usr/local/moab/8.1.1.2-2015080516-eb28ad0-el6/bin/showq --xml --host=#{@server['pbshost']} }
 
     showqxdoc = Nokogiri::XML(showqx)
 
-    self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i 
+    self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i
     self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i
     self.blocked_jobs = showqxdoc.at_xpath('//queue[@option="blocked"]/@count').value.to_i
 
@@ -29,8 +33,6 @@ class Showqer
     self.procs_avail = cluster.attribute('LocalUpProcs').value.to_i
     self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
     self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
-
-    self
   end
 
   # Set the server to a server in servers.yml
