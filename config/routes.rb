@@ -2,9 +2,11 @@ Systemstatus::Application.routes.draw do
   root "pages#index"
   get "pages/index"
   get "pages/about"
-  get "/oakley", to: "pages#oakley"
-  get "/ruby", to: "pages#ruby"
-  
+
+  OodAppkit.clusters.hpc.keys.each do |cluster|
+    get "/#{cluster}", to: "pages##{cluster}"
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
