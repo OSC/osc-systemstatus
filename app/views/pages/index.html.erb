@@ -3,7 +3,7 @@
       <%= link_to(send("#{cluster}_url")) do %>
           <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
             <h4><strong><%= cluster.to_s.titleize %> Cluster Status</strong></h4>
-            <%= render partial: 'node_status', locals: { showqer: @showqoakley } %>
+            <%= render partial: 'node_status', locals: { showqer: @clusters[cluster][:showqer] } %>
           </div>
       <% end %>
     </div>
