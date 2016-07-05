@@ -71,7 +71,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
-    ood_appkit (0.2.2)
+    ood_appkit (0.2.3)
       addressable (~> 2.4)
       lograge (~> 0.3)
       ood_support (~> 0.0)
