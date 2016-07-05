@@ -24,12 +24,12 @@ class PagesController < ApplicationController
   end
 
   def oakley
-    @ganglia = Ganglia.new.oakley
+    @ganglia = Ganglia.new('oakley')
     render "system_status"
   end
 
   def ruby
-    @ganglia = Ganglia.new.ruby
+    @ganglia = Ganglia.new('ruby')
     render "system_status"
   end
 
