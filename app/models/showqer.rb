@@ -8,9 +8,6 @@ class Showqer
 
   # Set the object to the server.
   #
-  # @option 'oakley'
-  # @option 'ruby'
-  #
   # @return [Showqer] self
   def initialize(server)
     self.server(server)
@@ -20,7 +17,7 @@ class Showqer
   def setup
 
     # Passenger wipes the PATH so we have to reset it to pull in the moab libraries.
-    showqx = %x{ MOABHOMEDIR=/var/spool/batch/moab /usr/local/moab/8.1.1.2-2015080516-eb28ad0-el6/bin/showq --xml --host=#{@server['pbshost']} }
+    showqx = %x{ MOABHOMEDIR=#{@server.servers[:scheduler].moabhomedir.to_s} #{@server.servers[:scheduler].prefix.to_s}/bin/showq --xml --host=#{@server.servers[:scheduler].host} }
 
     showqxdoc = Nokogiri::XML(showqx)
 
@@ -37,13 +34,13 @@ class Showqer
 
   # Set the server to a server in servers.yml
   #
-  # Default: Oakley if input is invalid
+  # Default: First if input is invalid
   #
   # @param [String] The server name
   #
   # @return [Showqer] self
-  def server(server='oakley')
-    @server = OSC_Servers[server] ||= OSC_Servers['oakley']
+  def server(server=OODClusters.keys.first.to_s)
+    @server = OODClusters[server.to_sym] ||= OODClusters[OODClusters.keys.first]
     self
   end
 
