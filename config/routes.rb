@@ -3,7 +3,7 @@ Systemstatus::Application.routes.draw do
   get "pages/index"
   get "pages/about"
 
-  OodAppkit.clusters.hpc.keys.each do |cluster|
+  OODClusters.keys.each do |cluster|
     get "/#{cluster}", to: "pages##{cluster}"
   end
 
