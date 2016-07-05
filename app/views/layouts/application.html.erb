@@ -35,12 +35,11 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <li class="<%= "active" if @ganglia.try(:server_name) == 'oakley' %>">
-              <%= link_to icon('area-chart') + ' Oakley Cluster'.html_safe, oakley_url %>
-          </li>
-          <li class="<%= "active" if @ganglia.try(:server_name) == 'ruby'  %>">
-              <%= link_to icon('area-chart') + ' Ruby Cluster'.html_safe, ruby_url %>
-          </li>
+          <% @clusters.each do |key, val| %>
+              <li class="<%= "active" if @ganglia.try(:server_name) == key.to_s %>">
+                <%= link_to icon('area-chart') + ' ' + val[:name] + ' Cluster'.html_safe, "#{root_path}#{key}" %>
+              </li>
+          <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 
