@@ -4,7 +4,7 @@ class PagesController < ApplicationController
 
     @clusters = Hash.new
 
-    OodAppkit.clusters.hpc.each do |key, cluster|
+    OODClusters.each do |key, cluster|
      if cluster.ganglia_server?
        ganglia_cluster = Hash.new
        ganglia_cluster[:name] = key
