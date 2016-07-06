@@ -1,11 +1,7 @@
 Systemstatus::Application.routes.draw do
-  root "pages#index"
-  get "pages/index"
-  get "pages/about"
+  root "clusters#index"
 
-  OODClusters.keys.each do |cluster|
-    get "/#{cluster}", to: "pages##{cluster}"
-  end
+  resources :clusters, only: [:index, :show]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
