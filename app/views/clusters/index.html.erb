@@ -1,6 +1,6 @@
 <% OodAppkit.clusters.hpc.keys.each do |cluster| %>
     <div class="col-sm-6 col-xs-6">
-      <%= link_to(send("#{cluster}_url")) do %>
+      <%= link_to(cluster_path(cluster.to_sym)) do %>
           <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
             <h4><strong><%= cluster.to_s.titleize %> Cluster Status</strong></h4>
             <%= render partial: 'node_status', locals: { showqer: @clusters[cluster][:showqer] } %>

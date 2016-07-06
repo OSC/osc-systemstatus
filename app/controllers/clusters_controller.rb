@@ -3,7 +3,7 @@ class ClustersController < ApplicationController
   def index
     @clusters = get_clusters
   end
-
+  
   # Generate the route methods
   OODClusters.each do |key, val|
     define_method key do
