@@ -11,18 +11,6 @@ class ClustersController < ApplicationController
     render "system_status"
   end
   
-  # Generate the route methods
-  OODClusters.each do |key, val|
-    define_method key do
-      @clusters = get_clusters
-      @ganglia = Ganglia.new(key.to_s)
-      render "system_status"
-    end
-  end
-
-  def about
-  end
-
   private
 
   def get_clusters
