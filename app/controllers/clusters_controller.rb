@@ -3,6 +3,13 @@ class ClustersController < ApplicationController
   def index
     @clusters = get_clusters
   end
+
+  def show
+    @clusters = get_clusters
+    cluster = params[:id]
+    @ganglia = Ganglia.new(cluster.to_s)
+    render "system_status"
+  end
   
   # Generate the route methods
   OODClusters.each do |key, val|
