@@ -37,7 +37,7 @@
         <ul class="nav navbar-nav">
           <% @clusters.each do |key, val| %>
               <li class="<%= "active" if @ganglia.try(:server_name) == key.to_s %>">
-                <%= link_to icon('area-chart') + ' ' + val[:name] + ' Cluster'.html_safe, "#{root_path}#{key}" %>
+                <%= link_to icon('area-chart') + ' ' + val[:name] + ' Cluster'.html_safe, cluster_path(key.to_s) %>
               </li>
           <% end %>
         </ul>
