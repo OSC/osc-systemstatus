@@ -13,34 +13,23 @@ class Ganglia
   # Default range:    One Hour
   # Default size:     Small
   #
+  # @param [OodAppkit::Cluster]
+  #
   # @return [Ganglia] self
-  def initialize(server=OODClusters.keys.first.to_s)
-    self.server(server)
+  def initialize(cluster)
+    @host = cluster
+    @server = @host.servers
     self.hour
     self.report_cpu
     self.small
     self
   end
 
-  # Set the server to a server in servers.yml
-  #
-  # Default: First if input is invalid
-  #
-  # @param [String] The server name
-  #
-  # @return [Ganglia] self
-  def server(server)
-    @server_name = server
-    @host = OODClusters[server.to_sym] ||= OODClusters[OODClusters.keys.first]
-    @server = @host.servers
-    self
-  end
-
   # returns the name of the server being managed by this object
   #
   # @return [String] server name
-  def server_name
-    @server_name
+  def server_id
+    @host.id
   end
 
   def ganglia_host
