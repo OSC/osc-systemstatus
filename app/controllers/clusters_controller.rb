@@ -1,7 +1,6 @@
 class ClustersController < ApplicationController
 
   def index
-    @clusters = get_clusters
   end
 
   def show
@@ -16,32 +15,11 @@ class ClustersController < ApplicationController
 
   private
 
-  def get_clusters
-    clusters = Hash.new
-
-    OODClusters.each do |key, cluster|
-      ganglia_cluster = Hash.new
-      begin
-        showqer = MoabShowqClient.new key.to_s
-        showqer.setup
-      rescue Exception => e
-        logger.error "Loading #{cluster.title} showq data failed #{e.message}"
-        logger.error e.backtrace.join("\n")
-        flash.now[:alert] = "Error loading showq data."
-        showqer = MoabShowqClientNotAvailable.new
+    def render_404
+      respond_to do |format|
+        format.html { render :file => "public/404", :layout => false, :status => :not_found }
+        format.xml  { head :not_found }
+        format.any  { head :not_found }
       end
-      ganglia_cluster[:showqer] = showqer
-      clusters[key] = ganglia_cluster
-      end
-
-    return clusters
-  end
-
-  def render_404
-    respond_to do |format|
-      format.html { render :file => "public/404", :layout => false, :status => :not_found }
-      format.xml  { head :not_found }
-      format.any  { head :not_found }
     end
-  end
 end
