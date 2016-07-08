@@ -33,6 +33,9 @@ class MoabShowqClient
     self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
     self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
     self
+  rescue
+    # TODO Add logging and a flash message that was removed from the controller
+    MoabShowqClientNotAvailable.new
   end
 
   # Return the active jobs as percent of total jobs
