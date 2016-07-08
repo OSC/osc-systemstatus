@@ -1,8 +1,8 @@
 # Utility class for getting numerical data from showq
 #
 # @author Brian L. McMichael
-# @version 0.0.1
-class Showqer
+# @version 0.1.0
+class MoabShowqClient
 
   attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
 
