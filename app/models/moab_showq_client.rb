@@ -8,9 +8,11 @@ class MoabShowqClient
 
   # Set the object to the server.
   #
-  # @return [Showqer] self
-  def initialize(server)
-    self.server(server)
+  # @param [OodAppkit::Cluster]
+  #
+  # @return [MoabShowqClient] self
+  def initialize(cluster)
+    @server = cluster
     self
   end
 
@@ -30,17 +32,6 @@ class MoabShowqClient
     self.procs_avail = cluster.attribute('LocalUpProcs').value.to_i
     self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
     self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
-  end
-
-  # Set the server to a server in servers.yml
-  #
-  # Default: First if input is invalid
-  #
-  # @param [String] The server name
-  #
-  # @return [Showqer] self
-  def server(server=OODClusters.keys.first.to_s)
-    @server = OODClusters[server.to_sym] ||= OODClusters[OODClusters.keys.first]
     self
   end
 
