@@ -10,15 +10,23 @@
         <%= number_to_percentage(showqer.procs_percent, precision: 2) %>
     </div>
 </div>
-<div><%= showqer.total_jobs %> Total Jobs</div>
+<hr>
+<div><h4><%= showqer.total_jobs %> Total Jobs</h4></div>
+<div><%= showqer.active_jobs %> Active Jobs</div>
 <div class="progress">
-    <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= number_to_percentage(showqer.active_percent) %>" data-toggle="tooltip" title="<%= showqer.active_jobs %> Active">
-        <%= showqer.active_jobs %> Active
-    </div>
-    <div class="progress-bar progress-bar-error" role="progressbar" style="width:<%= number_to_percentage(showqer.eligible_percent) %>" data-toggle="tooltip" title="<%= showqer.eligible_jobs %> Eligible">
-        <%= showqer.eligible_jobs %> Eligible
-    </div>
-    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:<%= number_to_percentage(showqer.blocked_percent) %>" data-toggle="tooltip" title="<%= showqer.blocked_jobs %> Blocked">
-        <%= showqer.blocked_jobs %> Blocked
-    </div>
+  <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= number_to_percentage(showqer.active_percent) %>">
+    <%= number_to_percentage(showqer.active_percent, precision: 2) %>
+  </div>
+</div>
+<div><%= showqer.eligible_jobs %> Eligible Jobs</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-error" role="progressbar" style="width:<%= number_to_percentage(showqer.eligible_percent) %>">
+    <%= number_to_percentage(showqer.eligible_percent, precision: 2) %>
+  </div>
+</div>
+<div><%= showqer.blocked_jobs %> Blocked Jobs</div>
+<div class="progress">
+  <div class="progress-bar progress-bar-warning" role="progressbar" style="width:<%= number_to_percentage(showqer.blocked_percent) %>">
+    <%= number_to_percentage(showqer.blocked_percent, precision: 2) %>
+  </div>
 </div>
