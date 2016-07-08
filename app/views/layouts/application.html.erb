@@ -35,9 +35,9 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <% @clusters.each do |key, val| %>
+          <% OODClusters.each do |key, val| %>
               <li class="<%= "active" if @ganglia.try(:server_name) == key.to_s %>">
-                <%= link_to icon('area-chart') + ' ' + val[:name] + ' Cluster'.html_safe, cluster_path(key.to_s) %>
+                <%= link_to "#{icon('area-chart')} #{val.title} Cluster".html_safe, cluster_path(key.to_s) %>
               </li>
           <% end %>
         </ul>
