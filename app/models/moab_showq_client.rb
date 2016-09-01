@@ -12,16 +12,19 @@ class MoabShowqClient
   #
   # @return [MoabShowqClient] self
   def initialize(cluster)
-    @server = cluster
+    @server = cluster.scheduler_server
     self
   end
 
   def setup
+    scheduler = Moab::Scheduler.new(
+      host: @server.host,
+      lib: @server.lib,
+      bin: @server.bin,
+      moabhomedir: @server.moabhomedir
+    )
 
-    # Passenger wipes the PATH so we have to reset it to pull in the moab libraries.
-    showqx = %x{ MOABHOMEDIR=#{@server.servers[:scheduler].moabhomedir.to_s} #{@server.servers[:scheduler].prefix.to_s}/bin/showq --xml --host=#{@server.servers[:scheduler].host} }
-
-    showqxdoc = Nokogiri::XML(showqx)
+    showqxdoc = scheduler.call('showq')
 
     self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i
     self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i

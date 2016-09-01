@@ -18,7 +18,7 @@ class Ganglia
   # @return [Ganglia] self
   def initialize(cluster)
     @host = cluster
-    @server = @host.servers
+    @server = @host.ganglia_server
     self.hour
     self.report_cpu
     self.small
@@ -33,7 +33,7 @@ class Ganglia
   end
 
   def ganglia_host
-    @server[:ganglia].uri.to_s
+    @server.uri.to_s
   end
 
   # Define the time-ago range for the data.
@@ -236,9 +236,9 @@ class Ganglia
     #  end
     #end
 
-    def cluster
-      "&c=#{@server['cluster_code']}"
-    end
+    # def cluster
+    #   "&c=#{@server['cluster_code']}"
+    # end
 
     def time
       current_server_time = Time.now.to_i
