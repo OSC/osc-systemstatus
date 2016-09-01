@@ -1,28 +1,30 @@
 # Utility class for getting numerical data from showq
 #
 # @author Brian L. McMichael
-# @version 0.0.1
-class Showqer
+# @version 0.1.0
+class MoabShowqClient
 
   attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
 
   # Set the object to the server.
   #
-  # @option 'oakley'
-  # @option 'ruby'
+  # @param [OodAppkit::Cluster]
   #
-  # @return [Showqer] self
-  def initialize(server)
-    self.server(server)
+  # @return [MoabShowqClient] self
+  def initialize(cluster)
+    @server = cluster.scheduler_server
     self
   end
 
   def setup
+    scheduler = Moab::Scheduler.new(
+      host: @server.host,
+      lib: @server.lib,
+      bin: @server.bin,
+      moabhomedir: @server.moabhomedir
+    )
 
-    # Passenger wipes the PATH so we have to reset it to pull in the moab libraries.
-    showqx = %x{ MOABHOMEDIR=/var/spool/batch/moab /usr/local/moab/8.1.1.2-2015080516-eb28ad0-el6/bin/showq --xml --host=#{@server['pbshost']} }
-
-    showqxdoc = Nokogiri::XML(showqx)
+    showqxdoc = scheduler.call('showq')
 
     self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i
     self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i
@@ -33,18 +35,10 @@ class Showqer
     self.procs_avail = cluster.attribute('LocalUpProcs').value.to_i
     self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
     self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
-  end
-
-  # Set the server to a server in servers.yml
-  #
-  # Default: Oakley if input is invalid
-  #
-  # @param [String] The server name
-  #
-  # @return [Showqer] self
-  def server(server='oakley')
-    @server = OSC_Servers[server] ||= OSC_Servers['oakley']
     self
+  rescue
+    # TODO Add logging and a flash message that was removed from the controller
+    MoabShowqClientNotAvailable.new
   end
 
   # Return the active jobs as percent of total jobs

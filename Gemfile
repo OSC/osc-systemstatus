@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+gem 'rails', '~> 4.0.0'
 
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
@@ -29,15 +29,12 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem "nokogiri"
-# gem 'pbs', '~> 1.1'
-# gem 'paperclip', '~> 4.2.2'
 gem 'bootstrap-sass', '3.3.5'
 gem 'autoprefixer-rails', '~> 6.3'
-# gem 'osc-machete', '~> 1.1'
 gem 'dotenv-rails', '~> 2.0', require: 'dotenv/rails-now'
 gem 'rails_12factor', group: :production
-gem 'ood_appkit', '~> 0.1'
+gem 'ood_appkit', '~> 0.3.0'
+gem 'moab', '~> 0.0.0'
 
 gem 'font-awesome-sass'
 # gem 'rails_autolink'

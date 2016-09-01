@@ -1,64 +1,39 @@
 # Utility class for building string requests to the Ganglia Server via object
 #
 # @author Brian L. McMichael
-# @version 0.0.1
+# @version 0.1.0
 #
 # TODO: Add 'glegend' option to show/hide the legend
 class Ganglia
 
-  # The location of the ganglia web interface.
-  GANGLIA_HOST = 'https://cts05.osc.edu/gweb/graph.php?'
-
   # Initializer for the Ganglia interface object
   #
-  # Default server:   Oakley
+  # Default server:   First
   # Default report:   CPU Report
   # Default range:    One Hour
   # Default size:     Small
   #
-  # @option 'oakley'
-  # @option 'ruby'  #
+  # @param [OodAppkit::Cluster]
   #
   # @return [Ganglia] self
-  def initialize(server='oakley')
-    self.server(server)
+  def initialize(cluster)
+    @host = cluster
+    @server = @host.ganglia_server
     self.hour
     self.report_cpu
     self.small
     self
   end
 
-  # Set the server to a server in servers.yml
-  #
-  # Default: Oakley if input is invalid
-  #
-  # @param [String] The server name
-  #
-  # @return [Ganglia] self
-  def server(server)
-    @server = OSC_Servers[server] ||= OSC_Servers['oakley']
-    self
-  end
-
-  # Set the server to Oakley
-  #
-  # @return [Ganglia] self
-  def oakley
-    self.server('oakley')
-  end
-
-  # Set the server to Ruby
-  #
-  # @return [Ganglia] self
-  def ruby
-    self.server('ruby')
-  end
-
   # returns the name of the server being managed by this object
   #
   # @return [String] server name
-  def server_name
-    @server['name']
+  def server_id
+    @host.id
+  end
+
+  def ganglia_host
+    @server.uri.to_s
   end
 
   # Define the time-ago range for the data.
@@ -219,7 +194,7 @@ class Ganglia
   end
 
   def to_s
-    "#{GANGLIA_HOST}#{range_type}#{report_type}#{chart_size}#{cluster}#{time}"
+    "#{ganglia_host}#{range_type}#{report_type}#{chart_size}#{time}"
   end
 
   # Builds a request that returns a png response from the ganglia server
@@ -261,9 +236,9 @@ class Ganglia
     #  end
     #end
 
-    def cluster
-      "&c=#{@server['cluster_code']}"
-    end
+    # def cluster
+    #   "&c=#{@server['cluster_code']}"
+    # end
 
     def time
       current_server_time = Time.now.to_i
