@@ -41,32 +41,25 @@ class MoabShowqClient
     MoabShowqClientNotAvailable.new
   end
 
-  # Return the active jobs as percent of total jobs
+  # Return the active jobs as percent of available jobs
   #
   # @return [Float] The percentage active as float
   def active_percent
-    (active_jobs.to_f / total_jobs.to_f) * 100
+    (active_jobs.to_f / available_jobs.to_f) * 100
   end
 
-  # Return the eligible jobs as percent of total jobs
+  # Return the eligible jobs as percent of available jobs
   #
   # @return [Float] The percentage eligible as float
   def eligible_percent
-    (eligible_jobs.to_f / total_jobs.to_f) * 100
+    (eligible_jobs.to_f / available_jobs.to_f) * 100
   end
 
-  # Return the blocked jobs as percent of total jobs
+  # Total active + eligible
   #
-  # @return [Float] The percentage blocked as float
-  def blocked_percent
-    (blocked_jobs.to_f / total_jobs.to_f) * 100
-  end
-
-  # Total active + eligible + blocked jobs
-  #
-  # @return [Integer] the total number of active/eligible/blocked jobs
-  def total_jobs
-    active_jobs + eligible_jobs + blocked_jobs
+  # @return [Integer] the total number of active/eligible jobs
+  def available_jobs
+    active_jobs + eligible_jobs
   end
 
   # Return the processor usage as percent
