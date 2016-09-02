@@ -121,6 +121,13 @@ pre {
   border-color: #6c75f0;
 }
 
-a:-webkit-any-link{
+a:-webkit-any-link {
   text-decoration:none !important;
+}
+
+.progress-custom {
+  margin-bottom: 0px;
+  background-color: transparent;
+  border-radius: 0px;
+  box-shadow: none;
 }
