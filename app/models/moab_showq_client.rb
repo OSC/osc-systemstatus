@@ -62,6 +62,13 @@ class MoabShowqClient
     (blocked_jobs.to_f / total_jobs.to_f) * 100
   end
 
+  # Total active + eligible
+  #
+  # @return [Integer] the total number of active/eligible jobs
+  def available_jobs
+    active_jobs + eligible_jobs
+  end
+
   # Total active + eligible + blocked jobs
   #
   # @return [Integer] the total number of active/eligible/blocked jobs
