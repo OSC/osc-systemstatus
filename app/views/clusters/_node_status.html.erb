@@ -1,12 +1,12 @@
 <div><%= showqer.nodes_used %> of <%= showqer.nodes_avail %> Nodes Active</div>
 <div class="progress">
-    <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= number_to_percentage(showqer.nodes_percent) %>">
+    <div class="progress-bar" role="progressbar" style="width:<%= number_to_percentage(showqer.nodes_percent) %>">
         <%=number_to_percentage(showqer.nodes_percent, precision: 2) %>
     </div>
 </div>
 <div><%= showqer.procs_used %> of <%= showqer.procs_avail %> Processors Active</div>
 <div class="progress">
-    <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= number_to_percentage(showqer.procs_percent) %>">
+    <div class="progress-bar" role="progressbar" style="width:<%= number_to_percentage(showqer.procs_percent) %>">
         <%= number_to_percentage(showqer.procs_percent, precision: 2) %>
     </div>
 </div>
