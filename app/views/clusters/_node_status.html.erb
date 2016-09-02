@@ -11,9 +11,9 @@
     </div>
 </div>
 <hr>
-<div><h4><%= showqer.available_jobs %> Scheduled Jobs</h4></div>
+<div><h4><%= showqer.available_jobs %> Running or Queued Jobs <br><small>(and <%= showqer.blocked_jobs %> blocked jobs)</small></h4></div>
 <div class="col-sm-2">
-  <div class="pull-right">Active</div>
+  <div class="pull-right">Running</div>
 </div>
 <div class="progress progress-custom">
   <div class="progress-bar col-sm-10" role="progressbar" style="width:<%= number_to_percentage(showqer.active_percent) %>">
@@ -21,7 +21,7 @@
   </div>
 </div>
 <div class="col-sm-2">
-  <div class="pull-right">Eligible</div>
+  <div class="pull-right">Queued</div>
 </div>
 <div class="progress progress-custom">
   <div class="progress-bar progress-bar-info col-sm-10" role="progressbar" style="width:<%= number_to_percentage(showqer.eligible_percent) %>">
