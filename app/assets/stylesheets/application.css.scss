@@ -125,9 +125,12 @@ a:-webkit-any-link {
   text-decoration:none !important;
 }
 
+.progress {
+  border-radius: 0px;
+}
+
 .progress-custom {
   margin-bottom: 0px;
   background-color: transparent;
-  border-radius: 0px;
   box-shadow: none;
 }
