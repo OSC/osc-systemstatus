@@ -1,5 +1,8 @@
-<% OODClusters.each do |key, cluster| %>
-    <div class="col-sm-6 col-xs-6">
+<% OODClusters.each_with_index do |(key, cluster), index | %>
+    <% if index == OODClusters.size - 1 && OODClusters.size % 2 == 1 %>
+        <div class="col-sm-3"></div>
+    <% end %>
+    <div class="col-sm-6 col-xs-12">
       <%= link_to(cluster_path(key)) do %>
           <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
             <h4><strong><%= cluster.title %> Cluster Status</strong></h4>
@@ -7,4 +10,6 @@
           </div>
       <% end %>
     </div>
+
+
 <% end %>
