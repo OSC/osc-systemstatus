@@ -1,5 +1,5 @@
 <% OODClusters.each_with_index do |(key, cluster), index | %>
-    <% if index == OODClusters.size - 1 && OODClusters.size % 2 == 1 %>
+    <% if index == OODClusters.size - 1 && OODClusters.size.odd? %>
         <div class="col-sm-3"></div>
     <% end %>
     <div class="col-sm-6 col-xs-12">
