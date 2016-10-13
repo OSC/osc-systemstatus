@@ -35,7 +35,5 @@ gem 'dotenv-rails', '~> 2.1', require: 'dotenv/rails-now'
 gem 'rails_12factor', group: :production
 gem 'ood_appkit', '~> 0.3.0'
 gem 'moab', '~> 0.0.0'
-gem 'awesim_branding', '~> 0.0.1', :git => "https://github.com/AweSim-OSC/awesim_branding.git"
 
 gem 'font-awesome-sass'
-# gem 'rails_autolink'
