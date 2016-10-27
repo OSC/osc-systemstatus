@@ -2,9 +2,24 @@
 
 ### System Status for Oakley/Ruby
 
-This app displays the current system status of Oakley Cluster and Ruby Cluster.
+This app displays the current system status of available system clusters.
 
-### The Ganglia Interface - ganglia.rb
+### Deployment on OOD
+
+1. Git clone this repository
+2. Modify `.env.production` as appropriate, or rename one of the versioned copies
+3. Install gems and restart app.
+
+```
+$ scl enable git19 rh-ruby22 nodejs010 -- bin/bundle install --path=vendor/bundle
+$ scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
+$ scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
+$ scl enable git19 rh-ruby22 nodejs010 -- bin/rake ood_appkit:restart
+```
+
+### Options
+
+#### The Ganglia Interface - ganglia.rb
 
 ganglia.rb provides an object-oriented approach to Ganglia interaction.
 
@@ -12,15 +27,9 @@ To use, simply create a new Ganglia object with `Ganglia.new` and use the chaina
 
 The object will build a string that can be used to request the desired report from the ganglia server.
 
-### Options
-
 #### Server
 
-The available host servers are configured in servers.yml. The following methods are provided for configuration of Oakley and Ruby clusters.
-
-* `Ganglia.oakley` (default) Sets the object to request a report on Oakley Cluster.
-* `Ganglia.ruby` Sets the object to request a report on Ruby Cluster.
-* `Ganglia.server(server)` Sets the object to request a report on a custom server. (Define in servers.yml)
+Initialize the Ganglia object with `Ganglia.new "servername"` where server name is the Ganglia ID of the monitored server.  
 
 #### Report Range
 
