@@ -2,14 +2,12 @@
     <% if index == OODClusters.size - 1 && OODClusters.size.odd? %>
         <div class="col-sm-3"></div>
     <% end %>
-    <div class="col-sm-6 col-xs-12">
-      <%= link_to(cluster_path(key)) do %>
-          <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
-            <h4><strong><%= cluster.title %> Cluster Status</strong></h4>
-            <%= render partial: 'node_status', locals: { showqer: MoabShowqClient.new(cluster).setup } %>
-          </div>
-      <% end %>
-    </div>
-
-
+        <div class="col-sm-6 col-xs-12">
+          <%= link_to(cluster_path(key)) do %>
+              <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
+                <h4><strong><%= cluster.title %> Cluster Status</strong></h4>
+                <%= render partial: 'node_status', locals: { showqer: MoabShowqClient.new(cluster).setup } %>
+              </div>
+          <% end %>
+        </div>
 <% end %>
