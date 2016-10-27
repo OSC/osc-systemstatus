@@ -37,4 +37,3 @@ gem 'ood_appkit', '~> 0.3.0'
 gem 'moab', '~> 0.0.0'
 
 gem 'font-awesome-sass'
-# gem 'rails_autolink'
