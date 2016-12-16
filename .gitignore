@@ -31,3 +31,5 @@ RAILS_DATABASE=db/development.sqlite3
 
 /.htaccess
 
+# don't version, since we have multiple custom manifests
+manifest.yml
