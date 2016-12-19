@@ -1,7 +1,6 @@
 ---
 name: System Status
-category: Ohio Supercomputer Center
 description: |-
   System Status of OSC Clusters
-category: Clusters
+category: Ohio Supercomputer Center
 icon: fa://tachometer
