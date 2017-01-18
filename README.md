@@ -1,6 +1,4 @@
-## README
-
-### System Status for Oakley/Ruby
+## System Status for Oakley/Ruby
 
 This app displays the current system status of available system clusters.
 
