@@ -16,7 +16,7 @@ This app displays the current system status of available system clusters.
    **For AweSim:**
 
    ```sh
-   OOD_SITE=osc OOD_PORTAL=ondemand RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
+   OOD_SITE=osc OOD_PORTAL=awesim RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
    ```
 
    **Updating:**
