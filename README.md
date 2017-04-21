@@ -2,18 +2,31 @@
 
 This app displays the current system status of available system clusters.
 
-### Deployment on OOD
+### Deployment on OSC
 
 1. Git clone this repository
-2. Modify `.env.production` as appropriate, or rename one of the versioned copies
-3. Install gems and restart app.
+2. Install the app for a production environment.
 
-```
-$ scl enable git19 rh-ruby22 nodejs010 -- bin/bundle install --path=vendor/bundle
-$ scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
-$ scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
-$ scl enable git19 rh-ruby22 nodejs010 -- bin/rake ood_appkit:restart
-```
+   **For OSC OnDemand:**
+
+   ```sh
+   OOD_SITE=osc OOD_PORTAL=ondemand RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
+   ```
+
+   **For AweSim:**
+
+   ```sh
+   OOD_SITE=osc OOD_PORTAL=awesim RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
+   ```
+
+   **Updating:**
+
+   For updating you do not need to specify `OOD_SITE` or `OOD_PORTAL` if they
+   are defined in `.env.local`
+
+   ```sh
+   RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
+   ```
 
 ### Options
 

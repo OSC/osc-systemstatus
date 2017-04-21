@@ -20,13 +20,7 @@
 /data
 
 # files used for deployment should not be versioned
-/public/assets/
+/public/assets
 /public/.htaccess
-/.env.production
 /.env.local
 /vendor/bundle
-
-RAILS_DATAROOT=$PWD/data
-RAILS_DATABASE=db/development.sqlite3
-
-/.htaccess
