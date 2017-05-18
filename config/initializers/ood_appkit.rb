@@ -8,5 +8,7 @@
 #end.each_with_object({}) { |c, h| h[c.id] = c }
 
 OODClusters = OodCore::Clusters.new(
-    OodAppkit.clusters.select(&:job_allow?).reject { |c| c.metadata.hidden }
+    OodAppkit.clusters.select(&:job_allow?)
+        .select { |c| c.custom_config[:moab] }
+        .reject { |c| c.metadata.hidden }
 )

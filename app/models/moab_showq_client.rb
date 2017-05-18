@@ -12,16 +12,16 @@ class MoabShowqClient
   #
   # @return [MoabShowqClient] self
   def initialize(cluster)
-    @server = cluster.scheduler_server
+    @server = cluster.custom_config[:moab]
     self
   end
 
   def setup
     scheduler = Moab::Scheduler.new(
-      host: @server.host,
-      lib: @server.lib,
-      bin: @server.bin,
-      moabhomedir: @server.moabhomedir
+      host: @server['host'],
+      lib: @server['lib'],
+      bin: @server['bin'],
+      moabhomedir: @server['homedir']
     )
 
     showqxdoc = scheduler.call('showq')
