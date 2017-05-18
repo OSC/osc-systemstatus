@@ -18,7 +18,7 @@ class Ganglia
   # @return [Ganglia] self
   def initialize(cluster)
     @host = cluster
-    @server = @host.ganglia_server
+    @server = cluster.custom_config[:ganglia]
     self.hour
     self.report_cpu
     self.small
@@ -32,8 +32,16 @@ class Ganglia
     @host.id
   end
 
+  def required_params
+    params = ''
+    @server['req_query'].each do |key, val|
+      params += "&#{key}=#{val}"
+    end
+    params
+  end
+
   def ganglia_host
-    @server.uri.to_s
+    "#{@server['scheme']}#{@server['host']}/#{@server['segments'].join('')}?#{required_params}"
   end
 
   # Define the time-ago range for the data.
