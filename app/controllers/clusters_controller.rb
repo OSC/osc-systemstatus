@@ -4,7 +4,7 @@ class ClustersController < ApplicationController
   end
 
   def show
-    cluster = OODClusters.fetch(params[:id].to_sym, nil)
+    cluster = OODClusters[params[:id].to_sym] || nil
     if cluster.nil?
       render_404
     else
