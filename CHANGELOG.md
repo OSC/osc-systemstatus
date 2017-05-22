@@ -1,4 +1,9 @@
-# version 1.2.8
+# Upcoming
+
+* Remove deprecation warnings
+* Update to OodAppkit 1.0.1
+
+# v1.2.8
 
 * added a bin/setup script for easier deployment
 
@@ -10,11 +15,11 @@
 
 * add URI.js support
 
-# version 1.2.5
+# v1.2.5
 
 * properly specify category in AweSim manifest
 
-# version 1.2.4
+# v1.2.4
 
 * added separate manifests for both AweSim and OSC OnDemand portals, so that when this app is deployed to OSC OnDemand the app does not disappear from the navbar
 
