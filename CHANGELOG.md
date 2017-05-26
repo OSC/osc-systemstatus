@@ -1,4 +1,4 @@
-# Upcoming
+# v1.3.0
 
 * Remove deprecation warnings
 * Update to OodAppkit 1.0.1
