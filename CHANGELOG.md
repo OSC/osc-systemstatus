@@ -1,3 +1,7 @@
+# Upcoming
+
+* Replace memory graphs with moab node usage graphs
+
 # v1.3.0
 
 * Remove deprecation warnings
