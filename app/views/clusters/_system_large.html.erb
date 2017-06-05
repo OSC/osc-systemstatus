@@ -2,7 +2,6 @@
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-sm-3 col-xs-6">
-
         <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('"+
         (image_tag @ganglia.report_load.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>" >
             <div class="panel-heading"><h4 class="panel-title">Load</h4></div>
@@ -33,14 +32,55 @@
     </div>
     <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('"+
-        (image_tag @ganglia.report_network.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>" >
-            <div class="panel-heading"><h4 class="panel-title">Network</h4></div>
+        (image_tag @ganglia.report_moab_jobs.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>" >
+            <div class="panel-heading"><h4 class="panel-title">Jobs</h4></div>
             <div class="panel-body">
-                <%= image_tag @ganglia.small.report_network.png, class: "img-responsive center-block updateable", :onclick=>"$('#large-image#{@count}').replaceWith('"+
+                <%= image_tag @ganglia.small.report_moab_jobs.png, class: "img-responsive center-block updateable", :onclick=>"$('#large-image#{@count}').replaceWith('"+
                                                  (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>
             </div>
         </div>
     </div>
+</div>
+<div class="row">
+  <div class="col-sm-3 col-xs-6">
+    <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('"+
+                                                                      (image_tag @ganglia.report_mem.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>" >
+      <div class="panel-heading"><h4 class="panel-title">Memory</h4></div>
+      <div class="panel-body">
+        <%= image_tag @ganglia.small.report_mem.png, class: "img-responsive center-block updateable", :onclick=>"$('#large-image#{@count}').replaceWith('"+
+            (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+    <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('"+
+                                                                      (image_tag @ganglia.report_packet.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>" >
+      <div class="panel-heading"><h4 class="panel-title">Packet</h4></div>
+      <div class="panel-body">
+        <%= image_tag @ganglia.small.png, class: "img-responsive center-block updateable" %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+    <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('"+
+                                                                      (image_tag @ganglia.report_network.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>" >
+      <div class="panel-heading"><h4 class="panel-title">Network</h4></div>
+      <div class="panel-body">
+        <%= image_tag @ganglia.small.report_network.png, class: "img-responsive center-block updateable", :onclick=>"$('#large-image#{@count}').replaceWith('"+
+            (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 col-xs-6">
+    <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('"+
+                                                                      (image_tag @ganglia.report_moab_jobs.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>" >
+      <div class="panel-heading"><h4 class="panel-title">Jobs</h4></div>
+      <div class="panel-body">
+        <%= image_tag @ganglia.small.report_moab_jobs.png, class: "img-responsive center-block updateable", :onclick=>"$('#large-image#{@count}').replaceWith('"+
+            (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="row">
     <div class="col-sm-12">
