@@ -2,6 +2,11 @@
 
 * Replace memory graphs with moab node usage graphs
 
+# v1.3.1
+
+* Fix bug in `bin/setup` that crashes when `OOD_PORTAL` is set but not
+  `OOD_SITE`
+
 # v1.3.0
 
 * Remove deprecation warnings

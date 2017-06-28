@@ -103,8 +103,6 @@ chdir APP_ROOT do
       ]
       cat source_files, target_file
     end
-  elsif APP.portal
-    abort "ERROR: You have a portal specified with no site specified"
   end
 
   if APP.production?
