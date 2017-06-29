@@ -1,4 +1,4 @@
-# Upcoming
+# v1.3.2
 
 * Replace memory graphs with moab node usage graphs
 
