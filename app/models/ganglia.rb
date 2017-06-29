@@ -162,6 +162,20 @@ class Ganglia
     self.report('packet_report')
   end
 
+  # Set the report type to moab nodes report
+  #
+  # @return [Ganglia] self
+  def report_moab_nodes
+    self.report('moab_nodes_report')
+  end
+
+  # Set the report type to moab jobs report
+  #
+  # @return [Ganglia] self
+  def report_moab_jobs
+    self.report('moab_jobs_report')
+  end
+
   # Set the report type to 'small' as defined by ganglia server
   #
   # @return [Ganglia] self
