@@ -1,3 +1,7 @@
+# Unreleased
+
+* Fix a bug where graphs weren't refreshing
+
 # v1.3.2
 
 * Replace memory graphs with moab node usage graphs
