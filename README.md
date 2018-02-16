@@ -7,26 +7,9 @@ This app displays the current system status of available system clusters.
 1. Git clone this repository
 2. Install the app for a production environment.
 
-   **For OSC OnDemand:**
-
-   ```sh
-   OOD_SITE=osc OOD_PORTAL=ondemand RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
-   ```
-
-   **For AweSim:**
-
-   ```sh
-   OOD_SITE=osc OOD_PORTAL=awesim RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
-   ```
-
-   **Updating:**
-
-   For updating you do not need to specify `OOD_SITE` or `OOD_PORTAL` if they
-   are defined in `.env.local`
-
-   ```sh
-   RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
-   ```
+    ```bash
+    RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
+    ```
 
 ### Options
 
