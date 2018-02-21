@@ -1,3 +1,7 @@
+# Upcoming
+
+* App uses OOD [runtime configuration](https://github.com/OSC/ood-dashboard/wiki/Configuration-and-Branding).
+
 # v1.3.2
 
 * Replace memory graphs with moab node usage graphs
