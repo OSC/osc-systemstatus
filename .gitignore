@@ -22,5 +22,5 @@
 # files used for deployment should not be versioned
 /public/assets
 /public/.htaccess
-/.env.local
+/.env.local*
 /vendor/bundle
