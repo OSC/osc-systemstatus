@@ -4,11 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v1.4.0]
 
 ### Changed
 
 * App uses OOD [runtime configuration](https://github.com/OSC/ood-dashboard/wiki/Configuration-and-Branding).
+* Update changelog to keepachangelog format
 
 ## [v1.3.2] - 2017-06-29
 
@@ -67,7 +68,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Configured for AweSim on OOD
 
-[Unreleased]: https://github.com/AweSim-OSC/osc-systemstatus/compare/v1.3.2...HEAD
+[Unreleased]: https://github.com/AweSim-OSC/osc-systemstatus/compare/v1.4.0...HEAD
+[v1.4.0]: https://github.com/AweSim-OSC/osc-systemstatus/compare/v1.3.2...v1.4.0
 [v1.3.2]: https://github.com/AweSim-OSC/osc-systemstatus/compare/v1.3.1...v1.3.2
 [v1.3.1]: https://github.com/AweSim-OSC/osc-systemstatus/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/AweSim-OSC/osc-systemstatus/compare/v1.2.8...v1.3.0
