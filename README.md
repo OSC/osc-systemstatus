@@ -10,6 +10,12 @@ This app displays the current system status of available system clusters.
     ```bash
     RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
     ```
+    
+    
+## Configuration
+
+See the wiki page https://github.com/OSC/ood-dashboard/wiki/Configuration-and-Branding
+
 
 ### Options
 
