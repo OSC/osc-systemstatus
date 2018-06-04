@@ -15,16 +15,16 @@
 
 <div class="row">
     <div class="col-sm-2 col-xs-3">Running</div>
-    <div class="progress progress-custom col-sm-8 col-xs-7">
-        <div class="progress-bar" role="progressbar" style="width:<%= number_to_percentage(showqer.active_percent) %>"></div>
-        <div class="col-sm-2 col-xs-2 pull-left"><%= showqer.active_jobs %></div>
+    <div class="progress progress-custom col-sm-10 col-xs-9">
+        <div class="progress-bar" role="progressbar" style="width:<%= number_to_percentage(showqer.active_percent*0.9) %>"></div>
+        <div class="col-sm-1 col-xs-1 pull-left"><%= showqer.active_jobs %></div>
      </div>
 </div>
 
 <div class="row">
     <div class="col-sm-2 col-xs-3">Queued</div>
-    <div class="progress progress-custom col-sm-8 col-xs-7">
-            <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= number_to_percentage(showqer.eligible_percent) %>"></div>
-            <div class="col-sm-2 col-xs-2 pull-left"><%= showqer.eligible_jobs %></div>
+    <div class="progress progress-custom col-sm-10 col-xs-9">
+          <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= number_to_percentage(showqer.eligible_percent*0.9) %>"></div>
+          <div class="col-sm-1 col-xs-1 pull-left"><%= showqer.eligible_jobs %></div>
     </div>
 </div>
