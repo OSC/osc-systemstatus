@@ -77,15 +77,15 @@ class ConfigurationSingleton
 
   # The environment
   # @return [String] "development", "test", or "production"
-  def rails_env
-    ENV['RAILS_ENV'] || ENV['RACK_ENV'] || "development"
-  end
-
-  # The app's root directory
-  # @return [Pathname] path to app root
-  def app_root
-    Pathname.new(File.expand_path("../../",  __FILE__))
-  end
+  # def rails_env
+  #   ENV['RAILS_ENV'] || ENV['RACK_ENV'] || "development"
+  # end
+  #
+  # # The app's root directory
+  # # @return [Pathname] path to app root
+  # def app_root
+  #   Pathname.new(File.expand_path("../../",  __FILE__))
+  # end
 
   def dotenv_local_files
     [

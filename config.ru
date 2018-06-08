@@ -1,4 +1,13 @@
-# This file is used by Rack-based servers to start the application.
+require 'rubygems'
+require 'bundler/setup'
 
-require ::File.expand_path('../config/environment',  __FILE__)
-run Rails.application
+require File.expand_path 'app', __FILE__
+
+run SystemStatusApp
+
+# namespace :ood do
+#   desc "Display the environment created after boot"
+#   task :env do
+#     puts ENV.map{ |k, v| "#{k}: #{v}" }.join("\n")
+#   end
+# end
