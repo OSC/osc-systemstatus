@@ -7,10 +7,9 @@
   <%= favicon_link_tag nil, href: OodAppkit.public.url.join('favicon.ico') %>
 
   <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "jquery.URI.min.js" %>
+
   <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "URI.min.js" %>
-  <%= javascript_include_tag "jquery-3.3.1.min.js" %>
+  <%= csrf_meta_tags %>
 </head>
 <body>
 
@@ -36,7 +35,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <% @OODClusters.each do |cluster| %>
+          <% OODClusters.each do |cluster| %>
               <li class="<%= "active" if @ganglia.try(:server_id) == cluster.id %>">
                 <%= link_to "#{icon('area-chart')} #{cluster.metadata.title} Cluster".html_safe, cluster_path(cluster.id.to_s) %>
               </li>

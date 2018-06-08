@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/cookies'
 require "sinatra/config_file"
+Dir["classes/*.rb"].each {|file| require file }
 
 # writing logging to STDERR is enabled by default
 class SystemStatusApp < Sinatra::Application

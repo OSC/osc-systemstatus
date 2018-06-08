@@ -2,9 +2,6 @@ source 'https://rubygems.org'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
-# Use jquery as the JavaScript library
-gem 'jquery-rails'
-
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
