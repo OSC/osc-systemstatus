@@ -3,11 +3,11 @@
         <div class="col-sm-3"></div>
     <% end %>
         <div class="col-sm-6 col-xs-12">
-          <%= link_to(cluster_path(cluster.id)) do %>
+           <a href = "<%= url("/clusters/#{cluster.id}") %>">
               <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
                 <h4><strong><%= cluster.metadata.title || cluster.id.titleize %> Cluster Status</strong></h4>
-                <%= render partial: 'node_status', locals: { showqer: MoabShowqClient.new(cluster).setup } %>
+               <%= erb :_node_status, :locals => {:showqer => MoabShowqClient.new(cluster).setup } %>
               </div>
-          <% end %>
+		</a>
         </div>
 <% end %>
