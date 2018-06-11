@@ -96,11 +96,11 @@ class SystemStatusApp < Sinatra::Application
   # 404 not found
   not_found do
     status 404
-    File.read('404.html')
+    File.read(settings.public_folder+'/404.html')
   end
 
   # 500 internal server error
   error do
-    File.read('500.html')
+    File.read(settings.public_folder+'/500.html')
   end
 end
