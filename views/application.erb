@@ -4,13 +4,16 @@
   <meta charset="UTF-8">
 
   <title>System Status</title>
-  <%= favicon_link_tag nil, href: OodAppkit.public.url.join('favicon.ico') %>
-
-  <%= stylesheet_link_tag    "application", media: "all" %>
+  <!-- <%= favicon_link_tag nil, href: OodAppkit.public.url.join('favicon.ico') %> -->
+  <!-- <%= stylesheet_link_tag    "application", media: "all" %>
   <%= javascript_include_tag "jquery.URI.min.js" %>
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "URI.min.js" %>
-  <%= javascript_include_tag "jquery-3.3.1.min.js" %>
+  <%= javascript_include_tag "jquery-3.3.1.min.js" %> -->
+  <link rel="stylesheet" type ="text/css" href="application.css.scss" media="all">
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+  <script type="text/javascript" src="application.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 </head>
 <body>
 
@@ -28,8 +31,8 @@
         </button>
 
         <ul class="navbar-breadcrumbs">
-          <li><%= link_to OodAppkit.dashboard.title, OodAppkit.dashboard.url.to_s %></li>
-          <li><%= link_to "System Status", root_path %></li>
+          <li><a href='/pun/sys/dashboard'>Open OnDemand</a></li>
+          <li><a href='/pun/sys/systemstatus'>System Status</a></li>
         </ul>
       </div>
 
@@ -38,7 +41,8 @@
         <ul class="nav navbar-nav">
           <% @OODClusters.each do |cluster| %>
               <li class="<%= "active" if @ganglia.try(:server_id) == cluster.id %>">
-                <%= link_to "#{icon('area-chart')} #{cluster.metadata.title} Cluster".html_safe, cluster_path(cluster.id.to_s) %>
+                <!-- <%= link_to "#{icon('area-chart')} #{cluster.metadata.title} Cluster".html_safe, cluster_path(cluster.id.to_s) %> -->
+                <a href="<%= cluster_path(cluster.id.to_s) %>"><%= icon('area-chart') + " "+ cluster.metadata.title %> Cluster</a>
               </li>
           <% end %>
         </ul>
@@ -81,7 +85,7 @@
     <hr>
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <p>&copy; <%= link_to 'Ohio Supercomputer Center (OSC)', 'https://www.osc.edu' %> 2014 - <%= Date.today.year %></p>
+        <p>&copy; <a href="https://www.osc.edu">Ohio Supercomputer Center (OSC)</a> 2014 - <%= Date.today.year %></p>
       </div>
       <div class="col-md-6 col-sm-6">
         <p id="app_version" class="pull-right"><%= ENV['APP_VERSION'] %></p>

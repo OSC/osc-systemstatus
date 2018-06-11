@@ -1,17 +1,17 @@
 require 'sinatra/base'
 require 'sinatra/cookies'
-require "sinatra/config_file"
+# require "sinatra/config_file"
 Dir["classes/*.rb"].each {|file| require file }
 
 # writing logging to STDERR is enabled by default
 class SystemStatusApp < Sinatra::Application
-  register Sinatra::ConfigFile
-  config_file 'env.yml'
+  # register Sinatra::ConfigFile
+  # config_file 'env.yml'
   set :environments, %w{development test production}
 
   configure do
     # The app's configuration root directory
-    set :config_root, ENV["OOD_APP_CONFIG_ROOT"] || "/etc/ood/config/apps/systemstatus"
+    # set :config_root, ENV["OOD_APP_CONFIG_ROOT"] || "/etc/ood/config/apps/systemstatus"
     # Default file paths
     set :root, File.dirname(__FILE__)
     set :public_folder, settings.root+"public"
@@ -31,9 +31,9 @@ class SystemStatusApp < Sinatra::Application
     set :logging, Logger::INFO
     set :dump_errors, false
     disable :static
-    set :RAILS_RELATIVE_URL_ROOT, File.dirname(/pun/sys/systemstatus)
-    set :OOD_DATAROOT, File.dirname($HOME/ondemand/data/sys/systemstatus)
-    set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname("~/#{ENV['OOD_PORTAL'] || 'ondemand'}/data/#{ENV['APP_TOKEN'] || 'sys/systemstatus'}")
+    # set :RAILS_RELATIVE_URL_ROOT, File.dirname('/pun/sys/systemstatus')
+    # set :OOD_DATAROOT, File.dirname($HOME/ondemand/data/sys/systemstatus)
+    # set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname("~/#{ENV['OOD_PORTAL'] || 'ondemand'}/data/#{ENV['APP_TOKEN'] || 'sys/systemstatus'}")
   end
 
 
@@ -59,15 +59,12 @@ class SystemStatusApp < Sinatra::Application
 
   def initialize(app=nil)
     super()
-
     @OODClusters = OodCore::Clusters.new(
-      OodAppkit.clusters.select(&:job_allow?)
+      OodCore::Clusters.load_file('/etc/ood/config/clusters.d').select(&:job_allow?)
           .select { |c| c.custom_config[:moab] }
           .select { |c| c.custom_config[:ganglia] }
           .reject { |c| c.metadata.hidden }
     )
-
-
 
   end
 

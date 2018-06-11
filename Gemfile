@@ -8,10 +8,9 @@ group :doc do
 end
 
 gem 'bootstrap-sass', '~> 3.3'
-gem 'ood_appkit', '~> 1.0'
 gem 'moab', '~> 0.0.0'
-
-gem 'font-awesome-sass'
+gem "ood_core", "~> 0.1"
+gem 'font-awesome-sass', "5.0.9"
 gem 'sinatra'
 gem 'sinatra-contrib'
 
