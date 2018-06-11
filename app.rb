@@ -1,8 +1,10 @@
 require 'sinatra/base'
-require 'sinatra/cookies'
+require 'ood_core'
+#require 'sinatra/cookies'
 # require "sinatra/config_file"
-Dir["classes/*.rb"].each {|file| require file }
-
+require_relative 'classes/ganglia.rb'
+require_relative 'classes/moab_showq_client.rb'
+require_relative 'classes/moab_showq_client_not_available.rb'
 # writing logging to STDERR is enabled by default
 class SystemStatusApp < Sinatra::Application
   # register Sinatra::ConfigFile
@@ -14,8 +16,8 @@ class SystemStatusApp < Sinatra::Application
     # set :config_root, ENV["OOD_APP_CONFIG_ROOT"] || "/etc/ood/config/apps/systemstatus"
     # Default file paths
     set :root, File.dirname(__FILE__)
-    set :public_folder, settings.root+"public"
-    set :views, settings.root + "views"
+    set :public_folder, settings.root+"/public"
+    set :views, settings.root + "/views"
 
   end
 
@@ -23,12 +25,12 @@ class SystemStatusApp < Sinatra::Application
   # Defaults to ENV['APP_ENV'], or "development" if not available
 
   configure :production do
-    use Rack::Session::Cookie, :key => 'rack.session',
-                               :path => '/',
-                               :secret =>'773216139fce1f010e015a6cbc2769f94080f477fbbfa76fbfa72d9235dc69ba359563f1699752e4d0872aed5a222f636c030b40999b51cb13c498389f99690e'
+  #  use Rack::Session::Cookie, :key => 'rack.session',
+   #                            :path => '/',
+    #                           :secret =>'773216139fce1f010e015a6cbc2769f94080f477fbbfa76fbfa72d9235dc69ba359563f1699752e4d0872aed5a222f636c030b40999b51cb13c498389f99690e'
 
     enable :logging
-    set :logging, Logger::INFO
+    # set :logging, Logger::INFO
     set :dump_errors, false
     disable :static
     # set :RAILS_RELATIVE_URL_ROOT, File.dirname('/pun/sys/systemstatus')
@@ -40,9 +42,9 @@ class SystemStatusApp < Sinatra::Application
   # app will run dev mode by default
   configure :development do
     enable :logging
-    set :logging, Logger::DEBUG
+   # set :logging, Logger::DEBUG
     set :dump_errors, true
-    set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname(setting.root,'data')
+  #  set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname(setting.root,'data')
   end
 
   configure :test do
@@ -54,7 +56,7 @@ class SystemStatusApp < Sinatra::Application
     disable :show_exceptions
     # Show full error reports
     set :dump_errors, true
-    set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname(setting.root,'data')
+    #set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname(setting.root,'data')
   end
 
   def initialize(app=nil)
@@ -102,3 +104,4 @@ class SystemStatusApp < Sinatra::Application
     File.read('500.html')
   end
 end
+

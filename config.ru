@@ -1,7 +1,4 @@
-require 'rubygems'
-require 'bundler/setup'
-
-require File.expand_path 'app', __FILE__
+require_relative 'app'
 
 run SystemStatusApp
 
