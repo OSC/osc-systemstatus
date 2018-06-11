@@ -78,7 +78,7 @@ class SystemStatusApp < Sinatra::Application
   get 'clusters/:id' do
     cluster = @OODClusters[params[:id].to_sym] || nil
     if cluster.nil?
-      redirect('/not-found')
+      File.read('404.html')
     else
       @ganglia = Ganglia.new(cluster)
       erb :system_status, :layout => :application
@@ -89,14 +89,14 @@ class SystemStatusApp < Sinatra::Application
     erb :about, :layout => :application
   end
 
-  get '/not-found' do
-    File.read('404.html')
-  end
+  # get '/not-found' do
+  #   File.read('404.html')
+  # end
 
   # 404 not found
   not_found do
     status 404
-    redirect('/not-found')
+    File.read('404.html')
   end
 
   # 500 internal server error
@@ -104,4 +104,3 @@ class SystemStatusApp < Sinatra::Application
     File.read('500.html')
   end
 end
-
