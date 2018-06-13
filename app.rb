@@ -67,7 +67,7 @@ class SystemStatusApp < Sinatra::Application
           .select { |c| c.custom_config[:ganglia] }
           .reject { |c| c.metadata.hidden }
     )
-
+    puts @OODClusters
   end
 
 
@@ -81,7 +81,7 @@ class SystemStatusApp < Sinatra::Application
       File.read('404.html')
     else
       @ganglia = Ganglia.new(cluster)
-      erb :system_status, :layout => :application
+      erb :system_status, :layout => :layout
     end
   end
 
