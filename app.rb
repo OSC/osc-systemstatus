@@ -93,7 +93,7 @@ end
 
 
 get '/' do
-  erb :index, :layout => :application
+  erb :index, :layout => :layout
 end
 
 get 'clusters/:id' do
@@ -107,7 +107,7 @@ get 'clusters/:id' do
 end
 
 get '/about' do
-  erb :about, :layout => :application
+  erb :about, :layout => :layout
 end
 
 # get '/not-found' do
