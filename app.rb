@@ -89,10 +89,12 @@ end
 # end
 
 before do
-  @OODClusters=   @OODClusters || valid_clusters
+  @OODClusters=  valid_clusters
 end
 
-
+get '/check' do
+  @OODClusters
+end
 get '/' do
   erb :index, :layout => :application
 end
