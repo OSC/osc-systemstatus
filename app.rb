@@ -62,8 +62,8 @@ end
 
 helpers do
 
-  def clusters
-    @clusters ||= parse_clusters(ENV['OOD_CLUSTERS'])
+  def get_clusters
+    @clusters ||= parse_clusters :ENV['OOD_CLUSTERS']
   end
 
   def parse_clusters
@@ -72,17 +72,26 @@ helpers do
     OodCore::Clusters.new([])
   end
 
+  def valid_clusters
+    clusters = get_clusters
+    OodCore::Clusters.new(
+      clusters.select(&:job_allow?)
+          .select { |c| c.custom_config[:moab] }
+          .select { |c| c.custom_config[:ganglia] }
+          .reject { |c| c.metadata.hidden }
+    )
+  end
+
 end
 
-def initialize(app=nil)
-  super()
-  @OODClusters = OodCore::Clusters.new(
-    clusters.select(&:job_allow?)
-        .select { |c| c.custom_config[:moab] }
-        .select { |c| c.custom_config[:ganglia] }
-        .reject { |c| c.metadata.hidden }
-  )
-  puts @OODClusters
+# def initialize(app=nil)
+#   super()
+#   @OODClusters =
+#   puts @OODClusters
+# end
+
+before do
+  @OODClusters= valid_clusters
 end
 
 
