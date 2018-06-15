@@ -6,7 +6,7 @@
            <a href = "<%= url("/clusters/#{cluster.id}") %>">
               <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
                 <h4><strong><%= cluster.metadata.title || cluster.id.titleize %> Cluster Status</strong></h4>
-               <%= erb :node_status, :locals => { :showqer => MoabShowqClient.new(cluster).setup } %>
+               <%= erb :_node_status, :locals => { :showqer => MoabShowqClient.new(cluster).setup } %>
               </div>
 		</a>
         </div>
