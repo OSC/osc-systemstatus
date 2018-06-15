@@ -16,7 +16,7 @@ class SystemStatusApp < Sinatra::Application
     # The app's configuration root directory
     # set :config_root, ENV["OOD_APP_CONFIG_ROOT"] || "/etc/ood/config/apps/systemstatus"
     # Default file paths
-    set :root, File.dirname(__FILE__)
+    # set :root, File.dirname(__FILE__)
     set :public_folder, settings.root+"/public"
     set :views, settings.root + "/views"
 
