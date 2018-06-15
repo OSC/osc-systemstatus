@@ -60,10 +60,24 @@ configure :test do
   #set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname(setting.root,'data')
 end
 
+helpers do
+
+  def clusters
+    @clusters ||= parse_clusters(ENV['OOD_CLUSTERS'])
+  end
+
+  def parse_clusters
+    OodCore::Clusters.load_file(config || '/etc/ood/config/clusters.d')
+  rescue OodCore::ConfigurationNotFound
+    OodCore::Clusters.new([])
+  end
+
+end
+
 def initialize(app=nil)
   super()
   @OODClusters = OodCore::Clusters.new(
-    OodCore::Clusters.load_file('/etc/ood/config/clusters.d').select(&:job_allow?)
+    clusters.select(&:job_allow?)
         .select { |c| c.custom_config[:moab] }
         .select { |c| c.custom_config[:ganglia] }
         .reject { |c| c.metadata.hidden }
