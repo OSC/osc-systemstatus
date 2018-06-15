@@ -103,12 +103,12 @@ get 'clusters/:id' do
     File.read('404.html')
   else
     @ganglia = Ganglia.new(cluster)
-    erb :system_status, :layout => :layout
+    erb :system_status
   end
 end
 
 get '/about' do
-  erb :about, :layout => :layout
+  erb :about
 end
 
 # get '/not-found' do
