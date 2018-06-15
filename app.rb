@@ -98,7 +98,7 @@ end
 
 get '/' do
   @OODClusters=  valid_clusters
-  erb :index, :layout => :application
+  erb :index
 end
 
 get 'clusters/:id' do
