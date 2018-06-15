@@ -6,7 +6,7 @@ require 'ood_core'
 # require_relative 'classes/moab_showq_client.rb'
 # require_relative 'classes/moab_showq_client_not_available.rb'
 # writing logging to STDERR is enabled by default
-Dir[settings.root + "/classes/*.rb"].each {|file| require file }
+Dir[File.dirname(__FILE__) + "/classes/*.rb"].each {|file| require_relative file }
 
 # register Sinatra::ConfigFile
 # config_file 'env.yml'
