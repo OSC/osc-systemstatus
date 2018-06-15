@@ -43,6 +43,7 @@ end
 # app will run dev mode by default
 configure :development do
   enable :logging
+  set :session, false
  # set :logging, Logger::DEBUG
   set :dump_errors, true
 #  set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname(setting.root,'data')
