@@ -38,7 +38,7 @@
           <% @OODClusters.each do |cluster| %>
               <% @ganglia=Ganglia.new(cluster) %>
               <li class="<%= "active" if @ganglia.server_id == cluster.id %>">
-                <a href="<%= url("/clusters/#{cluster.id}") %>"><i class="fa fa-area-chart"></i><%=cluster.metadata.tile %> Cluster</a>
+                <a href="<%= url("/clusters/#{cluster.id}") %>"><i class="fa fa-area-chart" aria-hidden="true"></i><%=cluster.metadata.title %> Cluster</a>
               </li>
           <% end %>
         </ul>
