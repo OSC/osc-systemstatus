@@ -1,8 +1,8 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
-@import "clusters";
+/* @import "bootstrap-sprockets";
+@import "bootstrap"; */
+/* @import "clusters";
 @import "font-awesome-sprockets";
-@import "font-awesome";
+@import "font-awesome"; */
 pre {
   white-space: pre-wrap;
   /* CSS 3 */
