@@ -66,7 +66,7 @@ helpers do
     @clusters ||= parse_clusters :ENV['OOD_CLUSTERS']
   end
 
-  def parse_clusters
+  def parse_clusters config
     OodCore::Clusters.load_file(config || '/etc/ood/config/clusters.d')
   rescue OodCore::ConfigurationNotFound
     OodCore::Clusters.new([])
