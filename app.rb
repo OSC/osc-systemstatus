@@ -94,7 +94,7 @@ end
 
 
 get '/' do
-  erb :index
+  erb :index, :layout => :application
 end
 
 get 'clusters/:id' do
@@ -103,12 +103,12 @@ get 'clusters/:id' do
     File.read('404.html')
   else
     @ganglia = Ganglia.new(cluster)
-    erb :system_status
+    erb :system_status, :layout => :application
   end
 end
 
 get '/about' do
-  erb :about
+  erb :about, :layout => :application
 end
 
 # get '/not-found' do
