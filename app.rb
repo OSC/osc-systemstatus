@@ -1,4 +1,4 @@
-require 'sinatra/base'
+require 'sinatra'
 require 'ood_core'
 #require 'sinatra/cookies'
 # require "sinatra/config_file"
@@ -10,12 +10,12 @@ Dir[File.dirname(__FILE__) + "/classes/*.rb"].each {|file| require_relative file
 
 # register Sinatra::ConfigFile
 # config_file 'env.yml'
-set :environments, %w{development test production}
 
 configure do
   # The app's configuration root directory
   # set :config_root, ENV["OOD_APP_CONFIG_ROOT"] || "/etc/ood/config/apps/systemstatus"
   # Default file paths
+  set :environments, %w{development test production}
   set :root, File.dirname(__FILE__)
   set :public_folder, settings.root+"/public"
   set :views, settings.root + "/views"
