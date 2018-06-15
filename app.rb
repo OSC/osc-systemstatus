@@ -88,14 +88,16 @@ end
 #   puts @OODClusters
 # end
 
-before do
-  @OODClusters=  valid_clusters
-end
+# before do
+#   @OODClusters=  valid_clusters
+# end
 
 get '/check' do
-  puts @OODClusters
+  puts OODClusters
 end
+
 get '/' do
+  @OODClusters=  valid_clusters
   erb :index, :layout => :application
 end
 
