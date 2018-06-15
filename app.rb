@@ -62,18 +62,15 @@ end
 
 helpers do
 
-  def get_clusters
-    @clusters ||= parse_clusters :ENV['OOD_CLUSTERS']
-  end
-
-  def parse_clusters(config='/etc/ood/config/clusters.d')
+  def parse_clusters
+    config = :ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d'
     OodCore::Clusters.load_file(config)
   rescue OodCore::ConfigurationNotFound
     OodCore::Clusters.new([])
   end
 
   def valid_clusters
-    clusters = get_clusters
+    clusters = parse_clusters
     OodCore::Clusters.new(
       clusters.select(&:job_allow?)
           .select { |c| c.custom_config[:moab] }
@@ -91,7 +88,7 @@ end
 # end
 
 before do
-  @OODClusters= valid_clusters
+  @OODClusters=   @OODClusters || valid_clusters
 end
 
 
