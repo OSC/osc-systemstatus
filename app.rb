@@ -93,7 +93,7 @@ before do
 end
 
 get '/check' do
-  @OODClusters
+  puts @OODClusters
 end
 get '/' do
   erb :index, :layout => :application
