@@ -1,6 +1,6 @@
 require_relative 'app'
 
-run SystemStatusApp
+run Sinatra::Application
 
 # namespace :ood do
 #   desc "Display the environment created after boot"
