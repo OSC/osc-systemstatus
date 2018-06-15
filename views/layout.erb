@@ -36,7 +36,7 @@
         <ul class="nav navbar-nav">
           <% @OODClusters.each do |cluster| %>
           <h2><%= cluster %></h2>
-              <li class="<%= "active" if @ganglia && @ganglia.server_id  == cluster.id %>">
+              <li class="<%= "active" if @ganglia.try(:server_id) == cluster.id %>">
                 <a href="<%= url("/clusters/#{cluster.id}") %>"><i class="fa fa-area-chart"></i><%=cluster.metadata.tile %> Cluster</a>
               </li>
           <% end %>
