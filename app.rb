@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'ood_core'
+require 'moab'
 #require 'sinatra/cookies'
 # require "sinatra/config_file"
 # require_relative 'classes/ganglia.rb'
