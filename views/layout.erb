@@ -36,9 +36,8 @@
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
           <% @OODClusters.each do |cluster| %>
-              <% @ganglia=Ganglia.new(cluster) %>
-              <li class="<%= "active" if @ganglia.server_id == cluster.id %>">
-                <a href="<%= url("/clusters/#{cluster.id}") %>"><i class="fa fa-area-chart"></i> <%=cluster.metadata.title %> Cluster</a>
+              <li class="<%= "active" if @ganglia && @ganglia.server_id == cluster.id %>">
+                <a href="<%= url("/clusters/#{cluster.id}") %>"><i class="fa fa-area-chart"></i>  <%=cluster.metadata.title %> Cluster</a>
               </li>
           <% end %>
         </ul>
