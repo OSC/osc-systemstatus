@@ -97,16 +97,14 @@ get '/' do
   erb :index
 end
 
-get 'clusters/:id' do
-  params[:id]
-  # id=params[:id].to_sym
-  # cluster = @oodclusters[id]|| nil
-  # if cluster.nil?
-  #   File.read('404.html')
-  # else
-  #   @ganglia = Ganglia.new(cluster)
-  #   erb :system_status
-  # end
+get '/clusters/:id' do
+  cluster = @oodclusters[params[:id].to_sym]|| nil
+  if cluster.nil?
+    File.read('404.html')
+  else
+    @ganglia = Ganglia.new(cluster)
+    erb :system_status
+  end
 end
 
 get '/about' do
