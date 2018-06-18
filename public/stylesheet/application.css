@@ -16,7 +16,7 @@ pre {
   /* Internet Explorer 5.5+ */
 }
 /* Base styles (regardless of theme) */
-.bs-callout {
+div a .bs-callout {
   margin: 20px 0;
   padding: 15px 30px 15px 15px;
   border-left: 5px solid #eee;
@@ -51,7 +51,7 @@ pre {
   background-color: #fefbed;
   border-color: #f1e7bc;
 }
-.bs-callout-info {
+div a .bs-callout-info {
   background-color: #f0f7fd;
   border-color: #d0e3f0;
 }
