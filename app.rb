@@ -93,7 +93,6 @@ get '/check' do
 end
 
 get '/' do
-  # @oodclusters = parse_clusters(ENV['OOD_CLUSTERS'])
   @oodclusters = OodCore::Clusters.new(
   parse_clusters.select(&:job_allow?)
        .select { |c| c.custom_config[:moab] }
