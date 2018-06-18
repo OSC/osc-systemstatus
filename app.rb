@@ -98,6 +98,7 @@ get '/' do
 end
 
 get 'clusters/:id' do
+  @oodclusters=valid_clusters
   id=params[:id]
   cluster = @oodclusters[id.to_sym]|| nil
   if cluster.nil?
