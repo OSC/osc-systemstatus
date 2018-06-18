@@ -24,19 +24,19 @@
             <%= erb :_system_large, :locals => { :ganglia => @ganglia.two_hours }%>
         </div>
         <div role="tabpanel" class="tab-pane" id="fourhour">
-            <%= render partial: 'system_large', locals: {ganglia: @ganglia.four_hours} %>
+            <%= erb :_system_large, :locals => { :ganglia => @ganglia.four_hours }%>
         </div>
         <div role="tabpanel" class="tab-pane" id="day">
-            <%= render partial: 'system_large', locals: {ganglia: @ganglia.day} %>
+            <%= erb :_system_large, :locals => { :ganglia => @ganglia.day }%>
         </div>
         <div role="tabpanel" class="tab-pane" id="week">
-            <%= render partial: 'system_large', locals: {ganglia: @ganglia.week} %>
+            <%= erb :_system_large, :locals => { :ganglia => @ganglia.week }%>
         </div>
         <div role="tabpanel" class="tab-pane" id="month">
-            <%= render partial: 'system_large', locals: {ganglia: @ganglia.month} %>
+            <%= erb :_system_large, :locals => { :ganglia => @ganglia.month }%>
         </div>
         <div role="tabpanel" class="tab-pane" id="year">
-            <%= render partial: 'system_large', locals: {ganglia: @ganglia.year} %>
+            <%= erb :_system_large, :locals => { :ganglia => @ganglia.year }%>
         </div>
     </div>
 </div>
