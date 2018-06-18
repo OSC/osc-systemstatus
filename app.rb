@@ -117,10 +117,10 @@ end
 # end
 
 # 404 not found
-not_found do
-  status 404
-  File.read(settings.public_folder+'/404.html')
-end
+# not_found do
+#   status 404
+#   File.read(settings.public_folder+'/404.html')
+# end
 
 # 500 internal server error
 error do
