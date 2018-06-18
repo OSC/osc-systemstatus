@@ -93,9 +93,11 @@ end
 #      )
 # end
 
+before do
+  @oodclusters=valid_clusters
+end
 
 get '/' do
-  @oodclusters=valid_clusters
   erb :index
 end
 
