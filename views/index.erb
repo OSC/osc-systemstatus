@@ -8,6 +8,6 @@
                 <h4><strong><%= cluster.metadata.title || cluster.id.titleize %> Cluster Status</strong></h4>
                <%= erb :_node_status, :locals => { :showqer => MoabShowqClient.new(cluster).setup } %>
               </div>
-		</a>
+		      </a>
         </div>
 <% end %>

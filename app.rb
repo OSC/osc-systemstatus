@@ -64,7 +64,7 @@ end
 helpers do
 
   def parse_clusters
-    config = :ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d'
+    config = :ENV['OOD_CLUSTERS'] || url('/etc/ood/config/clusters.d')
     OodCore::Clusters.load_file(config)
   rescue OodCore::ConfigurationNotFound
     OodCore::Clusters.new([])
@@ -82,22 +82,21 @@ helpers do
 
 end
 
-# def initialize(app=nil)
-#   super()
-#   @OODClusters =
-#   puts @OODClusters
-# end
+def initialize(app=nil)
+  super()
+  @OODClusters= valid_clusters
+  puts @OODClusters
+end
 
-# before do
-#   @OODClusters=  valid_clusters
-# end
+before do
+  @OODClusters=  valid_clusters
+end
 
 get '/check' do
-  puts OODClusters
+  @OODClusters
 end
 
 get '/' do
-  @OODClusters=  valid_clusters
   erb :index
 end
 
@@ -107,12 +106,12 @@ get 'clusters/:id' do
     File.read('404.html')
   else
     @ganglia = Ganglia.new(cluster)
-    erb :system_status, :layout => :application
+    erb :system_status
   end
 end
 
 get '/about' do
-  erb :about, :layout => :application
+  erb :about
 end
 
 # get '/not-found' do
