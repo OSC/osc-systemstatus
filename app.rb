@@ -64,7 +64,7 @@ end
 helpers do
 
   def parse_clusters
-    config = :ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d'
+    config = ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d'
     OodCore::Clusters.load_file(config)
   rescue OodCore::ConfigurationNotFound
     OodCore::Clusters.new([])
@@ -93,13 +93,14 @@ end
 #      )
 # end
 
-get '/check' do
-  @oodclusters
-end
 
 get '/' do
   @oodclusters=valid_clusters
   erb :index
+end
+
+get '/check' do
+  @oodclusters
 end
 
 get 'clusters/:id' do
