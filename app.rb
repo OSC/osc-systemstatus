@@ -1,12 +1,7 @@
 require 'sinatra'
 require 'ood_core'
 require 'moab'
-#require 'sinatra/cookies'
-# require "sinatra/config_file"
-# require_relative 'classes/ganglia.rb'
-# require_relative 'classes/moab_showq_client.rb'
-# require_relative 'classes/moab_showq_client_not_available.rb'
-# writing logging to STDERR is enabled by default
+
 Dir[File.dirname(__FILE__) + "/classes/*.rb"].each {|file| require_relative file }
 
 # register Sinatra::ConfigFile
@@ -102,12 +97,8 @@ get '/' do
   erb :index
 end
 
-get '/check' do
-  @oodclusters
-end
-
 get 'clusters/:id' do
-  cluster = @oodclusters[(params[:id]).to_sym] || nil
+  cluster = @oodclusters[params[:id].to_sym] || nil
   if cluster.nil?
     File.read('404.html')
   else
