@@ -108,7 +108,7 @@ end
 #   end
 # end
 
-get '/clusters/ruby' do
+get '/clusters/' do
   cluster = @oodclusters[:ruby]|| nil
   @ganglia = Ganglia.new(cluster)
   erb :system_status
