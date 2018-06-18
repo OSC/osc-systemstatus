@@ -99,9 +99,9 @@ get '/' do
   erb :index
 end
 
-get '/check' do
-  @oodclusters
-end
+# get '/check' do
+#   @oodclusters
+# end
 
 get 'clusters/:id' do
   cluster = @oodclusers[params[:id].to_sym] || nil
