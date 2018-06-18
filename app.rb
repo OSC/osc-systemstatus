@@ -85,7 +85,6 @@ end
 def initialize(app=nil)
   super()
   @OODClusters= valid_clusters
-  puts @OODClusters
 end
 
 before do
@@ -93,7 +92,7 @@ before do
 end
 
 get '/check' do
-  @OODClusters
+  valid_clusters
 end
 
 get '/' do
