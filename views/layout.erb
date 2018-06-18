@@ -50,8 +50,9 @@
 </header>
 
 <div class="container" role="main">
-<h1><%= @oodclusters%></h1>
-
+<% @oodclusters.each do |cluster| %>
+  <h1><%= cluster %></h1>
+  <% end %>
   <%= yield %>
 
 </div><!-- /.container -->
