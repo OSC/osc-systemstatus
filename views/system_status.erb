@@ -1,5 +1,5 @@
 <div>
-    
+
     <!-- Nav tabs -->
     <div id="time-tabs">
         <ul class="nav nav-tabs nav-justified" id="hour-tabs" role="tablist">
@@ -18,10 +18,10 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane active" id="hour">
-            <%= render partial: 'system_large', locals: {ganglia: @ganglia.hour} %>
+            <%= erb :_system_large, :locals => { :ganglia => @ganglia.hour }%>
         </div>
         <div role="tabpanel" class="tab-pane" id="twohour">
-            <%= render partial: 'system_large', locals: {ganglia: @ganglia.two_hours} %>
+            <%= erb :_system_large, :locals => { :ganglia => @ganglia.two_hours }%>
         </div>
         <div role="tabpanel" class="tab-pane" id="fourhour">
             <%= render partial: 'system_large', locals: {ganglia: @ganglia.four_hours} %>
