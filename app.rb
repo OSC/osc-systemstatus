@@ -63,36 +63,33 @@ end
 
 helpers do
 
-  def parse_clusters
-    config = :ENV['OOD_CLUSTERS'] || url('/etc/ood/config/clusters.d')
-    OodCore::Clusters.load_file(config)
-  rescue OodCore::ConfigurationNotFound
-    OodCore::Clusters.new([])
+  def parse_clusters config
+    begin
+      OodCore::Clusters.load_file(config || '/etc/ood/config/clusters.d' )
+    rescue OodCore::ConfigurationNotFound
+      OodCore::Clusters.new([])
+    end
   end
 
-  def valid_clusters
-    clusters = parse_clusters
-    OodCore::Clusters.new(
-      clusters.select(&:job_allow?)
-          .select { |c| c.custom_config[:moab] }
-          .select { |c| c.custom_config[:ganglia] }
-          .reject { |c| c.metadata.hidden }
-    )
-  end
-
-end
-
-def initialize(app=nil)
-  super()
-  @OODClusters= valid_clusters
 end
 
 before do
-  @OODClusters=  valid_clusters
+   @oodclusters ||= parse_clusters(ENV['OOD_CLUSTERS'])
+   @oodclusters = OodCore::Clusters.new(
+    @oodclusters.select(&:job_allow?)
+        .select { |c| c.custom_config[:moab] }
+        .select { |c| c.custom_config[:ganglia] }
+        .reject { |c| c.metadata.hidden }
+)
 end
+#
+# def initialize(app=nil)
+#   super()
+#   @oodclusers= valid_clusters
+# end
 
 get '/check' do
-  valid_clusters
+  @oodclusters
 end
 
 get '/' do
@@ -100,7 +97,7 @@ get '/' do
 end
 
 get 'clusters/:id' do
-  cluster = @OODClusters[params[:id].to_sym] || nil
+  cluster = @oodclusers[params[:id].to_sym] || nil
   if cluster.nil?
     File.read('404.html')
   else
