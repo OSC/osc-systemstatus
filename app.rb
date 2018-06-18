@@ -93,38 +93,24 @@ before do
   @oodclusters=valid_clusters
 end
 
-get '/' do
-  erb :index
+get '/clusters/:id' do
+  id=params[:id].to_sym
+  cluster = @oodclusters[id]|| nil
+  if cluster.nil?
+    File.read('404.html')
+  else
+    @ganglia = Ganglia.new(cluster)
+    erb :system_status
+  end
 end
 
-# get '/clusters/:id' do
-#   id=params[:id].to_sym
-#   cluster = @oodclusters[id]|| nil
-#   if cluster.nil?
-#     File.read('404.html')
-#   else
-#     @ganglia = Ganglia.new(cluster)
-#     erb :system_status
-#   end
-# end
-
-get '/clusters' do
-  # cluster = @oodclusters[:ruby] || nil
-  # @ganglia = Ganglia.new(cluster)
-  erb :system_status
-end
-get '/get' do
-  cluster = @oodclusters[:ruby] || nil
-  @ganglia = Ganglia.new(cluster)
-  erb :system_status
-end
 get '/about' do
   erb :about
 end
 
-# get '/not-found' do
-#   File.read('404.html')
-# end
+get '/' do
+  erb :index
+end
 
 # 404 not found
 not_found do
