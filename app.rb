@@ -102,7 +102,7 @@ get 'clusters/:id' do
   id=params[:id]
   cluster = @oodclusters[id.to_sym]|| nil
   if cluster.nil?
-    File.read('404.html')
+    'nothing'
   else
     @ganglia = Ganglia.new(cluster)
     erb :system_status
