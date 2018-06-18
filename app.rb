@@ -98,10 +98,11 @@ get '/' do
 end
 
 get 'clusters/:id' do
-  id=params[:id]
-  # cluster = @oodclusters[id.to_sym]|| nil
+  params[:id]
+  # id=params[:id].to_sym
+  # cluster = @oodclusters[id]|| nil
   # if cluster.nil?
-  #   'nothing'
+  #   File.read('404.html')
   # else
   #   @ganglia = Ganglia.new(cluster)
   #   erb :system_status
@@ -117,10 +118,10 @@ end
 # end
 
 # 404 not found
-# not_found do
-#   status 404
-#   File.read(settings.public_folder+'/404.html')
-# end
+not_found do
+  status 404
+  File.read(settings.public_folder+'/404.html')
+end
 
 # 500 internal server error
 error do
