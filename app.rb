@@ -98,15 +98,14 @@ get '/' do
 end
 
 get 'clusters/:id' do
-  @oodclusters=valid_clusters
   id=params[:id]
-  cluster = @oodclusters[id.to_sym]|| nil
-  if cluster.nil?
-    'nothing'
-  else
-    @ganglia = Ganglia.new(cluster)
-    erb :system_status
-  end
+  # cluster = @oodclusters[id.to_sym]|| nil
+  # if cluster.nil?
+  #   'nothing'
+  # else
+  #   @ganglia = Ganglia.new(cluster)
+  #   erb :system_status
+  # end
 end
 
 get '/about' do
