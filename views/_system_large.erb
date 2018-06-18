@@ -2,12 +2,12 @@
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-sm-3 col-xs-6">
-        <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('"+
-        (image_tag @ganglia.report_moab_nodes.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>" >
+        <div class="panel panel-default panel-clickable" onclick='<%= "$('#large-image#{@count}').replaceWith(
+        '<img src="<%= @ganglia.report_moab_nodes.size(800,250).png %>" class="img-responsive center-block updateable" id="large-image<%= @count%>">');" %>' >
             <div class="panel-heading"><h4 class="panel-title">Nodes</h4></div>
             <div class="panel-body">
-                <%= image_tag @ganglia.small.report_moab_nodes.png, class: "img-responsive center-block updateable", :onclick=>"$('#large-image#{@count}').replaceWith('"+
-                                                 (image_tag @ganglia.size(800,250).png, class: "img-responsive center-block updateable", id: "large-image#{@count}")+"');" %>
+              <img class="img-responsive center-block updateable" alt="Graph" src="<%= @ganglia.small.report_moab_nodes.png %>" onclick=" $('<%= #large-image#{@count} %>').replaceWith(
+              '<img src="<%= @ganglia.size(800,250).png %>" class="img-responsive center-block updateable" id="large-image<%= @count %>" alt="Graph">')" >
             </div>
         </div>
     </div>
@@ -50,5 +50,3 @@
         </div>
     </div>
 </div>
-
-
