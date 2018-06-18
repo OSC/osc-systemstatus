@@ -1,6 +1,6 @@
 <div><%= showqer.nodes_used %> of <%= showqer.nodes_avail %> Nodes Active</div>
 <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width:<%= showqer.nodes_percent/100.0 %>">
+    <div class="progress-bar" role="progressbar" style="width:<%= showqer.nodes_percent.round(2) %>"%>
         <%=(showqer.nodes_percent/100.0).round(2) %>
     </div>
 </div>
