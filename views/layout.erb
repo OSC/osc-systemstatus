@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 
   <title>System Status</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel="stylesheet" type ="text/css" href="<%= url("/stylesheet/application.css")%>" media="all">
   <link rel="shortcut icon" type="image/ico" href="<%= url("favicon.ico")%>"/>
   <link rel="stylesheet" type="text/css" href="<%= url("/ood-bootstrap3-override-0.0.1/navbar.css") %>">
@@ -15,7 +15,7 @@
 
 <header>
   <!-- navbar  -->
-  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <nav class="ood-appkit navbar navbar-inverse navbar-static-top" role="navigation">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
@@ -38,7 +38,7 @@
           <% @OODClusters.each do |cluster| %>
               <% @ganglia=Ganglia.new(cluster) %>
               <li class="<%= "active" if @ganglia.server_id == cluster.id %>">
-                <a href="<%= url("/clusters/#{cluster.id}") %>"><i class="fa fa-area-chart" aria-hidden="true"></i><%=cluster.metadata.title %> Cluster</a>
+                <a href="<%= url("/clusters/#{cluster.id}") %>"><i class="fa fa-area-chart"></i> <%=cluster.metadata.title %> Cluster</a>
               </li>
           <% end %>
         </ul>
