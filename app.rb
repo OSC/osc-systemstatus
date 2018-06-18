@@ -98,7 +98,7 @@ get '/' do
 end
 
 get 'clusters/:id' do
-  cluster = @oodclusters[params[:id].to_sym] || nil
+  cluster = @oodclusters[params[:id].to_sym] 
   if cluster.nil?
     File.read('404.html')
   else
