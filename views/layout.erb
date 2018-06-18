@@ -50,11 +50,10 @@
 </header>
 
 <div class="container" role="main">
-<% cluster= @oodclusters[:ruby] %>
+<h1><%= cluster= @oodclusters[:ruby] %></h1>
   <h1><%= cluster %></h1>
   <h1><%= cluster.custom_config[:moab] %></h1>
     <h1><%= cluster.custom_config[:ganglia]%></h1>
-    <% end %>
   <%= yield %>
 
 </div><!-- /.container -->
