@@ -15,14 +15,14 @@
 
 <% if showqer.active_percent < 11 %>
   <div class="row">
-      <div class="col-sm-2 col-xs-3 pull-right">Running</div>
+      <div class="col-sm-2 col-xs-3">Running</div>
       <div class="progress progress-custom col-sm-10 col-xs-9">
           <div class="progress-bar" role="progressbar" style="width:<%= number_to_percentage(showqer.active_percent*0.82) %>"></div>
           <div style="float:left; padding-left:5px"><%= showqer.active_jobs %></div>
        </div>
   </div>
 <% else %>
-  <div class="col-sm-2 pull-right">Running</div>
+  <div class="col-sm-2">Running</div>
   <div class="progress progress-custom">
     <div class="progress-bar col-sm-10" role="progressbar" style="width:<%= showqer.active_percent %>%">
       <div><%= showqer.active_jobs %></div>
@@ -32,14 +32,14 @@
 
 <% if showqer.eligible_percent < 11 %>
 <div class="row">
-  <div class="col-sm-2 col-xs-3 pull-right">Queued</div>
+  <div class="col-sm-2 col-xs-3">Queued</div>
    <div class="progress progress-custom col-sm-10 col-xs-9">
        <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= showqer.eligible_percent %>%"></div>
        <div style="float:left; padding-left:5px"><%= showqer.eligible_jobs %></div>
    </div>
  </div>
 <% else %>
-<div class="col-sm-2 pull-right">Queued</div>
+<div class="col-sm-2">Queued</div>
 <div class="progress progress-custom">
   <div class="progress-bar progress-bar-info col-sm-10" role="progressbar" style="width:<%= showqer.eligible_percent %>%">
     <div><%= showqer.eligible_jobs %></div>
