@@ -52,6 +52,8 @@
 <div class="container" role="main">
 <% @oodclusters.each do |cluster| %>
   <h1><%= cluster %></h1>
+  <h1><%= cluster.custom_config[:moab] %></h1>
+    <h1><%= cluster.custom_config[:ganglia]%></h1>
   <% end %>
   <%= yield %>
 
