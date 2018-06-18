@@ -74,13 +74,13 @@ helpers do
 end
 
 before do
-   @oodclusters = parse_clusters(ENV['OOD_CLUSTERS'])
-   @oodclusters = OodCore::Clusters.new(
-    @oodclusters.select(&:job_allow?)
-        .select { |c| c.custom_config[:moab] }
-        .select { |c| c.custom_config[:ganglia] }
-        .reject { |c| c.metadata.hidden }
-)
+#    @oodclusters = parse_clusters(ENV['OOD_CLUSTERS'])
+#    @oodclusters = OodCore::Clusters.new(
+#     @oodclusters.select(&:job_allow?)
+#         .select { |c| c.custom_config[:moab] }
+#         .select { |c| c.custom_config[:ganglia] }
+#         .reject { |c| c.metadata.hidden }
+# )
 end
 #
 # def initialize(app=nil)
@@ -93,6 +93,13 @@ get '/check' do
 end
 
 get '/' do
+  @oodclusters = parse_clusters(ENV['OOD_CLUSTERS'])
+  @oodclusters = OodCore::Clusters.new(
+   @oodclusters.select(&:job_allow?)
+       .select { |c| c.custom_config[:moab] }
+       .select { |c| c.custom_config[:ganglia] }
+       .reject { |c| c.metadata.hidden }
+     )
   erb :index
 end
 
