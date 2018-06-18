@@ -74,7 +74,7 @@ helpers do
 end
 
 before do
-   @oodclusters ||= parse_clusters(ENV['OOD_CLUSTERS'])
+   @oodclusters = parse_clusters(ENV['OOD_CLUSTERS'])
    @oodclusters = OodCore::Clusters.new(
     @oodclusters.select(&:job_allow?)
         .select { |c| c.custom_config[:moab] }
