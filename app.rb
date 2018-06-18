@@ -96,22 +96,21 @@ end
 # )
 # end
 #
-# def initialize(app=nil)
-#   super()
-#   @oodclusers= valid_clusters
-# end
-
-get '/check' do
-  @oodclusters
-end
-
-get '/' do
+def initialize(app=nil)
+  super()
   @oodclusters = OodCore::Clusters.new(
     parse_clusters.select(&:job_allow?)
          .select { |c| c.custom_config[:moab] }
          .select { |c| c.custom_config[:ganglia] }
          .reject { |c| c.metadata.hidden }
      )
+end
+
+get '/check' do
+  @oodclusters
+end
+
+get '/' do
   erb :index
 end
 
