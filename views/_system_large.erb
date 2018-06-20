@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable" onclick="$('#large-image<%= @count %>').replaceWith(
-        '<img src="<%= h (ganglia.report_moab_nodes.size(800,250).png).gsub('"','') %>" class="img-responsive center-block updateable" id="large-image<%= @count %>" />')" >
+        '<%= "<img src='#{ganglia.report_moab_nodes.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@coun}' />" %>');" >
             <div class="panel-heading"><h4 class="panel-title">Nodes</h4></div>
             <div class="panel-body">
               <img class="img-responsive center-block updateable"  src="<%= h (ganglia.small.report_moab_nodes.png).gsub('"','') %>" alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith(
@@ -13,7 +13,7 @@
     </div>
     <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable" onclick="$('#large-image<%= @count %>').replaceWith(
-        '<img src="<%= h (ganglia.report_moab_jobs.size(800,250).png).gsub('"','') %>" class="img-responsive center-block updateable" id="large-image<%= @count %>" >
+        '<img src="<%= (ganglia.report_moab_jobs.size(800,250).png).gsub('"','') %>" class="img-responsive center-block updateable" id="large-image<%= @count %>" >
             <div class="panel-heading"><h4 class="panel-title">Jobs</h4></div>
             <div class="panel-body">
                 <img src="<%= h (ganglia.small.report_moab_jobs.png).gsub('"','') %>" class="img-responsive center-block updateable">
