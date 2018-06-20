@@ -98,7 +98,7 @@
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
           <% @oodclusters.each do |cluster| %>
-              <li class="<%= 'active' if @ganglia && @ganglia.server_id == cluster.id %>">
+              <li class="<% 'active' if @ganglia && @ganglia.server_id == cluster.id %>">
                 <a href="<%= url("/clusters/#{cluster.id}") %>"><span><i class="fa fa-area-chart"></i></span>  <%=cluster.metadata.title %> Cluster</a>
               </li>
           <% end %>
