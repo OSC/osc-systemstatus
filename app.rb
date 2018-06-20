@@ -2,7 +2,7 @@ require 'sinatra'
 require 'ood_core'
 require 'moab'
 
-Dir[File.dirname(__FILE__) + "/classes/*.rb"].each {|file| require_relative file }
+Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
 
 # register Sinatra::ConfigFile
 # config_file 'env.yml'
