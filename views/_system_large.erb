@@ -3,11 +3,11 @@
 <div class="row">
     <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable" onclick="$('#large-image<%= @count %>').replaceWith(
-        '<%= "<img src='#{ganglia.report_moab_nodes.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>');" >
+        '<%= "<img src=\"#{ganglia.report_moab_nodes.size(800,250).png}\" class=\"img-responsive center-block updateable\" id=\"large-image#{@count}\" />" %>');" >
             <div class="panel-heading"><h4 class="panel-title">Nodes</h4></div>
             <div class="panel-body">
-              <%= "<img class='img-responsive center-block updateable'"+" src='#{ganglia.small.report_moab_nodes.png}' " %> alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith('
-              <%= "<img src='#{ganglia.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>');">
+              <%= "<img class=\"img-responsive center-block updateable\""+" src=\"#{ganglia.small.report_moab_nodes.png}\" " %> alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith('
+              <%= "<img src=\"#{ganglia.size(800,250).png}\" class=\"img-responsive center-block updateable\" id=\"large-image#{@count}\" />" %>');">
             </div>
         </div>
     </div>
@@ -17,27 +17,27 @@
             <div class="panel-heading"><h4 class="panel-title">Jobs</h4></div>
             <div class="panel-body">
               <%= "<img class='img-responsive center-block updateable'"+" src='#{ganglia.small.report_moab_jobs.png}' " %> alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith('
-              <%= "<img src='#{ganglia.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>');">
+              <%= "<img src=\"#{ganglia.size(800,250).png}\" class=\"img-responsive center-block updateable\" id=\"large-image#{@count}\" />" %>');">
             </div>
         </div>
     </div>
     <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable" onclick="$('#large-image<%= @count %>').replaceWith(
-          '<%= "<img src='#{ganglia.report_load.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>');" >
+          '<%= "<img src=\"#{ganglia.report_load.size(800,250).png}\" class=\"img-responsive center-block updateable\" id=\"large-image#{@count}\" />" %>');" >
             <div class="panel-heading"><h4 class="panel-title">Load</h4></div>
             <div class="panel-body">
-              <%= "<img class='img-responsive center-block updateable'"+" src='#{ganglia.small.report_load.png}' " %> alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith('
-              <%= "<img src='#{ganglia.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>');">
+              <%= "<img class=\"img-responsive center-block updateable\""+" src=\"#{ganglia.small.report_load.png}\" " %> alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith('
+              <%= "<img src=\"#{ganglia.size(800,250).png}\" class=\"img-responsive center-block updateable\" id=\"large-image#{@count}\" />" %>');">
             </div>
         </div>
     </div>
     <div class="col-sm-3 col-xs-6">
         <div class="panel panel-default panel-clickable" onclick="$('#large-image<%= @count %>').replaceWith(
-          '<%= "<img src='#{ganglia.report_network.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>');" >
+          '<%= "<img src=\"#{ganglia.report_network.size(800,250).png}\" class=\"img-responsive center-block updateable\" id=\"large-image#{@count}\" />" %>');" >
             <div class="panel-heading"><h4 class="panel-title">Network</h4></div>
             <div class="panel-body">
-              <%= "<img class='img-responsive center-block updateable'"+" src='#{ganglia.small.report_network.png}' " %> alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith('
-              <%= "<img src='#{ganglia.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>');">
+              <%= "<img class=\"img-responsive center-block updateable\""+" src=\"#{ganglia.small.report_network.png}\" " %> alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith('
+              <%= "<img src=\"#{ganglia.size(800,250).png}' class=\"img-responsive center-block updateable\" id=\"large-image#{@count}\" />" %>');">
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
     <div class="col-sm-12">
         <div class=" panel panel-default">
             <div class="panel-body" id="large-status">
-              <%= "<img src='#{ganglia.report_moab_nodes.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>
+              <%= "<img src=\"#{ganglia.report_moab_nodes.size(800,250).png}\" class=\"img-responsive center-block updateable\" id=\"large-image#{@count}\" />" %>
             </div>
         </div>
     </div>
