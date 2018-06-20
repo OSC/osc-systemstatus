@@ -5,11 +5,69 @@
 
   <title>System Status</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <link rel="stylesheet" type ="text/css" href="<%= url("/stylesheet/application.css")%>" media="all">
+  <link rel="stylesheet" type="text/css" href="<%= url("/bootstrap-3.3.7/css/bootstrap.min.css") %>">
   <link rel="shortcut icon" type="image/ico" href="<%= url("favicon.ico")%>"/>
   <link rel="stylesheet" type="text/css" href="<%= url("/ood-bootstrap3-override-0.0.1/navbar.css") %>">
   <script type="text/javascript" src="<%= url("jquery-3.2.1/jquery-3.2.1.min.js") %>"></script>
-  <script type="text/javascript" src="<%= url("scripts/application.js")%>"></script>
+  <style media="all">
+    pre {
+      white-space: pre-wrap;
+      /* CSS 3 */
+      white-space: -moz-pre-wrap;
+      /* Mozilla, since 1999 */
+      white-space: -pre-wrap;
+      /* Opera 4-6 */
+      white-space: -o-pre-wrap;
+      /* Opera 7 */
+      word-wrap: break-word;
+      /* Internet Explorer 5.5+ */
+    }
+    /* Base styles (regardless of theme) */
+    div a .bs-callout {
+      margin: 20px 0;
+      padding: 15px 30px 15px 15px;
+      border-left: 5px solid #eee;
+    }
+    .bs-callout h1, .bs-callout h2, .bs-callout h3, .bs-callout h4, .bs-callout h5, .bs-callout h6 {
+      margin-top: 0;
+    }
+    .bs-callout-info h1, .bs-callout-info h2, .bs-callout-info h3, .bs-callout-info h4, .bs-callout-info h5, .bs-callout-info h6 {
+      color: #3a87ad;
+    }
+    .bs-callout p:last-child {
+      margin-bottom: 0;
+    }
+    .bs-callout code, .bs-callout .highlight {
+      background-color: #fff;
+    }
+    /* Themes for different contexts */
+    div a .bs-callout-info {
+      background-color: #f0f7fd;
+      border-color: #d0e3f0;
+    }
+    .img-responsive {
+      min-width: 100%;
+    }
+    .panel-clickable:hover {
+      background-color: #c1cdf0;
+      border-color: #6c75f0;
+    }
+    .panel-clickable:active {
+      background-color: #6c75f0;
+      border-color: #6c75f0;
+    }
+    a:-webkit-any-link {
+      text-decoration: none !important;
+    }
+    .progress {
+      border-radius: 0px !important;
+    }
+    .progress-custom {
+      margin-bottom: 0px !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -68,7 +126,26 @@
   </div>
 </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <link rel="stylesheet" type="text/css" href="<%= url("/bootstrap-3.3.7/css/bootstrap.min.css") %>">
+    <script type="text/javascript">
+        var refreshImages, startRefresh;
+
+        startRefresh = function(node) {
+          return node.src = URL(node.src).setQuery("timestamp", (new Date).getTime()).toString();
+        };
+        // anonymous function to update all visible Ganglia graphs every 5 seconds
+        (refreshImages = function() {
+          var i, nodes;
+          nodes = $('.updateable');
+          i = 0;
+          while (i < nodes.length) {
+            if ($(nodes[i]).is(':visible')) {
+              startRefresh(nodes[i]);
+            }
+            i++;
+          }
+          setTimeout(refreshImages, 5000);
+        })();
+    </script>
+
 </body>
 </html>
