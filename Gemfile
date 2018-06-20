@@ -10,5 +10,7 @@ end
 gem 'moab', '~> 0.0.0'
 gem "ood_core", "~> 0.1"
 gem 'sinatra'
-gem 'sinatra-contrib'
-gem 'jbuilder', '~> 1.2'
+# gem 'sinatra-contrib'
+# gem 'jbuilder', '~> 1.2'
+
+gem 'erubis'
