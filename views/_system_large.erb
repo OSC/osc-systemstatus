@@ -6,8 +6,8 @@
         '<img src="<%= h ganglia.report_moab_nodes.size(800,250).png %>" class="img-responsive center-block updateable" id="large-image<%= @count %>" />')" >
             <div class="panel-heading"><h4 class="panel-title">Nodes</h4></div>
             <div class="panel-body">
-              <img class="img-responsive center-block updateable" alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith(
-              '<img src="<%= h ganglia.size(800,250).png %>" class="img-responsive center-block updateable" id="large-image<%= @count %>" alt="Graph" />');" src="<%= h ganglia.small.report_moab_nodes.png %>">
+              <img class="img-responsive center-block updateable"  src="<%= h ganglia.small.report_moab_nodes.png %>" alt="Graph" onclick="$('#large-image<%= @count %>').replaceWith(
+              '<img src="<%= h ganglia.size(800,250).png %>" class="img-responsive center-block updateable" id="large-image<%= @count %>" />');">
             </div>
         </div>
     </div>
