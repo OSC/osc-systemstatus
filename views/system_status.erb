@@ -12,31 +12,30 @@
             <li role="presentation"><a href="#year" aria-controls="year" role="tab" data-toggle="tab">Year</a></li>
         </ul>
         <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="hour">
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.hour }%>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="twohour">
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.two_hours }%>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="fourhour">
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.four_hours }%>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="day">
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.day }%>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="week">
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.week }%>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="month">
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.month }%>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="year">
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.year }%>
+            </div>
         </div>
     </div>
 
     <!-- Tab panes -->
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="hour">
-            <%= erb :_system_large, :locals => { :ganglia => @ganglia.hour }%>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="twohour">
-            <%= erb :_system_large, :locals => { :ganglia => @ganglia.two_hours }%>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="fourhour">
-            <%= erb :_system_large, :locals => { :ganglia => @ganglia.four_hours }%>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="day">
-            <%= erb :_system_large, :locals => { :ganglia => @ganglia.day }%>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="week">
-            <%= erb :_system_large, :locals => { :ganglia => @ganglia.week }%>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="month">
-            <%= erb :_system_large, :locals => { :ganglia => @ganglia.month }%>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="year">
-            <%= erb :_system_large, :locals => { :ganglia => @ganglia.year }%>
-        </div>
-    </div>
+
 </div>
