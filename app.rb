@@ -4,34 +4,18 @@ require 'moab'
 
 Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
 
-# register Sinatra::ConfigFile
-# config_file 'env.yml'
-
 configure do
-  # The app's configuration root directory
-  # set :config_root, ENV["OOD_APP_CONFIG_ROOT"] || "/etc/ood/config/apps/systemstatus"
-  # Default file paths
   set :environments, %w{development test production}
   set :root, File.dirname(__FILE__)
   set :public_folder, settings.root+"/public"
   set :views, settings.root + "/views"
 end
 
-# rackup -E production config.ru
-# Defaults to ENV['APP_ENV'], or "development" if not available
-
 configure :production do
-#  use Rack::Session::Cookie, :key => 'rack.session',
- #                            :path => '/',
-  #                           :secret =>'773216139fce1f010e015a6cbc2769f94080f477fbbfa76fbfa72d9235dc69ba359563f1699752e4d0872aed5a222f636c030b40999b51cb13c498389f99690e'
-
   enable :logging
   # set :logging, Logger::INFO
   set :dump_errors, false
   disable :static
-  # set :RAILS_RELATIVE_URL_ROOT, File.dirname('/pun/sys/systemstatus')
-  # set :OOD_DATAROOT, File.dirname($HOME/ondemand/data/sys/systemstatus)
-  # set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname("~/#{ENV['OOD_PORTAL'] || 'ondemand'}/data/#{ENV['APP_TOKEN'] || 'sys/systemstatus'}")
 end
 
 
@@ -41,7 +25,6 @@ configure :development do
   set :session, false
  # set :logging, Logger::DEBUG
   set :dump_errors, true
-#  set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname(setting.root,'data')
 end
 
 configure :test do
@@ -53,7 +36,6 @@ configure :test do
   disable :show_exceptions
   # Show full error reports
   set :dump_errors, true
-  #set :DATAROOT, ENV["OOD_DATAROOT"] || ENV["RAILS_DATAROOT"] || File.dirname(setting.root,'data')
 end
 
 helpers do
