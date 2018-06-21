@@ -135,11 +135,8 @@
 <script>
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
-        // setTimeout($(".updateable:visible").each(function(){
-        //    return this.src = new URL(this.src).setSearch("timestamp", (new Date).getTime()).toString();
-        // }),5000);
         setTimeout($(".updateable:visible").each(function(){
-           return this.src = $(this).set("timestamp", (new Date).getTime()).toString();
+           return this.src = new URL(this.src).setSearch("timestamp", (new Date).getTime()).toString();
         }),5000);
     });
 </script>
