@@ -115,6 +115,10 @@ get '/' do
   erb :index
 end
 
+get '/clusters' do
+  erb :index
+end
+
 # 404 not found
 not_found do
   status 404
