@@ -1,7 +1,6 @@
 <div>
-
-    <!-- Nav tabs -->
     <div id="time-tabs">
+      <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified" id="hour-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#hour" aria-controls="hour" role="tab" data-toggle="tab">Hour</a></li>
             <li role="presentation"><a href="#twohour" aria-controls="twohour" role="tab" data-toggle="tab">2 Hours</a></li>
@@ -11,6 +10,7 @@
             <li role="presentation"><a href="#month" aria-controls="month" role="tab" data-toggle="tab">Month</a></li>
             <li role="presentation"><a href="#year" aria-controls="year" role="tab" data-toggle="tab">Year</a></li>
         </ul>
+        <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="hour">
                 <%= erb :_system_large, :locals => { :ganglia => @ganglia.hour }%>
@@ -35,7 +35,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Tab panes -->
-
 </div>
