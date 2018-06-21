@@ -81,17 +81,6 @@ helpers do
 
 end
 
-# def initialize(app=nil)
-#   super()
-#   clusters=OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d' ) || OodCore::Clusters.new([])
-#   @oodclusters = OodCore::Clusters.new(
-#     clusters.select(&:job_allow?)
-#          .select { |c| c.custom_config[:moab] }
-#          .select { |c| c.custom_config[:ganglia] }
-#          .reject { |c| c.metadata.hidden }
-#      )
-# end
-
 before do
   @oodclusters=valid_clusters
 end

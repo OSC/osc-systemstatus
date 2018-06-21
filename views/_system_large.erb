@@ -43,3 +43,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        setTimeout($('.updateable:visible').each(function(){
+            return this.src = new URL(this.src).setQuery("timestamp", (new Date).getTime()).toString();
+        }),5000);
+    });
+</script>
