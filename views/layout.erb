@@ -133,13 +133,8 @@
     <script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
     <script>
       function replace_image(image){
-        var new_image="<img src='"+image+"' class='img-responsive center-block updateable' id='large-image#{@count}' />"  %>
         $('#large-image<%= @count %>').replaceWith("'"+image+"'");
       }
-      // var large_image = $('#large-image<%= @count %>');
-      // $("#myHref").on('click', function() {
-      //   $(large_image).replaceWith('<%= "<img src='#{h ganglia.report_network.size(800,250).png}' class='img-responsive center-block updateable' id='large-image#{@count}' />" %>');
-      // });
         // var refreshImages, startRefresh;
 
         // startRefresh = function(node) {
