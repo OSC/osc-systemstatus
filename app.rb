@@ -57,7 +57,7 @@ get '/clusters/:id' do
 end
 
 get '/' do
-  erb :index
+  redirect(url('/clusters'))
 end
 
 get '/clusters' do

@@ -76,3 +76,7 @@ li:last-child > a:focus {
 .ood-appkit.navbar.navbar-inverse ul.navbar-breadcrumbs > li + li:before {
   color: #cccccc;
 }
+
+.ood-appkit.navbar.navbar-inverse div.collapse.navbar-collapse ul.navbar-nav{
+  padding-left: 15px;
+}
