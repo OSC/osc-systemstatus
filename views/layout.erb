@@ -131,6 +131,11 @@
 <script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
 <script type="text/javascript" src="<%= url("/uri-1.18.4/URI.min.js") %>"></script>
 <script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
-<script src="<%= url("app.js") %>"></script>
+<script>
+$('[data-toggle="tooltip"]').tooltip();
+setTimeout($(".updateable:visible").each(function(){
+   return this.src = URI(this.src).setSearch("timestamp", (new Date).getTime()).toString();
+}),5000);
+</script>
 </body>
 </html>
