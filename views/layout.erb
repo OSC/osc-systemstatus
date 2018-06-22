@@ -96,7 +96,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <% @Clusters.each do |cluster| %>
+          <% @clusters.each do |cluster| %>
               <li class="<%= 'active' if @ganglia && @ganglia.server_id == cluster.id %>">
                 <a href="<%= url("/clusters/#{cluster.id}") %>"><span><i class="fa fa-area-chart"></i></span>  <%=cluster.metadata.title %> Cluster</a>
               </li>

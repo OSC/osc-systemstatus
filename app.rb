@@ -37,14 +37,13 @@ helpers do
 
 end
 
-def initalize(app=nil)
-  super()
-  @Clusters=valid_clusters
+before do
+  @clusters||=valid_clusters
 end
 
 get '/clusters/:id' do
   id=params[:id].to_sym
-  cluster = @Clusters[id]
+  cluster = @clusters[id]
   if cluster.nil?
     raise Sinatra::NotFound
   else
@@ -54,7 +53,7 @@ get '/clusters/:id' do
 end
 
 get '/' do
-  redirect '/clusters'
+  redirect "#{ENV["RAILS_RELATIVE_URL_ROOT"]}/clusters"
 end
 
 get '/clusters' do
