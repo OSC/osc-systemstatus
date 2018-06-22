@@ -37,13 +37,14 @@ helpers do
 
 end
 
-before do
-  @oodclusters=valid_clusters
+def initalize(app=nil)
+  super()
+  @Clusters=valid_clusters
 end
 
 get '/clusters/:id' do
   id=params[:id].to_sym
-  cluster = @oodclusters[id]
+  cluster = @Clusters[id]
   if cluster.nil?
     raise Sinatra::NotFound
   else
