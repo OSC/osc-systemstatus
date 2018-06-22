@@ -6,7 +6,7 @@
   <title>System Status</title>
   <link rel="stylesheet" type="text/css" href="<%= url("/bootstrap-3.3.7/css/bootstrap.min.css") %>">
   <link rel="shortcut icon" type="image/ico" href="<%= url("favicon.ico")%>"/>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="<%= url("/fontawesome-5.1.0/css/all.css") %>">
   <link rel="stylesheet" type="text/css" href="<%= url("/ood-bootstrap3-override-0.0.1/navbar.css") %>">
   <style media="all">
     pre {
@@ -88,7 +88,7 @@
         </button>
 
         <ul class="navbar-breadcrumbs">
-          <li><a href='/pun/sys/dashboard'>Open OnDemand</a></li>
+          <li><a href='<%=  dashboard_url %>'><%= dashboard_title %></a></li>
           <li><a href='/pun/sys/systemstatus'>System Status</a></li>
         </ul>
       </div>
@@ -128,16 +128,11 @@
     </div>
   </div>
 </footer>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
 <script type="text/javascript" src="<%= url("/uri-1.18.4/URI.min.js") %>"></script>
 <script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
 <script>
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
-        setTimeout($(".updateable:visible").each(function(){
-           return this.src = URI(this.src).setSearch("timestamp", (new Date).getTime()).toString();
-        }),5000);
-    });
+
 </script>
 </body>
 </html>
