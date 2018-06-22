@@ -39,7 +39,6 @@ helpers do
     ENV["RAILS_RELATIVE_URL_ROOT"] || "/pun/sys/systemstatus/"
   end
 
-
 end
 
 before do
@@ -57,11 +56,11 @@ get '/clusters/:id' do
   end
 end
 
-get '/clusters' do
+get '/' do
   erb :index
 end
 
-get '/' do
+get '/clusters' do
   erb :index
 end
 
