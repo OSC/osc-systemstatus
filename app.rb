@@ -62,7 +62,7 @@ get '/clusters' do
 end
 
 get '/' do
-  redirect('/clusters')
+  erb :index
 end
 
 # 404 not found
