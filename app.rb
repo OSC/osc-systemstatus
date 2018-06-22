@@ -35,6 +35,11 @@ helpers do
     "/pun/sys/dashboard/"
   end
 
+  def relative_url
+    ENV["RAILS_RELATIVE_URL_ROOT"] || "/pun/sys/systemstatus/"
+  end
+
+
 end
 
 before do
@@ -52,17 +57,16 @@ get '/clusters/:id' do
   end
 end
 
-get '/' do
-  redirect "#{ENV["RAILS_RELATIVE_URL_ROOT"]}/clusters"
-end
-
 get '/clusters' do
   erb :index
 end
 
+get '/' do
+  redirect('/clusters')
+end
+
 # 404 not found
 not_found do
-  status 404
   erb :not_found
 end
 
