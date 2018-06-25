@@ -5,16 +5,14 @@ require 'moab'
 Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
 
 # more details see ood_appkit lib/ood_appkit/configuration.rb
-CLUSTERS = (ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').tap do |config|
-  begin
-    OodCore::Clusters.new(OodCore::Clusters.load_file(config).select(&:job_allow?)
-          .select { |c| c.custom_config[:moab] }
-          .select { |c| c.custom_config[:ganglia] }
-          .reject { |c| c.metadata.hidden }
-    )
-  rescue OodCore::ConfigurationNotFound
-    OodCore::Clusters.new([])
-  end
+begin
+  CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
+            .select { |c| c.custom_config[:moab] }
+            .select { |c| c.custom_config[:ganglia] }
+            .reject { |c| c.metadata.hidden }
+          )
+rescue OodCore::ConfigurationNotFound
+  CLUSTERS = OodCore::Clusters.new([])
 end
 
 helpers do
