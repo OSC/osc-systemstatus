@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta charset="UTF-8">
-
   <title>System Status</title>
   <link rel="stylesheet" type="text/css" href="<%= url("/bootstrap-3.3.7/css/bootstrap.min.css") %>">
   <link rel="stylesheet" href="<%= url("/fontawesome-5.1.0/css/all.css") %>">
@@ -21,7 +20,7 @@
       word-wrap: break-word;
       /* Internet Explorer 5.5+ */
     }
-    /* Base styles (regardless of theme) */
+    /* Base styles */
     div a .bs-callout {
       margin: 20px 0;
       padding: 15px 30px 15px 15px;
@@ -39,7 +38,6 @@
     .bs-callout code, .bs-callout .highlight {
       background-color: #fff;
     }
-    /* Themes for different contexts */
     div a .bs-callout-info {
       background-color: #f0f7fd;
       border-color: #d0e3f0;
@@ -58,6 +56,7 @@
     a:-webkit-any-link {
       text-decoration: none !important;
     }
+    /* progress bar styling */
     .progress {
       border-radius: 0px !important;
     }
@@ -69,6 +68,13 @@
     .progress-bar.col-sm-10 + div{
       float:left;
       padding-left:5px
+    }
+    .progress-bar.col-sm-10.col-xs-9{
+      padding: 0px;
+    }
+    /* not found page styling */
+    .jumbotron{
+      margin-top: 28px;
     }
   </style>
 </head>
@@ -126,16 +132,19 @@
         <p id="app_version" class="pull-right"><%= ENV['APP_VERSION'] %></p>
       </div>
     </div>
-  </div>
+  </div><!-- /.container -->
 </footer>
+
 <script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
 <script type="text/javascript" src="<%= url("/uri-1.18.4/URI.min.js") %>"></script>
 <script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
 <script>
 $('[data-toggle="tooltip"]').tooltip();
+// update cluster information graphs every 5 seconds
 setTimeout($(".updateable:visible").each(function(){
    return this.src = URI(this.src).setSearch("timestamp", (new Date).getTime()).toString();
 }),5000);
 </script>
+
 </body>
 </html>

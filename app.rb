@@ -12,7 +12,7 @@ helpers do
   rescue OodCore::ConfigurationNotFound
     OodCore::Clusters.new([])
   end
-
+  # more details see ood_appkit lib/ood_appkit/configuration.rb
   def valid_clusters
     clusters = parse_clusters
     OodCore::Clusters.new(
@@ -56,6 +56,7 @@ get '/clusters/:id' do
   end
 end
 
+# redirect to /clusters page
 get '/' do
   redirect(url('/clusters'))
 end
