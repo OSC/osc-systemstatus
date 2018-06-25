@@ -1,6 +1,6 @@
 <!-- node status on /clusters page -->
-<% @clusters.each_with_index do |cluster, index | %>
-    <% if index == @clusters.count - 1 && @clusters.count.odd? %>
+<% CLUSTERS.each_with_index do |cluster, index | %>
+    <% if index == CLUSTERS.count - 1 && CLUSTERS.count.odd? %>
         <div class="col-sm-3"></div>
     <% end %>
         <div class="col-sm-6 col-xs-12">

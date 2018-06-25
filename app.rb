@@ -4,25 +4,20 @@ require 'moab'
 
 Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
 
-helpers do
-
-  def parse_clusters
-    config = ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d'
-    OodCore::Clusters.load_file(config)
-  rescue OodCore::ConfigurationNotFound
-    OodCore::Clusters.new([])
-  end
-  # more details see ood_appkit lib/ood_appkit/configuration.rb
-  def valid_clusters
-    clusters = parse_clusters
-    OodCore::Clusters.new(
-      clusters.select(&:job_allow?)
+# more details see ood_appkit lib/ood_appkit/configuration.rb
+CLUSTERS = (ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').tap do |config|
+  begin
+    OodCore::Clusters.new(OodCore::Clusters.load_file(config).select(&:job_allow?)
           .select { |c| c.custom_config[:moab] }
           .select { |c| c.custom_config[:ganglia] }
           .reject { |c| c.metadata.hidden }
     )
+  rescue OodCore::ConfigurationNotFound
+    OodCore::Clusters.new([])
   end
+end
 
+helpers do
   def h(text)
     Rack::Utils.escape_html(text)
   end
@@ -41,13 +36,9 @@ helpers do
 
 end
 
-before do
-  @clusters||=valid_clusters
-end
-
 get '/clusters/:id' do
   id=params[:id].to_sym
-  cluster = @clusters[id]
+  cluster = CLUSTERS[id]
   if cluster.nil?
     raise Sinatra::NotFound
   else
