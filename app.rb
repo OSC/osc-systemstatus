@@ -1,65 +1,70 @@
-require 'sinatra'
+require "sinatra/base"
 require 'ood_core'
 require 'moab'
 
 Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
 
-# more details see ood_appkit lib/ood_appkit/configuration.rb
-begin
-  CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
-            .select { |c| c.custom_config[:moab] }
-            .select { |c| c.custom_config[:ganglia] }
-            .reject { |c| c.metadata.hidden }
-          )
-rescue OodCore::ConfigurationNotFound
-  CLUSTERS = OodCore::Clusters.new([])
-end
 
-helpers do
-  def h(text)
-    Rack::Utils.escape_html(text)
+class SystemStatusApp < Sinatra::Base
+
+  # more details see ood_appkit lib/ood_appkit/configuration.rb
+  begin
+    CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
+              .select { |c| c.custom_config[:moab] }
+              .select { |c| c.custom_config[:ganglia] }
+              .reject { |c| c.metadata.hidden }
+            )
+  rescue OodCore::ConfigurationNotFound
+    CLUSTERS = OodCore::Clusters.new([])
   end
 
-  def dashboard_title
-    ENV['OOD_DASHBOARD_TITLE'] || "Open OnDemand"
+  helpers do
+    def h(text)
+      Rack::Utils.escape_html(text)
+    end
+
+    def dashboard_title
+      ENV['OOD_DASHBOARD_TITLE'] || "Open OnDemand"
+    end
+
+    def dashboard_url
+      "/pun/sys/dashboard/"
+    end
+
+    def relative_url
+      ENV["RAILS_RELATIVE_URL_ROOT"] || "/pun/sys/systemstatus/"
+    end
+
   end
 
-  def dashboard_url
-    "/pun/sys/dashboard/"
+  get '/clusters/:id' do
+    id=params[:id].to_sym
+    cluster = CLUSTERS[id]
+    if cluster.nil?
+      raise Sinatra::NotFound
+    else
+      @ganglia = Ganglia.new(cluster)
+      erb :system_status
+    end
   end
 
-  def relative_url
-    ENV["RAILS_RELATIVE_URL_ROOT"] || "/pun/sys/systemstatus/"
+  # redirect to /clusters page
+  get '/' do
+    redirect(url('/clusters'))
   end
 
-end
-
-get '/clusters/:id' do
-  id=params[:id].to_sym
-  cluster = CLUSTERS[id]
-  if cluster.nil?
-    raise Sinatra::NotFound
-  else
-    @ganglia = Ganglia.new(cluster)
-    erb :system_status
+  get '/clusters' do
+    erb :index
   end
-end
 
-# redirect to /clusters page
-get '/' do
-  redirect(url('/clusters'))
-end
+  # 404 not found
+  not_found do
+    erb :'404'
+  end
 
-get '/clusters' do
-  erb :index
-end
+  # 500 internal server error
+  error do
+    erb :'500'
+  end
 
-# 404 not found
-not_found do
-  erb :'404'
-end
-
-# 500 internal server error
-error do
-  erb :'500'
 end
