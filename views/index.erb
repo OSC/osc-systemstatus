@@ -1,14 +1,11 @@
 <!-- node status on /clusters page -->
 <% CLUSTERS.each_with_index do |cluster, index | %>
-    <% if index == CLUSTERS.count - 1 && CLUSTERS.count.odd? %>
-        <div class="col-sm-3"></div>
-    <% end %>
-        <div class="col-sm-6 col-xs-12">
-           <a href = "<%= url("/clusters/#{cluster.id}") %>">
-              <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
-                <h4><strong><%= cluster.metadata.title || cluster.id.titleize %> Cluster Status</strong></h4>
-               <%= erb :_node_status, :locals => { :showqer => MoabShowqClient.new(cluster).setup } %>
-              </div>
-		      </a>
-        </div>
+      <div class="<%= 'col-sm-offset-3' if index == CLUSTERS.count - 1 && CLUSTERS.count.odd? %> col-sm-6 col-xs-12">
+         <a href = "<%= url("/clusters/#{cluster.id}") %>">
+            <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
+              <h4><strong><%= cluster.metadata.title || cluster.id.titleize %> Cluster Status</strong></h4>
+             <%= erb :_node_status, :locals => { :showqer => MoabShowqClient.new(cluster).setup } %>
+            </div>
+	      </a>
+      </div>
 <% end %>

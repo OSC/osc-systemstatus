@@ -56,10 +56,10 @@ end
 
 # 404 not found
 not_found do
-  erb :not_found
+  erb :'404'
 end
 
 # 500 internal server error
 error do
-  erb :internal_server_error
+  erb :'500'
 end
