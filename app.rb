@@ -32,6 +32,9 @@ helpers do
     ENV["RAILS_RELATIVE_URL_ROOT"] || "/pun/sys/systemstatus/"
   end
 
+  def public_url
+     ENV['OOD_PUBLIC_URL'] || "/public"
+  end
 end
 
 get '/clusters/:id' do

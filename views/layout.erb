@@ -6,7 +6,7 @@
   <link rel="stylesheet" type="text/css" href="<%= url("/bootstrap-3.3.7/css/bootstrap.min.css") %>">
   <link rel="stylesheet" href="<%= url("/fontawesome-5.1.0/css/all.css") %>">
   <link rel="stylesheet" type="text/css" href="<%= url("/ood-bootstrap3-override-0.0.1/navbar.css") %>">
-    <link rel="shortcut icon" type="image/ico" href="<%= url("favicon.ico")%>"/>
+  <link rel="shortcut icon" type="image/ico" href="<%=public_url%>/favicon.ico" >
   <style media="all">
     pre {
       white-space: pre-wrap;
@@ -94,8 +94,8 @@
         </button>
 
         <ul class="navbar-breadcrumbs">
-          <li><a href='<%=  dashboard_url() %>'><%= dashboard_title() %></a></li>
-          <li><a href='/pun/sys/systemstatus'>System Status</a></li>
+          <li><a href='<%=dashboard_url%>'><%= dashboard_title %></a></li>
+          <li><a href='<%=relative_url%>'>System Status</a></li>
         </ul>
       </div>
 
