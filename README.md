@@ -2,7 +2,7 @@
 
 This app displays the current system status of available system clusters.
 
-### Deployment on OSC
+### Installation for production environment
 
 1. Git clone this repository
 2. Install the app for a production environment.
@@ -11,6 +11,10 @@ This app displays the current system status of available system clusters.
     RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
     ```
 
+### Deployment at OSC
+
+1. Update [System Status rpm spec](https://github.com/OSC/ondemand-packaging/tree/5089f584c03eae16433764c184eafb5e20b8c72c/web/ondemand-systemstatus)
+2. Update puppet
 
 ## Configuration
 
