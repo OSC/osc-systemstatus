@@ -1,7 +1,8 @@
 require 'sinatra'
 require 'ood_core'
-require 'moab'
-
+require 'rexml/document'
+require 'open3'
+require 'pathname'
 Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
 
 # more details see ood_appkit lib/ood_appkit/configuration.rb

@@ -17,24 +17,25 @@ class MoabShowqClient
   end
 
   def setup
-    scheduler = Moab::Scheduler.new(
-      host: @server['host'],
-      lib: @server['lib'],
-      bin: @server['bin'],
-      moabhomedir: @server['homedir']
-    )
+    lib= Pathname.new(@server['lib'].to_s)
+    bin= Pathname.new(@server['bin'].to_s)
+    moabhomedir= Pathname.new(@server['homedir'].to_s)
+    cmd = bin.join("showq").to_s
+    args = ["-s","--host=#{@server['host']}", "--xml"]
+    env= {
+        "LD_LIBRARY_PATH" => "#{lib}:#{ENV['LD_LIBRARY_PATH']}",
+        "MOABHOMEDIR" => "#{moabhomedir}"
+     }.merge(env.to_h)
+    o, e, s = Open3.capture3(env, cmd, *args)
+    doc = REXML::Document.new(o)
+    self.active_jobs = doc.root.elements["queue[@option='active']"].attributes["count"].to_i
+    self.eligible_jobs = doc.root.elements["queue[@option='eligible']"].attributes["count"].to_i
+    self.blocked_jobs = doc.root.elements["queue[@option='blocked']"].attributes["count"].to_i
 
-    showqxdoc = scheduler.call('showq')
-
-    self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i
-    self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i
-    self.blocked_jobs = showqxdoc.at_xpath('//queue[@option="blocked"]/@count').value.to_i
-
-    cluster = showqxdoc.xpath("//cluster")
-    self.procs_used = cluster.attribute('LocalAllocProcs').value.to_i
-    self.procs_avail = cluster.attribute('LocalUpProcs').value.to_i
-    self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
-    self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
+    self.procs_used = doc.root.elements["cluster"].attributes["LocalAllocProcs"].to_i
+    self.procs_avail = doc.root.elements["cluster"].attributes["LocalUpProcs"].to_i
+    self.nodes_used = doc.root.elements["cluster"].attributes["LocalActiveNodes"].to_i 
+    self.nodes_avail = doc.root.elements["cluster"].attributes["LocalUpNodes"].to_i
     self
   rescue
     # TODO Add logging and a flash message that was removed from the controller
