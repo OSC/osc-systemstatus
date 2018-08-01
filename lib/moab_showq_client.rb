@@ -17,17 +17,7 @@ class MoabShowqClient
   end
 
   def setup
-    lib= Pathname.new(@server['lib'].to_s)
-    bin= Pathname.new(@server['bin'].to_s)
-    moabhomedir= Pathname.new(@server['homedir'].to_s)
-    cmd = bin.join("showq").to_s
-    args = ["-s","--host=#{@server['host']}", "--xml"]
-    env= {
-        "LD_LIBRARY_PATH" => "#{lib}:#{ENV['LD_LIBRARY_PATH']}",
-        "MOABHOMEDIR" => "#{moabhomedir}"
-     }.merge(env.to_h)
-    o, e, s = Open3.capture3(env, cmd, *args)
-    doc = REXML::Document.new(o)
+    doc = REXML::Document.new(showq_summary_xml)
     self.active_jobs = doc.root.elements["queue[@option='active']"].attributes["count"].to_i
     self.eligible_jobs = doc.root.elements["queue[@option='eligible']"].attributes["count"].to_i
     self.blocked_jobs = doc.root.elements["queue[@option='blocked']"].attributes["count"].to_i
@@ -41,7 +31,34 @@ class MoabShowqClient
     # TODO Add logging and a flash message that was removed from the controller
     MoabShowqClientNotAvailable.new
   end
+  
+  # Return moab lib pathname
+  def moab_lib
+    Pathname.new(@server['lib'].to_s)
+  end
+  
+  # Return moab bin pathname
+  def moab_bin
+    Pathname.new(@server['bin'].to_s)
+  end
+  
+  # Return moab home directory pathname
+  def moab_home 
+    Pathname.new(@server['homedir'].to_s)
+  end
 
+  # Return 'showq -s --xml' output in xml format
+  def showq_summary_xml
+    cmd = moab_bin.join("showq").to_s
+    args = ["-s","--host=#{@server['host']}", "--xml"]
+    env= {
+        "LD_LIBRARY_PATH" => "#{moab_lib}:#{ENV['LD_LIBRARY_PATH']}",
+        "MOABHOMEDIR" => "#{moab_home}"
+     }.merge(env.to_h)
+    o, e, s = Open3.capture3(env, cmd, *args)
+    o
+  end
+  
   # Return the active jobs as percent of available jobs
   #
   # @return [Float] The percentage active as float
