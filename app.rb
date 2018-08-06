@@ -32,6 +32,10 @@ helpers do
   def public_url
      ENV['OOD_PUBLIC_URL'] || "/public"
   end
+  
+  def alert(message)
+      "<div class='row'><div class='alert alert-warning' role='alert'>#{message}</div></div>"
+  end
 end
 
 get '/clusters/:id' do

@@ -4,7 +4,7 @@
 # @version 0.1.0
 class MoabShowqClient
 
-  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
+  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail, :error_message
 
   # Set the object to the server.
   #
@@ -27,9 +27,9 @@ class MoabShowqClient
     self.nodes_used = doc.root.elements["cluster"].attributes["LocalActiveNodes"].to_i 
     self.nodes_avail = doc.root.elements["cluster"].attributes["LocalUpNodes"].to_i
     self
-  rescue
+  rescue => e
     # TODO Add logging and a flash message that was removed from the controller
-    MoabShowqClientNotAvailable.new
+    MoabShowqClientNotAvailable.new(e)
   end
   
   # Return moab lib pathname
@@ -50,13 +50,15 @@ class MoabShowqClient
   # Return 'showq -s --xml' output in xml format
   def showq_summary_xml
     cmd = moab_bin.join("showq").to_s
-    args = ["-s","--host=#{@server['host']}", "--xml"]
+    args = ["-s", "--host=#{@server['host']}", "--xml"]
     env= {
         "LD_LIBRARY_PATH" => "#{moab_lib}:#{ENV['LD_LIBRARY_PATH']}",
         "MOABHOMEDIR" => "#{moab_home}"
      }.merge(env.to_h)
     o, e, s = Open3.capture3(env, cmd, *args)
-    o
+    s.success? ? o : raise(CommandFailed, e)
+  rescue Errno::ENOENT => e
+    raise InvalidCommand, e.message
   end
   
   # Return the active jobs as percent of available jobs
@@ -96,7 +98,7 @@ class MoabShowqClient
 
   private
 
-    attr_writer :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
+    attr_writer :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail,:error_message
 
     # assign 0 if the input is nil or empty
     def assign(match_string)
