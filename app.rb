@@ -33,8 +33,8 @@ helpers do
      ENV['OOD_PUBLIC_URL'] || "/public"
   end
   
-  def alert(cluster_title, message)
-      "<div class='row'><div class='alert alert-warning' role='alert'>#{cluster_title} Cluster: #{message}</div></div>"
+  def alert(message)
+      "<div class='row'><div class='alert alert-warning' role='alert'>#{message}</div></div>"
   end
 end
 

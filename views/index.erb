@@ -1,8 +1,8 @@
 <div class="row">
 <!-- node status on /clusters page -->
-<% @error_msg=[] %>
+<% @error_msg='' %>
 <% CLUSTERS.each_with_index do |cluster, index | %>
-      <% @error_msg.push({"title": cluster.metadata.title|| cluster.id.titleize, "error":(MoabShowqClient.new(cluster).setup).error_message}) %>    
+      <% @error_msg.concat("#{cluster.metadata.title|| cluster.id.titleize} Cluster: #{(MoabShowqClient.new(cluster).setup).error_message}</br>") if (MoabShowqClient.new(cluster).setup).error_message %>    
       <div class="<%= 'col-sm-offset-3' if index == CLUSTERS.count - 1 && CLUSTERS.count.odd? %> col-sm-6 col-xs-12">
          <a href = "<%= url("/clusters/#{cluster.id}") %>">
             <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
@@ -13,6 +13,4 @@
       </div>
 <% end %>
 </div>
-<% @error_msg.each do |cluster| %>
-    <%= alert(cluster[:title], cluster[:error]) if cluster[:error] %>
-<% end %>
+<%= alert(@error_msg) if !@error_msg.empty? %> 
