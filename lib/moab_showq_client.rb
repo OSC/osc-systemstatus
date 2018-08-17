@@ -102,7 +102,7 @@ class MoabShowqClient
   #
   # @return nil or constructed error message
   def friendly_error_message
-      error_message.nil?? nil : "#{cluster_title} Cluster: #{error_message}"
+      error_message.nil? ? nil : "#{cluster_title} Cluster: #{error_message}"
   end
 
   private

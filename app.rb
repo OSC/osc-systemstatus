@@ -52,8 +52,8 @@ get '/' do
 end
 
 get '/clusters' do
-  @clusters = CLUSTERS.map { | cluster| MoabShowqClient.new(cluster).setup }
-  @error_message = (@clusters.map{ | cluster| cluster.friendly_error_message}).compact 
+  @clusters = CLUSTERS.map { |cluster| MoabShowqClient.new(cluster).setup }
+  @error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact 
   erb :index
 end
 
