@@ -1,16 +1,14 @@
 <div class="row">
 <!-- node status on /clusters page -->
-<% @error_msg='' %>
-<% CLUSTERS.each_with_index do |cluster, index | %>
-      <% @error_msg.concat("#{cluster.metadata.title|| cluster.id.titleize} Cluster: #{(MoabShowqClient.new(cluster).setup).error_message}</br>") if (MoabShowqClient.new(cluster).setup).error_message %>    
-      <div class="<%= 'col-sm-offset-3' if index == CLUSTERS.count - 1 && CLUSTERS.count.odd? %> col-sm-6 col-xs-12">
-         <a href = "<%= url("/clusters/#{cluster.id}") %>">
+<% @clusters.each_with_index do |cluster, index | %>   
+      <div class="<%= 'col-sm-offset-3' if index == @clusters.count - 1 && @clusters.count.odd? %> col-sm-6 col-xs-12">
+          <a href = "<%= url("/clusters/#{cluster.cluster_id}") %>">
             <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
-              <h4><strong><%= cluster.metadata.title || cluster.id.titleize %> Cluster Status</strong></h4>
-             <%= erb :_node_status, :locals => { :showqer => MoabShowqClient.new(cluster).setup } %>
+              <h4><strong><%= cluster.cluster_title %> Cluster Status</strong></h4>
+              <%= erb :_node_status, :locals => { :showqer => cluster } %>
             </div>
 	      </a>
       </div>
 <% end %>
 </div>
-<%= alert(@error_msg) if !@error_msg.empty? %> 
+

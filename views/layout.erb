@@ -76,9 +76,6 @@
     .jumbotron{
       margin-top: 28px;
     }
-    .alert{
-     margin:20px 0 0 0;   
-    }
   </style>
 </head>
 <body>
@@ -121,7 +118,14 @@
 
 <div class="container" role="main">
   <%= yield %>
+  <!-- error message  -->
+  <% if @error_message %>
+    <% @error_message.each do |msg| %>
+        <div class='row'><div class='alert alert-warning' role='alert'><%= msg %></div></div>
+    <% end %>
+ <% end %><!-- /.error message  -->
 </div><!-- /.container -->
+
 
 <footer>
   <div class="container">

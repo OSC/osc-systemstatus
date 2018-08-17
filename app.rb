@@ -33,9 +33,6 @@ helpers do
      ENV['OOD_PUBLIC_URL'] || "/public"
   end
   
-  def alert(message)
-      "<div class='row'><div class='alert alert-warning' role='alert'>#{message}</div></div>"
-  end
 end
 
 get '/clusters/:id' do
@@ -55,6 +52,8 @@ get '/' do
 end
 
 get '/clusters' do
+  @clusters = CLUSTERS.map { | cluster| MoabShowqClient.new(cluster).setup }
+  @error_message = (@clusters.map{ | cluster| cluster.friendly_error_message}).compact 
   erb :index
 end
 

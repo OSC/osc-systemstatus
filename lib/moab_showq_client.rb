@@ -4,7 +4,7 @@
 # @version 0.1.0
 class MoabShowqClient
 
-  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail, :error_message
+  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail, :error_message, :cluster_id, :cluster_title, :friendly_error_message
 
   # Set the object to the server.
   #
@@ -13,6 +13,8 @@ class MoabShowqClient
   # @return [MoabShowqClient] self
   def initialize(cluster)
     @server = cluster.custom_config[:moab]
+    @cluster_id = cluster.id
+    @cluster_title = cluster.metadata.title || cluster.id.titleize
     self
   end
 
@@ -29,7 +31,7 @@ class MoabShowqClient
     self
   rescue => e
     # TODO Add logging and a flash message that was removed from the controller
-    MoabShowqClientNotAvailable.new(e)
+    MoabShowqClientNotAvailable.new(cluster_id, cluster_title, e)
   end
   
   # Return moab lib pathname
@@ -95,10 +97,17 @@ class MoabShowqClient
   def nodes_percent
     (nodes_used.to_f / nodes_avail.to_f) * 100
   end
+  
+  # Return cluster title + error message
+  #
+  # @return nil or constructed error message
+  def friendly_error_message
+      error_message.nil?? nil : "#{cluster_title} Cluster: #{error_message}"
+  end
 
   private
 
-    attr_writer :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail,:error_message
+    attr_writer :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail,:error_message, :cluster_id, :cluster_title
 
     # assign 0 if the input is nil or empty
     def assign(match_string)
