@@ -118,8 +118,12 @@
 
 <div class="container" role="main">
   <%= yield %>
-
+  <!-- error message  -->
+  <% Array(@error_messages).each do |msg| %>
+    <div class='row'><div class='alert alert-warning' role='alert'><%= msg %></div></div>
+  <% end %><!-- /.error message  -->
 </div><!-- /.container -->
+
 
 <footer>
   <div class="container">

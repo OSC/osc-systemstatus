@@ -1,7 +1,8 @@
 require 'sinatra'
 require 'ood_core'
-require 'moab'
-
+require 'rexml/document'
+require 'open3'
+require 'pathname'
 Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
 
 # more details see ood_appkit lib/ood_appkit/configuration.rb
@@ -31,6 +32,7 @@ helpers do
   def public_url
      ENV['OOD_PUBLIC_URL'] || "/public"
   end
+  
 end
 
 get '/clusters/:id' do
@@ -50,6 +52,8 @@ get '/' do
 end
 
 get '/clusters' do
+  @clusters = CLUSTERS.map { |cluster| MoabShowqClient.new(cluster).setup }
+  @error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact 
   erb :index
 end
 

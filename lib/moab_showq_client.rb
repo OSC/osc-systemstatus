@@ -4,7 +4,7 @@
 # @version 0.1.0
 class MoabShowqClient
 
-  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
+  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail, :error_message, :cluster_id, :cluster_title, :friendly_error_message
 
   # Set the object to the server.
   #
@@ -13,34 +13,56 @@ class MoabShowqClient
   # @return [MoabShowqClient] self
   def initialize(cluster)
     @server = cluster.custom_config[:moab]
+    @cluster_id = cluster.id
+    @cluster_title = cluster.metadata.title || cluster.id.titleize
     self
   end
 
   def setup
-    scheduler = Moab::Scheduler.new(
-      host: @server['host'],
-      lib: @server['lib'],
-      bin: @server['bin'],
-      moabhomedir: @server['homedir']
-    )
+    doc = REXML::Document.new(showq_summary_xml)
+    self.active_jobs = doc.root.elements["queue[@option='active']"].attributes["count"].to_i
+    self.eligible_jobs = doc.root.elements["queue[@option='eligible']"].attributes["count"].to_i
+    self.blocked_jobs = doc.root.elements["queue[@option='blocked']"].attributes["count"].to_i
 
-    showqxdoc = scheduler.call('showq')
-
-    self.active_jobs = showqxdoc.at_xpath('//queue[@option="active"]/@count').value.to_i
-    self.eligible_jobs = showqxdoc.at_xpath('//queue[@option="eligible"]/@count').value.to_i
-    self.blocked_jobs = showqxdoc.at_xpath('//queue[@option="blocked"]/@count').value.to_i
-
-    cluster = showqxdoc.xpath("//cluster")
-    self.procs_used = cluster.attribute('LocalAllocProcs').value.to_i
-    self.procs_avail = cluster.attribute('LocalUpProcs').value.to_i
-    self.nodes_used = cluster.attribute('LocalActiveNodes').value.to_i
-    self.nodes_avail = cluster.attribute('LocalUpNodes').value.to_i
+    self.procs_used = doc.root.elements["cluster"].attributes["LocalAllocProcs"].to_i
+    self.procs_avail = doc.root.elements["cluster"].attributes["LocalUpProcs"].to_i
+    self.nodes_used = doc.root.elements["cluster"].attributes["LocalActiveNodes"].to_i 
+    self.nodes_avail = doc.root.elements["cluster"].attributes["LocalUpNodes"].to_i
     self
-  rescue
+  rescue => e
     # TODO Add logging and a flash message that was removed from the controller
-    MoabShowqClientNotAvailable.new
+    MoabShowqClientNotAvailable.new(cluster_id, cluster_title, e)
+  end
+  
+  # Return moab lib pathname
+  def moab_lib
+    Pathname.new(@server['lib'].to_s)
+  end
+  
+  # Return moab bin pathname
+  def moab_bin
+    Pathname.new(@server['bin'].to_s)
+  end
+  
+  # Return moab home directory pathname
+  def moab_home 
+    Pathname.new(@server['homedir'].to_s)
   end
 
+  # Return 'showq -s --xml' output in xml format
+  def showq_summary_xml
+    cmd = moab_bin.join("showq").to_s
+    args = ["-s", "--host=#{@server['host']}", "--xml"]
+    env= {
+        "LD_LIBRARY_PATH" => "#{moab_lib}:#{ENV['LD_LIBRARY_PATH']}",
+        "MOABHOMEDIR" => "#{moab_home}"
+     }.merge(env.to_h)
+    o, e, s = Open3.capture3(env, cmd, *args)
+    s.success? ? o : raise(CommandFailed, e)
+  rescue Errno::ENOENT => e
+    raise InvalidCommand, e.message
+  end
+  
   # Return the active jobs as percent of available jobs
   #
   # @return [Float] The percentage active as float
@@ -75,10 +97,17 @@ class MoabShowqClient
   def nodes_percent
     (nodes_used.to_f / nodes_avail.to_f) * 100
   end
+  
+  # Return cluster title + error message
+  #
+  # @return nil or constructed error message
+  def friendly_error_message
+      error_message.nil? ? nil : "#{cluster_title} Cluster: #{error_message}"
+  end
 
   private
 
-    attr_writer :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail
+    attr_writer :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail,:error_message, :cluster_id, :cluster_title
 
     # assign 0 if the input is nil or empty
     def assign(match_string)
