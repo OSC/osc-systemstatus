@@ -2,7 +2,7 @@
 <!-- node status on /clusters page -->
 <% @clusters.each_with_index do |cluster, index | %>   
       <div class="<%= 'col-sm-offset-3' if index == @clusters.count - 1 && @clusters.count.odd? %> col-sm-6 col-xs-12">
-          <a href = "<%= url("/clusters/#{cluster.cluster_id}") %>">
+          <a href = "<%= url("/clusters/#{cluster.cluster_id}/hour") %>">
             <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
               <h4><strong><%= cluster.cluster_title %> Cluster Status</strong></h4>
               <%= erb :_node_status, :locals => { :showqer => cluster } %>

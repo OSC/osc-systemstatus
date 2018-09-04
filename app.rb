@@ -35,15 +35,21 @@ helpers do
   
 end
 
-get '/clusters/:id' do
-  id=params[:id].to_sym
-  cluster = CLUSTERS[id]
+get '/clusters/:id/:time' do
+  @id=params[:id].to_sym
+  @time=params[:time]
+  cluster = CLUSTERS[@id]
   if cluster.nil?
     raise Sinatra::NotFound
   else
-    @ganglia = Ganglia.new(cluster)
+    @ganglia = eval("(Ganglia.new(cluster)).#{@time}")
     erb :system_status
   end
+end
+
+# redirect to /clusters page
+get '/clusters/:id' do
+  redirect(url("/clusters/#{params[:id]}/hour"))
 end
 
 # redirect to /clusters page

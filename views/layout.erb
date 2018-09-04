@@ -77,6 +77,10 @@
       margin-top: 28px;
     }
   </style>
+  <script src="<%= url("/turbolinks-5.2.0/turbolinks.js") %>"></script>
+  <script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
+  <script type="text/javascript" src="<%= url("/uri-1.18.4/URI.min.js") %>"></script>
+  <script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
 </head>
 <body>
 
@@ -104,7 +108,7 @@
         <ul class="nav navbar-nav">
           <% CLUSTERS.each do |cluster| %>
               <li class="<%= 'active' if @ganglia && @ganglia.server_id == cluster.id %>">
-                <a href="<%= url("/clusters/#{cluster.id}") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
+                <a href="<%= url("/clusters/#{cluster.id}/hour") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
               </li>
           <% end %>
         </ul>
@@ -138,26 +142,16 @@
     </div>
   </div><!-- /.container -->
 </footer>
-
-<script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
-<script type="text/javascript" src="<%= url("/uri-1.18.4/URI.min.js") %>"></script>
-<script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
 <script>
 $('[data-toggle="tooltip"]').tooltip();
 // update cluster information graphs every 5 seconds
 setTimeout($(".updateable:visible").each(function(){
    return this.src = URI(this.src).setSearch("timestamp", (new Date).getTime()).toString();
 }),5000);
-function update_large_graph(graph, count){
-  $("#large-image".concat(count)).replaceWith("<img id="+"large-image".concat(count)+ ">");
-  $("#large-image".concat(count)).attr({src : graph,class: 'img-responsive center-block updateable'});
-
-  sessionStorage.setItem('default_graph', document.getElementById('large-image'.concat(count)).getAttribute("src"));
-//   if(sessionStorage['default_graph']){
-  console.log(sessionStorage['default_graph'])
-  console.log($('#large-image'+count))
- }
-// }
+function update_large_graph(graph){
+  $("#large-image").replaceWith("<img id='large-image'>");
+  $("#large-image").attr({src: graph,class: 'img-responsive center-block updateable'});
+}
 </script>
 
 </body>
