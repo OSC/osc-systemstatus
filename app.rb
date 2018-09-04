@@ -34,7 +34,7 @@ helpers do
   end
   
   def graph_types
-      {:hour => 'Hour',:two_hours => '2 Hours',:four_hours => '4 Hours',:day => 'Day',:week => 'Week',:month => 'Month',:year => 'Year'}
+      {:hour => 'Hour', :two_hours => '2 Hours', :four_hours => '4 Hours', :day => 'Day', :week => 'Week', :month => 'Month', :year => 'Year'}
   end
 end
 
