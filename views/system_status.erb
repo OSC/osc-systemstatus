@@ -14,25 +14,25 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="hour">
-                <%= erb :_system_large, :locals => { :ganglia => @ganglia.hour }%>
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.hour, :count =>0 }%>
             </div>
             <div role="tabpanel" class="tab-pane" id="twohour">
-                <%= erb :_system_large, :locals => { :ganglia => @ganglia.two_hours }%>
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.two_hours, :count =>1 }%>
             </div>
             <div role="tabpanel" class="tab-pane" id="fourhour">
-                <%= erb :_system_large, :locals => { :ganglia => @ganglia.four_hours }%>
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.four_hours, :count =>2 }%>
             </div>
             <div role="tabpanel" class="tab-pane" id="day">
-                <%= erb :_system_large, :locals => { :ganglia => @ganglia.day }%>
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.day, :count =>3 }%>
             </div>
             <div role="tabpanel" class="tab-pane" id="week">
-                <%= erb :_system_large, :locals => { :ganglia => @ganglia.week }%>
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.week, :count =>4 }%>
             </div>
             <div role="tabpanel" class="tab-pane" id="month">
-                <%= erb :_system_large, :locals => { :ganglia => @ganglia.month }%>
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.month, :count =>5 }%>
             </div>
             <div role="tabpanel" class="tab-pane" id="year">
-                <%= erb :_system_large, :locals => { :ganglia => @ganglia.year }%>
+                <%= erb :_system_large, :locals => { :ganglia => @ganglia.year, :count =>6 }%>
             </div>
         </div>
     </div>

@@ -148,6 +148,16 @@ $('[data-toggle="tooltip"]').tooltip();
 setTimeout($(".updateable:visible").each(function(){
    return this.src = URI(this.src).setSearch("timestamp", (new Date).getTime()).toString();
 }),5000);
+function update_large_graph(graph, count){
+  $("#large-image".concat(count)).replaceWith("<img id="+"large-image".concat(count)+ ">");
+  $("#large-image".concat(count)).attr({src : graph,class: 'img-responsive center-block updateable'});
+
+  sessionStorage.setItem('default_graph', document.getElementById('large-image'.concat(count)).getAttribute("src"));
+//   if(sessionStorage['default_graph']){
+  console.log(sessionStorage['default_graph'])
+  console.log($('#large-image'+count))
+ }
+// }
 </script>
 
 </body>
