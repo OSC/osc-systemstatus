@@ -3,13 +3,9 @@
     <div id="time-tabs">
       <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified" id="<%= @time %>_tabs" role="tablist">
-            <li role="presentation" class="<%= "active" if @time == "hour" %>"><a href="<%= url("/clusters/#{@id}/hour") %>">Hour</a></li>
-            <li role="presentation" class="<%= "active" if @time == "two_hours" %>"><a href="<%= url("/clusters/#{@id}/two_hours") %>">2 Hours</a></li>
-            <li role="presentation" class="<%= "active" if @time == "four_hours" %>"><a href="<%= url("/clusters/#{@id}/four_hours") %>">4 Hours</a></li>
-            <li role="presentation" class="<%= "active" if @time == "day" %>"><a href="<%= url("/clusters/#{@id}/day") %>">Day</a></li>
-            <li role="presentation" class="<%= "active" if @time == "week" %>"><a href="<%= url("/clusters/#{@id}/week") %>">Week</a></li>
-            <li role="presentation" class="<%= "active" if @time == "month" %>"><a href="<%= url("/clusters/#{@id}/month") %>">Month</a></li>
-            <li role="presentation" class="<%= "active" if @time == "year" %>"><a href="<%= url("/clusters/#{@id}/year") %>">Year</a></li>
+            <% graph_types.each do |key, value| %>
+                <li role="presentation" class="<%= "active" if @time == key %>"><a href="<%= url("/clusters/#{@id}/#{key}") %>"><%= value %></a></li>
+            <% end %>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">

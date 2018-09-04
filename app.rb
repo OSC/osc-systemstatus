@@ -33,11 +33,14 @@ helpers do
      ENV['OOD_PUBLIC_URL'] || "/public"
   end
   
+  def graph_types
+      {:hour => 'Hour',:two_hours => '2 Hours',:four_hours => '4 Hours',:day => 'Day',:week => 'Week',:month => 'Month',:year => 'Year'}
+  end
 end
 
 get '/clusters/:id/:time' do
   @id=params[:id].to_sym
-  @time=params[:time]
+  graph_types.keys.include?(params[:time].to_sym) ? @time=params[:time].to_sym : @time="hour".to_sym
   cluster = CLUSTERS[@id]
   if cluster.nil?
     raise Sinatra::NotFound
@@ -47,8 +50,13 @@ get '/clusters/:id/:time' do
   end
 end
 
-# redirect to /clusters page
+# redirect to /clusters/:id/hour page
 get '/clusters/:id' do
+  redirect(url("/clusters/#{params[:id]}/hour"))
+end
+
+# redirect to /clusters/:id/hour page
+get '/clusters/:id/' do
   redirect(url("/clusters/#{params[:id]}/hour"))
 end
 
