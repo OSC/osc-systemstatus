@@ -1,0 +1,27 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    mustermann (1.0.3)
+    ood_core (0.5.1)
+      ood_support (~> 0.0.2)
+    ood_support (0.0.3)
+    rack (2.0.5)
+    rack-protection (2.0.3)
+      rack
+    rdoc (6.0.4)
+    sdoc (1.0.0)
+      rdoc (>= 5.0)
+    sinatra (2.0.3)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.3)
+      tilt (~> 2.0)
+    tilt (2.0.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ood_core (~> 0.1)
+  sdoc
+  sinatra

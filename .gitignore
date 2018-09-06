@@ -24,4 +24,3 @@
 /public/.htaccess
 /.env.local*
 /vendor/bundle
-/Gemfile.lock
