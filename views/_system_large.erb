@@ -4,7 +4,7 @@
     <% graph_types.each do |key, value| %>
         <div class="col-sm-3 col-xs-6">
             <a href="<%= url("/clusters/#{@id}/#{@time}/#{key}") %>">
-                <div class="panel panel-default panel-clickable">
+                <div class="panel panel-default panel-clickable <%= "active" if @type == key %>">
                     <div class="panel-heading"><h4 class="panel-title"><%= value %></h4></div>
                     <div class="panel-body">
                       <img class='img-responsive center-block updateable' src='<%= eval("ganglia.small.#{key}.png") %>' alt='Graph'>

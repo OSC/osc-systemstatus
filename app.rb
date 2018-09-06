@@ -17,10 +17,6 @@ rescue OodCore::ConfigurationNotFound
 end
 
 helpers do
-  def h(text)
-    Rack::Utils.escape_html(text)
-  end
-
   def dashboard_title
     ENV['OOD_DASHBOARD_TITLE'] || "Open OnDemand"
   end
