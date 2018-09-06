@@ -49,7 +49,7 @@
       background-color: #c1cdf0;
       border-color: #6c75f0;
     }
-    .panel-clickable:active {
+    .panel-clickable.active {
       background-color: #6c75f0;
       border-color: #6c75f0;
     }
@@ -77,6 +77,11 @@
       margin-top: 28px;
     }
   </style>
+  <script src="<%= url("/turbolinks-5.2.0/turbolinks.js") %>"></script>
+  <script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
+  <script type="text/javascript" src="<%= url("/uri-1.18.4/URI.min.js") %>"></script>
+  <script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
+  <meta name="turbolinks-root" content="<%=url("/")%>">
 </head>
 <body>
 
@@ -104,7 +109,7 @@
         <ul class="nav navbar-nav">
           <% CLUSTERS.each do |cluster| %>
               <li class="<%= 'active' if @ganglia && @ganglia.server_id == cluster.id %>">
-                <a href="<%= url("/clusters/#{cluster.id}") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
+                <a href="<%= url("/clusters/#{cluster.id}/hour/report_moab_nodes") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
               </li>
           <% end %>
         </ul>
@@ -138,10 +143,6 @@
     </div>
   </div><!-- /.container -->
 </footer>
-
-<script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
-<script type="text/javascript" src="<%= url("/uri-1.18.4/URI.min.js") %>"></script>
-<script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
 <script>
 $('[data-toggle="tooltip"]').tooltip();
 // update cluster information graphs every 5 seconds

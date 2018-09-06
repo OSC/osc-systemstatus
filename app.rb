@@ -17,10 +17,6 @@ rescue OodCore::ConfigurationNotFound
 end
 
 helpers do
-  def h(text)
-    Rack::Utils.escape_html(text)
-  end
-
   def dashboard_title
     ENV['OOD_DASHBOARD_TITLE'] || "Open OnDemand"
   end
@@ -33,17 +29,32 @@ helpers do
      ENV['OOD_PUBLIC_URL'] || "/public"
   end
   
+  def graph_time
+      {:hour => 'Hour', :two_hours => '2 Hours', :four_hours => '4 Hours', :day => 'Day', :week => 'Week', :month => 'Month', :year => 'Year'}
+  end
+  
+  def graph_types
+    {:report_moab_nodes => 'Nodes', :report_moab_jobs => 'Jobs', :report_load => 'Load', :report_network => 'Network'}
+  end
 end
 
-get '/clusters/:id' do
-  id=params[:id].to_sym
-  cluster = CLUSTERS[id]
+get '/clusters/:id/:time/:type' do
+  @id=params[:id].to_sym
+  graph_time.keys.include?(params[:time].to_sym) ? @time=params[:time].to_sym : @time=:hour
+  graph_types.keys.include?(params[:type].to_sym) ? @type=params[:type].to_sym : @type=:report_moab_nodes
+  cluster = CLUSTERS[@id]
   if cluster.nil?
     raise Sinatra::NotFound
   else
-    @ganglia = Ganglia.new(cluster)
+    @ganglia = Ganglia.new(cluster).send(@time)
     erb :system_status
   end
+end
+
+
+# redirect to /clusters/:id/hour/report_moab_nodes page
+get '/clusters/:id*' do
+  redirect(url("/clusters/#{params[:id]}/hour/report_moab_nodes"))
 end
 
 # redirect to /clusters page

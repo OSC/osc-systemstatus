@@ -1,45 +1,23 @@
 <!-- graphs for cluster's system status -->
-<% @count.nil? ? @count = 0 : @count+=1 %>
 <div class="row">&nbsp;</div>
 <div class="row">
-    <div class="col-sm-3 col-xs-6">
-        <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('<img  id=large-image#{@count} >'); "+"$('#large-image#{@count}').attr({src : '#{h ganglia.report_moab_nodes.size(800,250).png }',class: 'img-responsive center-block updateable'});" %>">
-            <div class="panel-heading"><h4 class="panel-title">Nodes</h4></div>
-            <div class="panel-body">
-              <img class='img-responsive center-block updateable' src='<%= h ganglia.small.report_moab_nodes.png %>' alt='Graph' onclick="<%= "$('#large-image#{@count}').replaceWith('<img  id=large-image#{@count} >'); "+"$('#large-image#{@count}').attr({src : '#{h ganglia.size(800,250).png }',class: 'img-responsive center-block updateable'});" %>">
-            </div>
+    <% graph_types.each do |key, value| %>
+        <div class="col-sm-3 col-xs-6">
+            <a href="<%= url("/clusters/#{@id}/#{@time}/#{key}") %>">
+                <div class="panel panel-default panel-clickable <%= "active" if @type == key %>">
+                    <div class="panel-heading"><h4 class="panel-title"><%= value %></h4></div>
+                    <div class="panel-body">
+                      <img class='img-responsive center-block updateable' src='<%=  ganglia.small.send(key).png %>' alt='Graph'>
+                    </div>
+                </div>
+            </a>
         </div>
-    </div>
-    <div class="col-sm-3 col-xs-6">
-        <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('<img  id=large-image#{@count} >'); "+"$('#large-image#{@count}').attr({src : '#{h ganglia.report_moab_jobs.size(800,250).png }',class: 'img-responsive center-block updateable'});" %>">
-            <div class="panel-heading"><h4 class="panel-title">Jobs</h4></div>
-            <div class="panel-body">
-              <img class='img-responsive center-block updateable' src='<%= h ganglia.small.report_moab_jobs.png %>' alt="Graph" onclick="<%= "$('#large-image#{@count}').replaceWith('<img  id=large-image#{@count} >'); "+"$('#large-image#{@count}').attr({src : '#{h ganglia.size(800,250).png }',class: 'img-responsive center-block updateable'});" %>">
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-3 col-xs-6">
-        <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('<img  id=large-image#{@count} >'); "+"$('#large-image#{@count}').attr({src : '#{h ganglia.report_load.size(800,250).png }',class: 'img-responsive center-block updateable'});" %>">
-            <div class="panel-heading"><h4 class="panel-title">Load</h4></div>
-            <div class="panel-body">
-                <img class='img-responsive center-block updateable' src='<%= h ganglia.small.report_load.png %>' alt="Graph" onclick="<%= "$('#large-image#{@count}').replaceWith('<img  id=large-image#{@count} >'); "+"$('#large-image#{@count}').attr({src : '#{h ganglia.size(800,250).png }',class: 'img-responsive center-block updateable'});" %>">
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-3 col-xs-6">
-        <div class="panel panel-default panel-clickable" onclick="<%= "$('#large-image#{@count}').replaceWith('<img  id=large-image#{@count} >'); "+"$('#large-image#{@count}').attr({src : '#{h ganglia.report_network.size(800,250).png }',class: 'img-responsive center-block updateable'});" %>">
-            <div class="panel-heading"><h4 class="panel-title">Network</h4></div>
-            <div class="panel-body">
-                <img class='img-responsive center-block updateable' src='<%= h ganglia.small.report_network.png %>' alt='Graph' onclick="<%= "$('#large-image#{@count}').replaceWith('<img  id=large-image#{@count} >'); "+"$('#large-image#{@count}').attr({src : '#{h ganglia.size(800,250).png }',class: 'img-responsive center-block updateable'});" %>">
-            </div>
-        </div>
-    </div>
-</div>
+    <% end %>
 <div class="row">
     <div class="col-sm-12">
         <div class=" panel panel-default">
             <div class="panel-body" id="large-status">
-                <img src='<%= h ganglia.report_moab_nodes.size(800,250).png %>' class='img-responsive center-block updateable' id='large-image<%=@count %>' >
+                <img src='<%= ganglia.send(@type).size(800, 250).png %>' class='img-responsive center-block updateable' id='large-image'  alt='largeGraph'>
             </div>
         </div>
     </div>
