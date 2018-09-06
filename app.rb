@@ -46,7 +46,7 @@ get '/clusters/:id/:time/:type' do
   if cluster.nil?
     raise Sinatra::NotFound
   else
-    @ganglia = eval("(Ganglia.new(cluster)).#{@time}")
+    @ganglia = Ganglia.new(cluster).send(@time)
     erb :system_status
   end
 end

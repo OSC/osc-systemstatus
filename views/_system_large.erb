@@ -7,7 +7,7 @@
                 <div class="panel panel-default panel-clickable <%= "active" if @type == key %>">
                     <div class="panel-heading"><h4 class="panel-title"><%= value %></h4></div>
                     <div class="panel-body">
-                      <img class='img-responsive center-block updateable' src='<%= eval("ganglia.small.#{key}.png") %>' alt='Graph'>
+                      <img class='img-responsive center-block updateable' src='<%=  ganglia.small.send(key).png %>' alt='Graph'>
                     </div>
                 </div>
             </a>
@@ -17,7 +17,7 @@
     <div class="col-sm-12">
         <div class=" panel panel-default">
             <div class="panel-body" id="large-status">
-                <img src='<%= eval("ganglia.#{@type}.size(800,250).png")  %>' class='img-responsive center-block updateable' id='large-image'  alt='largeGraph'>
+                <img src='<%= ganglia.send(@type).size(800, 250).png %>' class='img-responsive center-block updateable' id='large-image'  alt='largeGraph'>
             </div>
         </div>
     </div>
