@@ -40,8 +40,8 @@ end
 
 get '/clusters/:id/:time/:type' do
   @id=params[:id].to_sym
-  graph_time.keys.include?(params[:time].to_sym) ? @time=params[:time].to_sym : @time="hour".to_sym
-  graph_types.keys.include?(params[:type].to_sym) ? @type=params[:type].to_sym : @type="report_moab_nodes".to_sym
+  graph_time.keys.include?(params[:time].to_sym) ? @time=params[:time].to_sym : @time=:hour
+  graph_types.keys.include?(params[:type].to_sym) ? @type=params[:type].to_sym : @type=:report_moab_nodes
   cluster = CLUSTERS[@id]
   if cluster.nil?
     raise Sinatra::NotFound
