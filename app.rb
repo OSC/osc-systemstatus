@@ -33,14 +33,19 @@ helpers do
      ENV['OOD_PUBLIC_URL'] || "/public"
   end
   
-  def graph_types
+  def graph_time
       {:hour => 'Hour', :two_hours => '2 Hours', :four_hours => '4 Hours', :day => 'Day', :week => 'Week', :month => 'Month', :year => 'Year'}
+  end
+  
+  def graph_types
+    {:report_moab_nodes => 'Nodes', :report_moab_jobs => 'Jobs', :report_load => 'Load', :report_network => 'Network'}
   end
 end
 
-get '/clusters/:id/:time' do
+get '/clusters/:id/:time/:type' do
   @id=params[:id].to_sym
-  graph_types.keys.include?(params[:time].to_sym) ? @time=params[:time].to_sym : @time="hour".to_sym
+  graph_time.keys.include?(params[:time].to_sym) ? @time=params[:time].to_sym : @time="hour".to_sym
+  graph_types.keys.include?(params[:type].to_sym) ? @type=params[:type].to_sym : @type="report_moab_nodes".to_sym
   cluster = CLUSTERS[@id]
   if cluster.nil?
     raise Sinatra::NotFound
@@ -50,14 +55,10 @@ get '/clusters/:id/:time' do
   end
 end
 
-# redirect to /clusters/:id/hour page
-get '/clusters/:id' do
-  redirect(url("/clusters/#{params[:id]}/hour"))
-end
 
-# redirect to /clusters/:id/hour page
-get '/clusters/:id/' do
-  redirect(url("/clusters/#{params[:id]}/hour"))
+# redirect to /clusters/:id/hour/report_moab_nodes page
+get '/clusters/:id*' do
+  redirect(url("/clusters/#{params[:id]}/hour/report_moab_nodes"))
 end
 
 # redirect to /clusters page

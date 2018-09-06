@@ -3,8 +3,8 @@
     <div id="time-tabs">
       <!-- Nav tabs -->
         <ul class="nav nav-tabs nav-justified" id="<%= @time %>_tabs" role="tablist">
-            <% graph_types.each do |key, value| %>
-                <li role="presentation" class="<%= "active" if @time == key %>"><a href="<%= url("/clusters/#{@id}/#{key}") %>"><%= value %></a></li>
+            <% graph_time.each do |key, value| %>
+                <li role="presentation" class="<%= "active" if @time == key %>"><a href="<%= url("/clusters/#{@id}/#{key}/#{@type}") %>"><%= value %></a></li>
             <% end %>
         </ul>
         <!-- Tab panes -->

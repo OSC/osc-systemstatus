@@ -108,7 +108,7 @@
         <ul class="nav navbar-nav">
           <% CLUSTERS.each do |cluster| %>
               <li class="<%= 'active' if @ganglia && @ganglia.server_id == cluster.id %>">
-                <a href="<%= url("/clusters/#{cluster.id}/hour") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
+                <a href="<%= url("/clusters/#{cluster.id}/hour/report_moab_nodes") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
               </li>
           <% end %>
         </ul>
