@@ -145,9 +145,13 @@
 </footer>
 <script>
 // update cluster information graphs every 5 seconds
-setTimeout($(".updateable:visible").each(function(){
-   return this.src = URI(this.src).setSearch("timestamp", (new Date).getTime()).toString();
-}),5000);
+//TODO: this won't work in turbolinks; rather setInterval and clearInterval
+//      would need to be set during appropriate turbolinks events
+//setInterval(function(){
+//    $(".updateable:visible").each(function(){
+//      this.src = URI(this.src).setSearch("timestamp", (new Date).getTime()).toString();
+//    });
+//}, 5000);
 </script>
 
 </body>
