@@ -6,15 +6,15 @@ GEM
       ood_support (~> 0.0.2)
     ood_support (0.0.3)
     rack (2.0.5)
-    rack-protection (2.0.3)
+    rack-protection (2.0.4)
       rack
     rdoc (6.0.4)
     sdoc (1.0.0)
       rdoc (>= 5.0)
-    sinatra (2.0.3)
+    sinatra (2.0.4)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.3)
+      rack-protection (= 2.0.4)
       tilt (~> 2.0)
     tilt (2.0.8)
 
@@ -25,3 +25,6 @@ DEPENDENCIES
   ood_core (~> 0.1)
   sdoc
   sinatra
+
+BUNDLED WITH
+   1.13.7
