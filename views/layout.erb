@@ -22,7 +22,7 @@
       /* Internet Explorer 5.5+ */
     }
     /* Base styles */
-    div a .bs-callout {
+    div .bs-callout {
       margin: 20px 0;
       padding: 15px 30px 15px 15px;
       border-left: 5px solid #eee;
@@ -39,7 +39,7 @@
     .bs-callout code, .bs-callout .highlight {
       background-color: #fff;
     }
-    div a .bs-callout-info {
+    div .bs-callout-info {
       background-color: #f0f7fd;
       border-color: #d0e3f0;
     }
@@ -53,6 +53,9 @@
     .panel-clickable.active {
       background-color: #6c75f0;
       border-color: #6c75f0;
+    }
+    .panel-unclickable {
+      cursor: default;
     }
     a:-webkit-any-link {
       text-decoration: none !important;
@@ -107,7 +110,7 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <% CLUSTERS.each do |cluster| %>
+          <% GANGLIA_CLUSTERS.each do |cluster| %>
               <li class="<%= 'active' if @ganglia && @ganglia.server_id == cluster.id %>">
                 <a href="<%= url("/clusters/#{cluster.id}/hour/report_moab_nodes") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
               </li>

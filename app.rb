@@ -7,9 +7,13 @@ Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
 
 # more details see ood_appkit lib/ood_appkit/configuration.rb
 begin
-  CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
+  GANGLIA_CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
             .select { |c| c.custom_config[:moab] }
             .select { |c| c.custom_config[:ganglia] }
+            .reject { |c| c.metadata.hidden }
+          )
+   CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
+            .select { |c| c.custom_config[:moab] }
             .reject { |c| c.metadata.hidden }
           )
 rescue OodCore::ConfigurationNotFound
@@ -42,7 +46,7 @@ get '/clusters/:id/:time/:type' do
   @id=params[:id].to_sym
   graph_time.keys.include?(params[:time].to_sym) ? @time=params[:time].to_sym : @time=:hour
   graph_types.keys.include?(params[:type].to_sym) ? @type=params[:type].to_sym : @type=:report_moab_nodes
-  cluster = CLUSTERS[@id]
+  cluster = GANGLIA_CLUSTERS[@id]
   if cluster.nil?
     raise Sinatra::NotFound
   else
