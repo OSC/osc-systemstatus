@@ -3,7 +3,10 @@ require 'ood_core'
 require 'rexml/document'
 require 'open3'
 require 'pathname'
-Dir[File.dirname(__FILE__) + "/lib/*.rb"].each {|file| require_relative file }
+
+require_relative 'lib/moab_showq_client'
+require_relative 'lib/moab_showq_client_not_available'
+require_relative 'lib/ganglia'
 
 # more details see ood_appkit lib/ood_appkit/configuration.rb
 begin
