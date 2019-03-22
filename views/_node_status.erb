@@ -1,5 +1,5 @@
 <!-- node status panel -->
-<a href = "<%= url("/clusters/#{showqer.cluster_id}/hour/report_moab_nodes") %>">
+<a href = "<%= url("/clusters/#{showqer.cluster_id}/hour/report_moab_nodes") if clickable %>">
     <div class="panel panel-default bs-callout bs-callout-info text-center <%= clickable ? 'panel-clickable' : 'panel-unclickable' %>">
         <h4><strong><%= showqer.cluster_title %> Cluster Status</strong></h4>
         <!-- node status progressbar -->
