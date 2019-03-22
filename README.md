@@ -8,7 +8,7 @@ This app displays the current system status of available system clusters.
 2. Install the app for a production environment.
 
     ```bash
-    RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
+    RAILS_ENV=production scl enable git19 rh-ruby24 rh-nodejs6  -- bin/setup
     ```
 
 ### Deployment at OSC
