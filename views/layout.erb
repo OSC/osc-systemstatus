@@ -46,16 +46,18 @@
     .img-responsive {
       min-width: 100%;
     }
-    .panel-clickable:hover {
+    .clickable .panel:hover {
       background-color: #c1cdf0;
       border-color: #6c75f0;
     }
-    .panel-clickable.active {
+    .clickable .panel.active {
       background-color: #6c75f0;
       border-color: #6c75f0;
     }
-    .panel-unclickable {
+    .unclickable {
       cursor: default;
+      text-decoration: none !important;
+      pointer-events: none;
     }
     a:-webkit-any-link {
       text-decoration: none !important;

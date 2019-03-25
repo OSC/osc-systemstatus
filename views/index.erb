@@ -1,9 +1,15 @@
 <div class="row">
 <!-- node status on /clusters page -->
 <% @clusters.each_with_index do |cluster, index | %>   
-      <div class="<%= 'col-sm-offset-3' if index == @clusters.count - 1 && @clusters.count.odd? %> col-sm-6 col-xs-12">
-          <%= erb :_node_status, :locals => { :showqer => cluster, :clickable => !GANGLIA_CLUSTERS[cluster.cluster_id].nil? } %>
-      </div>
+    <div class="<%= 'col-sm-offset-3' if index == @clusters.count - 1 && @clusters.count.odd? %> col-sm-6 col-xs-12">
+        <!-- node status panel -->
+        <a class="<%= GANGLIA_CLUSTERS[cluster.cluster_id].nil? ? "unclickable" : "clickable" %>" href="<%= url("/clusters/#{cluster.cluster_id}/hour/report_moab_nodes") %>">
+            <div class="panel panel-default bs-callout bs-callout-info text-center">
+                <h4><strong><%= cluster.cluster_title %> Cluster Status</strong></h4>
+                <%= erb :_node_status, :locals => { :showqer => cluster} %>
+            </div>
+        </a>
+    </div>
 <% end %>
 </div>
 

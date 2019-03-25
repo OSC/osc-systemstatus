@@ -1,37 +1,31 @@
-<!-- node status panel -->
-<a href = "<%= url("/clusters/#{showqer.cluster_id}/hour/report_moab_nodes") if clickable %>">
-    <div class="panel panel-default bs-callout bs-callout-info text-center <%= clickable ? 'panel-clickable' : 'panel-unclickable' %>">
-        <h4><strong><%= showqer.cluster_title %> Cluster Status</strong></h4>
-        <!-- node status progressbar -->
-        <div><%= showqer.nodes_used %> of <%= showqer.nodes_avail %> Nodes Active</div>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width:<%= showqer.nodes_percent.round(2) %>%">
-                <%=(showqer.nodes_percent).round(2) %>%
-            </div>
-        </div>
-        <div><%= showqer.procs_used %> of <%= showqer.procs_avail %> Processors Active</div>
-        <div class="progress">
-            <div class="progress-bar" role="progressbar" style="width:<%= showqer.procs_percent.round(2) %>%">
-                <%= (showqer.procs_percent).round(2) %>%
-            </div>
-        </div>
-        <hr>
-        <div><h4><%= showqer.available_jobs %> Running or Queued Jobs <br><small>(and <%= showqer.blocked_jobs %> blocked jobs)</small></h4></div>
-        
-        <div class="row">
-          <div class="col-sm-2 col-xs-3">Running</div>
-          <div class="progress progress-custom">
-              <div class="progress-bar col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.active_percent*0.89 %>%"></div>
-              <div><%= showqer.active_jobs %></div>
-           </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-sm-2 col-xs-3">Queued</div>
-          <div class="progress progress-custom">
-             <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.eligible_percent*0.89 %>%"></div>
-             <div><%= showqer.eligible_jobs %></div>
-          </div>
-        </div>
+<!-- node status progressbar -->
+<div><%= showqer.nodes_used %> of <%= showqer.nodes_avail %> Nodes Active</div>
+<div class="progress">
+    <div class="progress-bar" role="progressbar" style="width:<%= showqer.nodes_percent.round(2) %>%">
+        <%=(showqer.nodes_percent).round(2) %>%
     </div>
-</a>
+</div>
+<div><%= showqer.procs_used %> of <%= showqer.procs_avail %> Processors Active</div>
+<div class="progress">
+    <div class="progress-bar" role="progressbar" style="width:<%= showqer.procs_percent.round(2) %>%">
+        <%= (showqer.procs_percent).round(2) %>%
+    </div>
+</div>
+<hr>
+<div><h4><%= showqer.available_jobs %> Running or Queued Jobs <br><small>(and <%= showqer.blocked_jobs %> blocked jobs)</small></h4></div>
+
+<div class="row">
+  <div class="col-sm-2 col-xs-3">Running</div>
+  <div class="progress progress-custom">
+      <div class="progress-bar col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.active_percent*0.89 %>%"></div>
+      <div><%= showqer.active_jobs %></div>
+   </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-2 col-xs-3">Queued</div>
+  <div class="progress progress-custom">
+     <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.eligible_percent*0.89 %>%"></div>
+     <div><%= showqer.eligible_jobs %></div>
+  </div>
+</div>
