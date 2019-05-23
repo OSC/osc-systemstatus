@@ -8,7 +8,7 @@ This app displays the current system status of available system clusters.
 2. Install the app for a production environment.
 
     ```bash
-    RAILS_ENV=production scl enable git19 rh-ruby22 nodejs010 -- bin/setup
+    RAILS_ENV=production scl enable rh-git29 rh-ruby24 rh-nodejs6 -- bin/setup
     ```
 
 ### Deployment at OSC
@@ -33,7 +33,7 @@ The object will build a string that can be used to request the desired report fr
 
 #### Server
 
-Initialize the Ganglia object with `Ganglia.new "servername"` where server name is the Ganglia ID of the monitored server.  
+Initialize the Ganglia object with `Ganglia.new "servername"` where server name is the Ganglia ID of the monitored server.
 
 #### Report Range
 
