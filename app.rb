@@ -5,6 +5,8 @@ require 'open3'
 require 'pathname'
 
 require_relative 'lib/moab_showq_client'
+require_relative 'lib/pbsnodes_client'
+require_relative 'lib/pbsnodes_client_not_available'
 require_relative 'lib/moab_showq_client_not_available'
 require_relative 'lib/ganglia'
 
@@ -21,7 +23,7 @@ end
 
 helpers do
   def dashboard_title
-    ENV['OOD_DASHBOARD_TITLE'] || "Open OnDemand"
+   ENV['OOD_DASHBOARD_TITLE'] || "Open OnDemand"
   end
 
   def dashboard_url
@@ -31,11 +33,11 @@ helpers do
   def public_url
      ENV['OOD_PUBLIC_URL'] || "/public"
   end
-  
+
   def graph_time
       {:hour => 'Hour', :two_hours => '2 Hours', :four_hours => '4 Hours', :day => 'Day', :week => 'Week', :month => 'Month', :year => 'Year'}
   end
-  
+
   def graph_types
     {:report_moab_nodes => 'Nodes', :report_moab_jobs => 'Jobs', :report_load => 'Load', :report_network => 'Network'}
   end
@@ -67,7 +69,8 @@ end
 
 get '/clusters' do
   @clusters = CLUSTERS.map { |cluster| MoabShowqClient.new(cluster).setup }
-  @error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact 
+  @error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact
+  @pbsnodes = CLUSTERS.map { |cluster| PBSNodesClient.new(cluster) }
   erb :index
 end
 

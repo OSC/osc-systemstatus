@@ -1,14 +1,20 @@
 <!-- node status progressbar -->
-<div><%= showqer.nodes_used %> of <%= showqer.nodes_avail %> Nodes Active</div>
+<div><%= showqer.nodes_used %> of <%= showqer.nodes_avail %> Nodes Active (<%= showqer.nodes_avail - showqer.nodes_used %> Nodes Free) </div>
 <div class="progress">
     <div class="progress-bar" role="progressbar" style="width:<%= showqer.nodes_percent.round(2) %>%">
         <%=(showqer.nodes_percent).round(2) %>%
     </div>
 </div>
-<div><%= showqer.procs_used %> of <%= showqer.procs_avail %> Processors Active</div>
+<div><%= showqer.procs_used %> of <%= showqer.procs_avail %> Processors Active (<%= showqer.procs_avail - showqer.procs_used %> Processors Free)</div>
 <div class="progress">
     <div class="progress-bar" role="progressbar" style="width:<%= showqer.procs_percent.round(2) %>%">
         <%= (showqer.procs_percent).round(2) %>%
+    </div>
+</div>
+<div><%= pbsnodes.gpus_used %> of <%= pbsnodes.gpus_available %> GPUs Active (<%= pbsnodes.gpus_available - pbsnodes.gpus_used %> GPUs Free)</div>
+<div class="progress">
+    <div class="progress-bar" role="progressbar" style="width:<%= pbsnodes.gpus_percent.round(2) %>%">
+        <%= (pbsnodes.gpus_percent).round(2) %>%
     </div>
 </div>
 <hr>
