@@ -1,6 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    metaclass (0.0.4)
+    minitest (5.11.3)
+    mocha (1.8.0)
+      metaclass (~> 0.0.1)
     mustermann (1.0.3)
     ood_core (0.5.1)
       ood_support (~> 0.0.2)
@@ -8,6 +12,7 @@ GEM
     rack (2.0.5)
     rack-protection (2.0.4)
       rack
+    rake (12.3.2)
     rdoc (6.0.4)
     sdoc (1.0.0)
       rdoc (>= 5.0)
@@ -22,7 +27,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  minitest
+  mocha
   ood_core (~> 0.1)
+  rake
   sdoc
   sinatra
 

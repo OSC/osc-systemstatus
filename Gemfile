@@ -1,3 +1,4 @@
+
 source 'https://rubygems.org'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 
@@ -7,4 +8,7 @@ group :doc do
 end
 
 gem "ood_core", "~> 0.1"
-gem 'sinatra'
+gem 'sinatra' 
+gem 'minitest'
+gem 'rake'
+gem 'mocha'
