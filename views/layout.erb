@@ -59,7 +59,7 @@
     }
     /* progress bar styling */
     .progress {
-      border-radius: 0px !important;
+      border-radius: 2px !important;
     }
     .progress-custom {
       margin-bottom: 0px !important;
@@ -82,6 +82,11 @@
   <script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
   <script type="text/javascript" src="<%= url("/uri-1.18.4/URI.min.js") %>"></script>
   <script src="<%= url("/bootstrap-3.3.7/js/bootstrap.min.js") %>"></script>
+  <script>
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    })
+  </script>
 </head>
 <body>
 
@@ -153,6 +158,5 @@
 //    });
 //}, 5000);
 </script>
-
 </body>
 </html>

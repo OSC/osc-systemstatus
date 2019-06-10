@@ -5,7 +5,7 @@
           <a href = "<%= url("/clusters/#{cluster.cluster_id}/hour/report_moab_nodes") %>">
             <div class="panel panel-default bs-callout bs-callout-info text-center panel-clickable">
               <h4><strong><%= cluster.cluster_title %> Cluster Status</strong></h4>
-              <%= erb :_node_status, :locals => { :showqer => cluster, :pbsnodes => @pbsnodes[index].setup } %>
+              <%= erb :_node_status, :locals => { :showqer => cluster, :gpustats => @gpustats[index].setup } %>
             </div>
 	      </a>
       </div>

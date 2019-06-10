@@ -5,8 +5,8 @@ require 'open3'
 require 'pathname'
 
 require_relative 'lib/moab_showq_client'
-require_relative 'lib/pbsnodes_client'
-require_relative 'lib/pbsnodes_client_not_available'
+require_relative 'lib/gpu_cluster_status'
+require_relative 'lib/gpu_cluster_status_not_available'
 require_relative 'lib/moab_showq_client_not_available'
 require_relative 'lib/ganglia'
 
@@ -70,7 +70,7 @@ end
 get '/clusters' do
   @clusters = CLUSTERS.map { |cluster| MoabShowqClient.new(cluster).setup }
   @error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact
-  @pbsnodes = CLUSTERS.map { |cluster| PBSNodesClient.new(cluster) }
+  @gpustats = CLUSTERS.map { |cluster| GPUClusterStatus.new(cluster) }
   erb :index
 end
 

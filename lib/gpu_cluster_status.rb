@@ -1,6 +1,7 @@
 # Utility class for getting numerical data regarding GPU usage in the set of clusters that allow job submission using pbsnodes & info_all
 #
 # @author Kinan AlAttar
+require_relative 'moab_showq_client'
 
 class GPUClusterStatus < MoabShowqClient
 
@@ -40,7 +41,7 @@ class GPUClusterStatus < MoabShowqClient
     # Defines a method for writing a pbsnodes command line to a terminal.
     #
     # @param cluster_server [String]
-    def gpu_states(cluster_server)
+    def pbsnodes(cluster_server)
         cmd = pbs_bin.join("pbsnodes").to_s
         args = ["-s", cluster_server, ":gpu"]
         o, e, s = Open3.capture3(cmd, *args)
@@ -51,7 +52,7 @@ class GPUClusterStatus < MoabShowqClient
 
     # @return [String] Information regarding cluster nodes
     def nodes_info
-      gpu_states(@cluster_title.downcase + "-batch.ten.osc.edu")
+      pbsnodes(@cluster_title.downcase + "-batch.ten.osc.edu")
     end
 
     # Calculate total number of GPUs on a cluster
