@@ -8,7 +8,8 @@ group :doc do
 end
 
 gem "ood_core", "~> 0.1"
-gem 'sinatra' 
+gem 'sinatra'
 gem 'minitest'
 gem 'rake'
 gem 'mocha'
+gem 'ood_appkit'
