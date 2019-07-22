@@ -111,4 +111,10 @@ class TestGPUClusterStatus < Minitest::Test
 		# p "Ruby: Number of gpus unallocated: " + gpustats.calc_gpus_unallocated.to_s
 		assert gpustats.calc_gpus_unallocated > 0
 	end
+
+	################ batee5 native
+	def test_zbaleh
+		gpustats = GPUClusterStatus.new(cluster_mock_ruby)
+		gpustats.calc_gpus_unallocated
+	end
 end
