@@ -29,8 +29,8 @@ class GPUClusterStatus
       calc_queued_jobs_and_gpus
       @gpus_used = @total_gpus - @gpus_unallocated
       self
-      rescue => e
-        GPUClusterStatusNotAvailable.new(cluster_id, cluster_title, e)
+    rescue => e
+      GPUClusterStatusNotAvailable.new(cluster_id, cluster_title, e)
     end
 
     # @return [Pathname] pbs bin pathname
