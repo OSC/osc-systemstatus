@@ -10,15 +10,18 @@
 %bcond_with passenger
 %endif
 
+%{!?package_release: %define package_release 1}
+%{!?git_tag: %define git_tag %{package_version}}
+
 Name:     ondemand-%{app_name}
 Version:  %{package_version}
-Release:  1%{?dist}
+Release:  %{package_release}%{?dist}
 Summary:  System Status for OSC Clusters
 
 Group:    System Environment/Daemons
 License:  MIT
 URL:      https://github.com/AweSim-OSC/%{repo_name}
-Source0:  https://github.com/AweSim-OSC/%{repo_name}/archive/v%{version}.tar.gz
+Source0:  https://github.com/AweSim-OSC/%{repo_name}/archive/%{git_tag}.tar.gz
 
 BuildRequires:  sqlite-devel curl make
 BuildRequires:  ondemand-runtime
