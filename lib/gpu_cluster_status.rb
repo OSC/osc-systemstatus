@@ -3,9 +3,9 @@
 # @author Kinan AlAttar
 require_relative 'moab_showq_client'
 
-class GPUClusterStatus < MoabShowqClient
+class GPUClusterStatus
 
-    attr_reader :gpus_unallocated, :total_gpus, :queued_gpus, :full_nodes_available, :queued_jobs_req_gpus, :gpus_used
+    attr_reader :gpus_unallocated, :total_gpus, :queued_gpus, :full_nodes_available, :queued_jobs_req_gpus, :gpus_used, :error_message
 
     # Set the object to the server.
     #
@@ -77,6 +77,7 @@ class GPUClusterStatus < MoabShowqClient
        else @cluster_title.eql?('Ruby')
         # See line 62. Excluding the two debug nodes from the calculation.
         @gpus_unallocated = nodes_info.lines("\n\n").select { |node| node.include?("Unallocated") && !node.include?("dedicated_threads = 20") && node.include?("np = 20") }.size
+        @oodClustersAdapter.info_all().each { |job| p job}
       end
     end
 

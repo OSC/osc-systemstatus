@@ -86,7 +86,7 @@ class TestGPUClusterStatus < Minitest::Test
 		assert gpustats.calc_full_nodes_avail >= 0
 	end
 
-	def test_gpus_available_o
+	def test_gpus_available_p
 	    gpustats = GPUClusterStatus.new(cluster_mock_pitzer)
 	    assert gpustats.calc_total_gpus > 0
 	end
