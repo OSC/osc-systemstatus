@@ -11,7 +11,7 @@
 %endif
 
 %{!?package_release: %define package_release 1}
-%{!?git_tag: %define git_tag %{package_version}}
+%{!?git_tag: %define git_tag v%{package_version}}
 
 Name:     ondemand-%{app_name}
 Version:  %{package_version}
