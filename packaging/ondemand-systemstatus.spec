@@ -12,6 +12,7 @@
 
 %{!?package_release: %define package_release 1}
 %{!?git_tag: %define git_tag v%{package_version}}
+%define git_tag_minus_v %(echo %{git_tag} | sed -r 's/^v//')
 
 Name:     ondemand-%{app_name}
 Version:  %{package_version}
@@ -39,7 +40,7 @@ This app displays the current system status of available system clusters.
 
 
 %prep
-%setup -q -n %{repo_name}-%{version}
+%setup -q -n %{repo_name}-%{git_tag_minus_v}
 
 
 %build
