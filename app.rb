@@ -39,6 +39,24 @@ helpers do
   def graph_types
     {:report_moab_nodes => 'Nodes', :report_moab_jobs => 'Jobs', :report_load => 'Load', :report_network => 'Network'}
   end
+
+  def app_version
+    @app_version ||= (version_from_file(settings.root) || version_from_git(settings.root) || "").strip
+  end
+
+  def version_from_file(dir)
+    file = Pathname.new(dir).join("VERSION")
+    file.read if file.file?
+  end
+
+  def version_from_git(dir)
+    Dir.chdir(Pathname.new(dir)) do
+      version = `git describe --always --tags 2>/dev/null`
+      version.to_s.strip.empty? ? nil : version
+    end
+  rescue Errno::ENOENT
+    nil
+  end
 end
 
 get '/clusters/:id/:time/:type' do
