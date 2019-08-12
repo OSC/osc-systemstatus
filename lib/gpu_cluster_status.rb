@@ -88,7 +88,7 @@ class GPUClusterStatus
         # See line 62
       @full_nodes_available = nodes_info.lines("\n\n").select { |node| node.include?("dedicated_threads = 0") && node.include?("np = 20") && node.include?("gpu_state=Unallocated")}.size
       else
-      @full_nodes_available = nodes_info.lines("\n\n").select { |node| node.include?("dedicated_threads = 0") && node.include?("gpu_state=Unallocated")}.size
+      @full_nodes_available = nodes_info.lines("\n\n").select { |node| node.include?("dedicated_threads = 0") && node.include?("gpu_state=Unallocated") }.size
       end
     end
 
@@ -110,9 +110,16 @@ class GPUClusterStatus
 
     # Return the allocated GPUs as percent of available GPUs
     #
-    # @return [Float] The percentage GPUs used as float
+    # @return [Float] The percentage GPUs used
     def gpus_percent
       (gpus_used.to_f / total_gpus.to_f) * 100
+    end
+
+    # Return the queued GPUs as percent of available GPUs
+    #
+    # @return [Float] The percentage GPUs queued
+    def gpus_queued_percent
+      (queued_gpus.to_f / total_gpus.to_f) * 100
     end
 
     private
