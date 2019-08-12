@@ -12,13 +12,8 @@
     </div>
 </div>
 <div>
-  <span data-toggle="tooltip" data-placement="bottom" data-html="true" title="
-    <ul style='text-align:left'>
-      <li><%= gpustats.gpus_unallocated.to_s + " unallocated GPU(s) with at least one core available."%></li>
-      <li><%= gpustats.full_nodes_available.to_s + " GPU node(s) free." %></li>
-      <li><%= gpustats.queued_jobs_req_gpus.to_s + " job(s) queued requesting " + gpustats.queued_gpus.to_s + " GPU(s)." %></li>
-    </ul>">
-    <%= gpustats.gpus_used %> of <%= gpustats.total_gpus %> GPUs Allocated
+  <span>
+    <%= gpustats.full_nodes_available %> of <%= gpustats.total_gpus %> GPU Node(s) Free
   </span>
 </div>
 <div class="progress">
@@ -43,4 +38,11 @@
      <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.eligible_percent*0.89 %>%"></div>
      <div><%= showqer.eligible_jobs %></div>
   </div>
+</div>
+
+<hr>
+<div><h4><%= gpustats.queued_gpus %> Queued GPU(s)</h4></div>
+<div class="progress progress-custom">
+     <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= gpustats.gpus_queued_percent*0.89 %>%"></div>
+     <div><%= gpustats.queued_gpus %></div>
 </div>
