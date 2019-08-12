@@ -62,7 +62,7 @@ class GPUClusterStatus
          # For the Ruby cluster, pbsnodes takes into account two debug nodes with two GPUs along with the other Ruby GPU nodes. The debug nodes will not be considered in the total GPUs and unallocated GPUs calculation, as they cannot be allocated as part of a regular job request with other GPU nodes. Here np = 20 is the number of processors for a GPU node rather than a debug node (np = 16) in a Ruby cluster.
          @total_gpus = nodes_info.scan(/np = 20/).size
         else
-         @total_gpus = nodes_info.scan(/gpu_state=(\w+)/).size
+         @total_gpus = nodes_info.lines("\n\n").size
       end
     end
 
