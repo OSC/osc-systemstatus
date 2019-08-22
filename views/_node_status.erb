@@ -13,11 +13,11 @@
 </div>
 <div>
   <span>
-    <%= gpustats.full_nodes_available %> of <%= gpustats.total_gpus %> GPU Node(s) Free
+    <%= gpustats.full_nodes_available %> of <%= gpustats.total_gpus %> GPU Nodes Free
   </span>
 </div>
 <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width:<%= gpustats.gpus_percent.round(2) %>%">
+    <div class="progress-bar progress-bar-danger" role="progressbar" style="width:<%= gpustats.gpus_percent.round(2) %>%">
         <%= (gpustats.gpus_percent).round(2) %>%
     </div>
 </div>
@@ -36,13 +36,8 @@
   <div class="col-sm-2 col-xs-3">Queued</div>
   <div class="progress progress-custom">
      <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.eligible_percent*0.89 %>%"></div>
-     <div><%= showqer.eligible_jobs %></div>
+      <div class="progress-bar progress-bar-danger progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= gpustats.gpus_queued_percent*0.89 %>%"></div>
+      <div><%= showqer.eligible_jobs %></div>
+      <div class="text-danger text-left">&nbsp;(<%= gpustats.queued_gpus %> requesting GPU)</div>
   </div>
-</div>
-
-<hr>
-<div><h4><%= gpustats.queued_gpus %> Queued GPU(s)</h4></div>
-<div class="progress progress-custom">
-     <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= gpustats.gpus_queued_percent*0.89 %>%"></div>
-     <div><%= gpustats.queued_gpus %></div>
 </div>
