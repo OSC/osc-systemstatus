@@ -1,7 +1,6 @@
 # Utility class for getting numerical data regarding GPU usage in the set of clusters that allow job submission using pbsnodes & info_all
 #
 # @author Kinan AlAttar
-require_relative 'moab_showq_client'
 
 class GPUClusterStatus
 
