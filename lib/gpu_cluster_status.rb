@@ -8,7 +8,7 @@ class GPUClusterStatus
 
     # Set the object to the server.
     #
-    # @param cluster [OodAppkit::Cluster]
+    # @param cluster [OodCore::Clusters]
     #
     # @return [GPUClusterStatus]
     def initialize(cluster)
