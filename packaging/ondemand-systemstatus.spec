@@ -14,6 +14,12 @@
 %{!?git_tag: %define git_tag v%{package_version}}
 %define git_tag_minus_v %(echo %{git_tag} | sed -r 's/^v//')
 
+# Work around issue with EL6 builds
+# https://stackoverflow.com/a/48801417
+%if 0%{?rhel} < 7
+%define __strip /opt/rh/devtoolset-6/root/usr/bin/strip
+%endif
+
 Name:     ondemand-%{app_name}
 Version:  %{package_version}
 Release:  %{package_release}%{?dist}
