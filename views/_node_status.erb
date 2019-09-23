@@ -35,9 +35,9 @@
 <div class="row">
   <div class="col-sm-2 col-xs-3">Queued</div>
   <div class="progress progress-custom">
-    <div class="queued_gpu_jobs_progress_bar progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.eligible_percent*0.89 %>%"></div>
-    <div class="queued_gpu_jobs_progress_bar progress-bar progress-bar-danger progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= (gpustats.queued_gpu_jobs_percent(showqer.eligible_jobs))*0.89 %>%"></div>
-    <div class="ellipsis "><%= showqer.eligible_jobs %></div>
-    <div class="ellipsis  text-danger text-left">&nbsp;(<%= gpustats.queued_gpus %> requesting GPU)</div>
+    <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.eligible_percent*0.89 %>%"></div>
+    <div class="progress-bar progress-bar-danger progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= (gpustats.queued_gpu_jobs_percent(showqer.eligible_jobs))*0.89 %>%"></div>
+    <div><%= showqer.eligible_jobs %></div>
+    <div class="text-danger text-left">&nbsp;(<%= gpustats.queued_gpus %> requesting GPU)</div>
   </div>
 </div>
