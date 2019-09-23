@@ -1,15 +1,14 @@
 # Utility class for getting numerical data regarding GPU usage in the set of clusters that allow job submission using pbsnodes & info_all
 #
 # @author Kinan AlAttar
-require_relative 'moab_showq_client'
 
 class GPUClusterStatus
 
-    attr_reader :gpus_unallocated, :total_gpus, :queued_gpus, :full_nodes_available, :queued_jobs_req_gpus, :gpus_used, :error_message
+    attr_reader :gpus_unallocated, :total_gpus, :queued_gpus, :full_nodes_available, :queued_jobs_req_gpus, :error_message
 
     # Set the object to the server.
     #
-    # @param cluster [OodAppkit::Cluster]
+    # @param cluster [OodCore::Clusters]
     #
     # @return [GPUClusterStatus]
     def initialize(cluster)
@@ -27,7 +26,6 @@ class GPUClusterStatus
       calc_gpus_unallocated
       calc_full_nodes_avail
       calc_queued_jobs_and_gpus
-      @gpus_used = @total_gpus - @gpus_unallocated
       self
     rescue => e
       GPUClusterStatusNotAvailable.new(cluster_id, cluster_title, e)
@@ -95,9 +93,7 @@ class GPUClusterStatus
     # Calculates number of jobs that have requested one or more GPUs that are currently queued
     # @return [Integer] the number of queued jobs requesting GPUs
     def calc_queued_jobs_and_gpus
-      @queued_jobs_req_gpus = @queued_gpus = 0
       @oodClustersAdapter.info_all().each { |job| queued_jobs_req_gpus_counter(job) }
-      @queued_jobs_req_gpus
     end
 
     # Checks to see whether a job is queued and requesting a gpu
@@ -112,14 +108,14 @@ class GPUClusterStatus
     #
     # @return [Float] The percentage GPUs used
     def gpus_percent
-      (gpus_used.to_f / total_gpus.to_f) * 100
+      ((total_gpus - full_nodes_available).to_f / total_gpus.to_f) * 100
     end
 
-    # Return the queued GPUs as percent of available GPUs
+    # Return the percentage of queued jobs requesting gpus
     #
     # @return [Float] The percentage GPUs queued
-    def gpus_queued_percent
-      (queued_gpus.to_f / total_gpus.to_f) * 100
+    def queued_gpu_jobs_percent(eligible_jobs)
+      (queued_jobs_req_gpus.to_f / eligible_jobs) * 100
     end
 
     private
