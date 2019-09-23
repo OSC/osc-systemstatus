@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <meta charset="UTF-8">
   <meta name="turbolinks-root" content="<%=url("/")%>">
   <title>System Status</title>
@@ -77,6 +78,25 @@
     .jumbotron{
       margin-top: 28px;
     }
+    .ellipsis {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .queued_gpu_jobs_progress_bar {
+      display: flex;
+      flex-shrink: 100;
+    }
+    .running_jobs_progress_bar {
+      display: flex;
+      flex-shrink: 100;
+    }
+    .flexbox-container {
+      display: flex;
+      flex-basis: 600px;
+      flex-grow: 100;
+      flex-shrink: 0;
+    }
   </style>
   <script src="<%= url("/turbolinks-5.2.0/turbolinks.js") %>"></script>
   <script src="<%= url("/jquery-1.12.4/jquery.min.js") %>"></script>
@@ -133,7 +153,6 @@
     <div class='row'><div class='alert alert-warning' role='alert'><%= msg %></div></div>
   <% end %><!-- /.error message  -->
 </div><!-- /.container -->
-
 
 <footer>
   <div class="container">
