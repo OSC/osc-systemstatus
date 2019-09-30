@@ -113,11 +113,19 @@ class GPUClusterStatus
       ((total_gpus - full_nodes_available).to_f / total_gpus.to_f) * 100
     end
 
-    # Return the queued GPUs as percent of available GPUs
+    # Return the percentage of queued jobs requesting gpus
     #
     # @return [Float] The percentage GPUs queued
-    def gpus_queued_percent
-      (queued_gpus.to_f / total_gpus.to_f) * 100
+    def queued_gpu_jobs_percent(available_jobs)
+      (queued_jobs_req_gpus.to_f / available_jobs) * 100
+    end
+
+    # Return the percentage of queued jobs not requesting gpus
+    #
+    # @return [Float] The percentage
+    def queued_jobs_no_gpu_percent(available_jobs, eligible_jobs)
+      @queued_jobs_no_gpu = (eligible_jobs-queued_jobs_req_gpus).abs()
+      (@queued_jobs_no_gpu.to_f / available_jobs) * 100
     end
 
     private
