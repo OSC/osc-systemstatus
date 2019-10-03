@@ -30,7 +30,7 @@
   </div>
   <div class="col-md-10 col-xs-12">
     <div class="row">
-      <div class="col-md-7 col-xs-12 progress progress-custom" style="outline: 1px dotted black; padding: 0px">
+      <div class="col-md-7 col-xs-12 progress">
         <div class="progress-bar col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.active_percent*0.89 %>%"></div></div>
         <div class="col-md-5 col-xs-12" style="padding-left: 5px; text-align: left"><span><%= showqer.active_jobs %></span>
       </div>
@@ -44,7 +44,7 @@
   </div>
   <div class="col-md-10 col-xs-12">
     <div class="row">
-      <div class="col-md-7 col-xs-12 progress progress-custom" style="outline: 1px dotted black; padding: 0px">
+      <div class="col-md-7 col-xs-12 progress">
         <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= gpustats.percent_of_queued_jobs_not_requesting_gpus(showqer.available_jobs, showqer.eligible_jobs)*0.89 %>%"></div>
         <div class="progress-bar progress-bar-secondary col-sm-10 col-xs-9" role="progressbar" style="width:<%= gpustats.percent_of_queued_jobs_requesting_gpus(showqer.available_jobs)*0.89 %>%"></div>
       </div>
