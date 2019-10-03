@@ -1,43 +1,55 @@
 <!-- node status progressbar -->
 <div><%= showqer.nodes_used %> of <%= showqer.nodes_avail %> Nodes Active (<%= showqer.nodes_avail - showqer.nodes_used %> Nodes Free) </div>
 <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width:<%= showqer.nodes_percent.round(2) %>%">
-        <%=(showqer.nodes_percent).round(2) %>%
-    </div>
+  <div class="progress-bar" role="progressbar" style="width:<%= showqer.nodes_percent.round(2) %>%">
+    <%=(showqer.nodes_percent).round(2) %>%
+  </div>
 </div>
 <div><%= showqer.procs_used %> of <%= showqer.procs_avail %> Processors Active (<%= showqer.procs_avail - showqer.procs_used %> Processors Free)</div>
 <div class="progress">
-    <div class="progress-bar" role="progressbar" style="width:<%= showqer.procs_percent.round(2) %>%">
-        <%= (showqer.procs_percent).round(2) %>%
-    </div>
+  <div class="progress-bar" role="progressbar" style="width:<%= showqer.procs_percent.round(2) %>%">
+    <%= (showqer.procs_percent).round(2) %>%
+  </div>
 </div>
 <div>
   <span>
-    <%= gpustats.total_gpus - gpustats.full_nodes_available %> of <%= gpustats.total_gpus %> GPU Node(s) Active (<%= gpustats.full_nodes_available %> Nodes Free)
+    <%= gpustats.total_gpus - gpustats.full_nodes_available %> of <%= gpustats.total_gpus %> GPU Nodes Active (<%= gpustats.full_nodes_available %> Node(s) Free)
   </span>
 </div>
 <div class="progress">
-    <div class="progress-bar progress-bar-secondary" role="progressbar" style="width:<%= gpustats.gpus_percent.round(2) %>%">
-        <%= (gpustats.gpus_percent).round(2) %>%
-    </div>
+  <div class="progress-bar progress-bar-secondary" role="progressbar" style="width:<%= gpustats.gpus_percent.round(2) %>%">
+    <%= (gpustats.gpus_percent).round(2) %>%
+  </div>
 </div>
 <hr>
 <div><h4><%= showqer.available_jobs %> Running or Queued Jobs <br><small>(and <%= showqer.blocked_jobs %> blocked jobs)</small></h4></div>
 
 <div class="row">
-  <div class="col-sm-2 col-xs-3">Running</div>
-  <div class="progress progress-custom">
-      <div class="progress-bar col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.active_percent*0.89 %>%"></div>
-      <div><%= showqer.active_jobs %></div>
-   </div>
+  <div class="col-md-2 col-xs-12">
+    Running
+  </div>
+  <div class="col-md-10 col-xs-12">
+    <div class="row">
+      <div class="col-md-7 col-xs-12 progress">
+        <div class="progress-bar col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.active_percent %>%"></div></div>
+        <div class="col-md-5 col-xs-12" style="padding-left: 5px; text-align: left"><span><%= showqer.active_jobs %></span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row">
-  <div class="col-sm-2 col-xs-3">Queued</div>
-  <div class="progress progress-custom">
-     <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= showqer.eligible_percent*0.89 %>%"></div>
-      <div class="progress-bar progress-bar-secondary progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= gpustats.gpus_queued_percent*0.89 %>%"></div>
-      <div><%= showqer.eligible_jobs %></div>
-      <div class="text-secondary text-left">&nbsp;(<%= gpustats.queued_gpus %> requesting GPU)</div>
+  <div class="col-md-2 col-xs-12">
+    Queued
+  </div>
+  <div class="col-md-10 col-xs-12">
+    <div class="row">
+      <div class="col-md-7 col-xs-12 progress">
+        <div class="progress-bar progress-bar-info col-sm-10 col-xs-9" role="progressbar" style="width:<%= gpustats.percent_of_queued_jobs_not_requesting_gpus(showqer.available_jobs, showqer.eligible_jobs) %>%"></div>
+        <div class="progress-bar progress-bar-secondary col-sm-10 col-xs-9" role="progressbar" style="width:<%= gpustats.percent_of_queued_jobs_requesting_gpus(showqer.available_jobs) %>%"></div>
+      </div>
+      <div class="col-md-5 col-xs-12" style="padding-left: 5px; text-align: left"><span><%= showqer.eligible_jobs %><span class="text-secondary" style="padding-left: 5px;">(<%= gpustats.queued_jobs_requesting_gpus %> requesting GPU)</span></span>
+      </div>
+    </div>
   </div>
 </div>

@@ -4,7 +4,7 @@
 
 class GPUClusterStatus
 
-    attr_reader :gpus_unallocated, :total_gpus, :queued_gpus, :full_nodes_available, :queued_jobs_req_gpus, :error_message
+    attr_reader :gpus_unallocated, :total_gpus, :full_nodes_available, :queued_jobs_requesting_gpus, :error_message
 
     # Set the object to the server.
     #
@@ -21,14 +21,13 @@ class GPUClusterStatus
     end
 
     def setup
-      @queued_jobs_req_gpus = @queued_gpus = 0
       calc_total_gpus
       calc_gpus_unallocated
       calc_full_nodes_avail
-      calc_queued_jobs_and_gpus
+      calc_queued_jobs_requesting_GPUs
       self
     rescue => e
-      GPUClusterStatusNotAvailable.new(cluster_id, cluster_title, e)
+      GPUClusterStatusNotAvailable.new(@cluster_id, @cluster_title, e)
     end
 
     # @return [Pathname] pbs bin pathname
@@ -75,7 +74,7 @@ class GPUClusterStatus
        else @cluster_title.eql?('Ruby')
         # See line 62. Excluding the two debug nodes from the calculation.
         @gpus_unallocated = nodes_info.lines("\n\n").select { |node| node.include?("Unallocated") && !node.include?("dedicated_threads = 20") && node.include?("np = 20") }.size
-        @oodClustersAdapter.info_all().each { |job| p job}
+        @oodClustersAdapter.info_all_each { |job| p job}
       end
     end
 
@@ -92,17 +91,17 @@ class GPUClusterStatus
 
     # Calculates number of jobs that have requested one or more GPUs that are currently queued
     # @return [Integer] the number of queued jobs requesting GPUs
-    def calc_queued_jobs_and_gpus
-      @queued_jobs_req_gpus = @queued_gpus = 0
-      @oodClustersAdapter.info_all().each { |job| queued_jobs_req_gpus_counter(job) }
-      @queued_jobs_req_gpus
+    def calc_queued_jobs_requesting_GPUs
+      @queued_jobs_requesting_gpus = 0
+      @oodClustersAdapter.info_all_each { |job| queued_jobs_requesting_gpus_counter(job) }
+      @queued_jobs_requesting_gpus
     end
 
     # Checks to see whether a job is queued and requesting a gpu
     #
     # @param job [OodCore::Job::Info]
     # @return true if job requested a gpu and is queued otherwise false
-    def is_job_req_gpus_and_queued(job)
+    def is_job_requesting_gpus_and_queued(job)
       job.status.queued? && job.native[:Resource_List][:nodes].include?("gpus")
     end
 
@@ -113,11 +112,19 @@ class GPUClusterStatus
       ((total_gpus - full_nodes_available).to_f / total_gpus.to_f) * 100
     end
 
-    # Return the queued GPUs as percent of available GPUs
+    # Return the percentage of queued jobs requesting gpus
     #
     # @return [Float] The percentage GPUs queued
-    def gpus_queued_percent
-      (queued_gpus.to_f / total_gpus.to_f) * 100
+    def percent_of_queued_jobs_requesting_gpus(available_jobs)
+      (queued_jobs_requesting_gpus.to_f / available_jobs) * 100
+    end
+
+    # Return the percentage of queued jobs not requesting gpus
+    #
+    # @return [Float] The percentage
+    def percent_of_queued_jobs_not_requesting_gpus(available_jobs, eligible_jobs)
+      @queued_jobs_requesting_no_gpus = (eligible_jobs - queued_jobs_requesting_gpus).abs()
+      (@queued_jobs_requesting_no_gpus.to_f / available_jobs) * 100
     end
 
     private
@@ -129,10 +136,9 @@ class GPUClusterStatus
       # Helper method for counting the number of queued gpus and jobs requesting gpus
       #
       # @param job [OodCore::Job::Info]
-      def queued_jobs_req_gpus_counter(job)
-        if is_job_req_gpus_and_queued(job)
-         @queued_jobs_req_gpus += 1
-         @queued_gpus += job.native[:Resource_List][:nodes].slice(/gpus=(\d+)/).reverse.to_i
+      def queued_jobs_requesting_gpus_counter(job)
+        if is_job_requesting_gpus_and_queued(job)
+         @queued_jobs_requesting_gpus += 1
         end
       end
 end
