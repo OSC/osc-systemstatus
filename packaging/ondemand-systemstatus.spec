@@ -3,6 +3,8 @@
 %global repo_name osc-systemstatus
 %global app_name systemstatus
 %global with_passenger 1
+%define ondemand_gems_ver %(rpm --qf "%%{version}" -q ondemand-gems)
+%global gem_home %{scl_ondemand_gem_home}/apps/%{app_name}
 
 %if 0%{?with_passenger}
 %bcond_without passenger
@@ -36,7 +38,10 @@ BuildRequires:  sqlite-devel curl make
 BuildRequires:  ondemand-runtime
 BuildRequires:  ondemand-ruby
 BuildRequires:  ondemand-nodejs
+BuildRequires:  ondemand-scldevel
+BuildRequires:  ondemand-gems
 Requires:       ondemand
+Requires:       ondemand-gems-%{ondemand_gems_ver}
 
 # Disable automatic dependencies as it causes issues with bundled gems and
 # node.js packages used in the apps
@@ -56,11 +61,17 @@ scl enable ondemand - << \EOS
 export PASSENGER_APP_ENV=production
 export PASSENGER_BASE_URI=/pun/sys/%{app_name}
 %endif
+export GEM_HOME=$(pwd)/gems-build
+export GEM_PATH=$(pwd)/gems-build:$GEM_PATH
 bin/setup
 EOS
 
 
 %install
+%__mkdir_p %{buildroot}%{gem_home}
+%__mv ./gems-build/* %{buildroot}%{gem_home}/
+%__rm_rf ./gems
+
 %__mkdir_p %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}
 %__cp -a ./. %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}/
 echo %{git_tag} > %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}/VERSION
@@ -102,6 +113,7 @@ touch %{_localstatedir}/www/ood/apps/sys/%{app_name}/tmp/restart.txt
 
 %files
 %defattr(-,root,root)
+%{gem_home}
 %{_localstatedir}/www/ood/apps/sys/%{app_name}
 %{_localstatedir}/www/ood/apps/sys/%{app_name}/manifest.yml
 %if %{with passenger}
