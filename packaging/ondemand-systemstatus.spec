@@ -70,7 +70,6 @@ EOS
 %install
 %__mkdir_p %{buildroot}%{gem_home}
 %__mv ./gems-build/* %{buildroot}%{gem_home}/
-%__rm_rf ./gems-build
 
 %__mkdir_p %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}
 %__cp -a ./. %{buildroot}%{_localstatedir}/www/ood/apps/sys/%{app_name}/
