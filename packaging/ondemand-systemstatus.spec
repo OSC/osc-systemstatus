@@ -4,7 +4,7 @@
 %global app_name systemstatus
 %global with_passenger 1
 %define ondemand_gems_ver %(rpm --qf "%%{version}" -q ondemand-gems)
-%global gem_home %{scl_ondemand_gem_home}/apps/%{app_name}
+%global gem_home %{scl_ondemand_apps_gem_home}/%{app_name}
 
 %if 0%{?with_passenger}
 %bcond_without passenger
