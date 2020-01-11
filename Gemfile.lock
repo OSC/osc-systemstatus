@@ -10,7 +10,7 @@ GEM
       ffi (~> 1.9, >= 1.9.6)
       ood_support (~> 0.0.2)
     ood_support (0.0.3)
-    rack (1.6.11)
+    rack (1.6.12)
     rack-protection (1.5.5)
       rack
     rake (12.3.2)
