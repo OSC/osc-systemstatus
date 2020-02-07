@@ -14,7 +14,7 @@ require_relative 'lib/ganglia'
 begin
   CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
             .select { |c| c.custom_config[:moab] }
-            .select { |c| c.custom_config[:ganglia] }
+            .select { |c| c.custom_config[:ganglia] || c.custom_config[:grafana] }
             .reject { |c| c.metadata.hidden }
           )
 rescue OodCore::ConfigurationNotFound
@@ -68,8 +68,8 @@ get '/clusters/:id/:time/:type' do
   cluster = CLUSTERS[@id]
   if cluster.nil?
     raise Sinatra::NotFound
-  else
-    @ganglia = Ganglia.new(cluster).send(@time)
+  elsif cluster.custom_config.key?(:ganglia)
+    @provider = Ganglia.new(cluster).send(@time)
     erb :system_status
   end
 end

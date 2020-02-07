@@ -4,7 +4,7 @@
 # @version 0.1.0
 class MoabShowqClient
 
-  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail, :error_message, :cluster_id, :cluster_title, :friendly_error_message
+  attr_reader :active_jobs, :eligible_jobs, :blocked_jobs, :procs_used, :procs_avail, :nodes_used, :nodes_avail, :error_message, :dashboard_url, :cluster_id, :cluster_title, :friendly_error_message
 
   # Set the object to the server.
   #
@@ -13,6 +13,9 @@ class MoabShowqClient
   # @return [MoabShowqClient] self
   def initialize(cluster)
     @server = cluster.custom_config[:moab]
+    if cluster.custom_config.key?(:grafana)
+      @dashboard_url = cluster.custom_config[:grafana]['dashboard']
+    end
     @cluster_id = cluster.id
     @cluster_title = cluster.metadata.title || cluster.id.titleize
     self
