@@ -66,12 +66,11 @@ get '/clusters/:id/:time/:type' do
   graph_time.keys.include?(params[:time].to_sym) ? @time=params[:time].to_sym : @time=:hour
   graph_types.keys.include?(params[:type].to_sym) ? @type=params[:type].to_sym : @type=:report_moab_nodes
   cluster = CLUSTERS[@id]
-  if cluster.nil?
+  if cluster.nil? || ! cluster.custom_config.key?(:ganglia)
     raise Sinatra::NotFound
-  elsif cluster.custom_config.key?(:ganglia)
-    @provider = Ganglia.new(cluster).send(@time)
-    erb :system_status
   end
+  @ganglia = Ganglia.new(cluster).send(@time)
+  erb :system_status
 end
 
 
