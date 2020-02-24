@@ -81,7 +81,8 @@ get '/clusters/:id/grafana' do
   end
   grafana = cluster.custom_config[:grafana]
   dashboard_url = "#{grafana['dashboard']['uid']}/#{grafana['dashboard']['name']}"
-  grafana_url = "#{grafana['host']}/d/#{dashboard_url}?orgId=#{grafana['orgId']}&var-cluster=#{@id}"
+  theme = grafana['theme'] || 'light'
+  grafana_url = "#{grafana['host']}/d/#{dashboard_url}?orgId=#{grafana['orgId']}&theme=#{theme}&var-cluster=#{@id}"
   redirect(grafana_url)
 end
 
