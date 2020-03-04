@@ -73,6 +73,18 @@ get '/clusters/:id/:time/:type' do
   erb :system_status
 end
 
+get '/clusters/:id/grafana' do
+  @id = params[:id].to_sym
+  cluster = CLUSTERS[@id]
+  if cluster.nil? || ! cluster.custom_config.key?(:grafana)
+    raise Sinatra::NotFound
+  end
+  grafana = cluster.custom_config[:grafana]
+  dashboard_url = "#{grafana['dashboard']['uid']}/#{grafana['dashboard']['name']}"
+  theme = grafana['theme'] || 'light'
+  grafana_url = "#{grafana['host']}/d/#{dashboard_url}?orgId=#{grafana['orgId']}&theme=#{theme}&var-cluster=#{@id}"
+  redirect(grafana_url)
+end
 
 # redirect to /clusters/:id/hour/report_moab_nodes page
 get '/clusters/:id*' do

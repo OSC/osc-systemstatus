@@ -130,7 +130,7 @@
                 <% if cluster.custom_config.key?(:ganglia) %>
                   <a href="<%= url("/clusters/#{cluster.id}/hour/report_moab_nodes") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
                 <% elsif cluster.custom_config.key?(:grafana) %>
-                  <a href="<%= cluster.custom_config[:grafana]['dashboard'] %>" target="_blank"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
+                  <a href="<%= url("/clusters/#{cluster.id}/grafana") %>" target="_blank"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
                 <% end %>
               </li>
           <% end %>
