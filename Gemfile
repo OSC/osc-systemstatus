@@ -7,7 +7,7 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem "ood_core", "~> 0.1"
+gem 'ood_core', '~> 0.11'
 gem 'sinatra'
 gem 'minitest'
 gem 'rake'
