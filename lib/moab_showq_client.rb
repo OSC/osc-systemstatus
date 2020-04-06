@@ -14,7 +14,7 @@ class MoabShowqClient
   def initialize(cluster)
     @server = cluster.custom_config[:moab]
     if cluster.custom_config.key?(:grafana)
-      @dashboard_url = cluster.custom_config[:grafana]['dashboard']
+      @dashboard_url = "/clusters/#{cluster.id}/grafana"
     end
     @cluster_id = cluster.id
     @cluster_title = cluster.metadata.title || cluster.id.titleize
