@@ -25,7 +25,7 @@
 <% end %>
 <hr>
 <div>
-  <% if showqer.cluster_title != "Pitzer Expansion" %>
+  <% if showqer.job_scheduler_name != "slurm" %>
     <h4><%= showqer.available_jobs %> Running or Queued Jobs <br><small>(and <%= showqer.blocked_jobs %> blocked jobs)</small></h4>
   <% else %>
     <h4><%= showqer.available_jobs %> Running or Queued Jobs</h4>
