@@ -84,7 +84,7 @@ get '/clusters/:id/grafana' do
   grafana = cluster.custom_config[:grafana]
   dashboard_url = "#{grafana['dashboard']['uid']}/#{grafana['dashboard']['name']}"
   theme = grafana['theme'] || 'light'
-  grafana_url = "#{grafana['host']}/d/#{dashboard_url}?orgId=#{grafana['orgId']}&theme=#{theme}&var-cluster=#{@id}"
+  grafana_url = "#{grafana['host']}/d/#{dashboard_url}?orgId=#{grafana['orgId']}&theme=#{theme}&var-cluster=#{grafana.fetch('cluster_override', @id)}"
   redirect(grafana_url)
 end
 
