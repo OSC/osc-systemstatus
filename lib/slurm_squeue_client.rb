@@ -94,58 +94,6 @@ class SlurmSqueueClient
     # TODO Add logging and a flash message that was removed from the controller
     # SlurmSqueueClientNotAvailable.new(cluster_id, cluster_title, e)
   end
-  
-  # Return moab lib pathname
-  def moab_lib
-    Pathname.new(@server['lib'].to_s)
-  end
-  
-  # Return moab bin pathname
-  def moab_bin
-    Pathname.new(@server['bin'].to_s)
-  end
-  
-  # Return moab home directory pathname
-  def moab_home 
-    Pathname.new(@server['homedir'].to_s)
-  end
-
-  # Return total CPU cores 
-  def total_cpu_cores
-    cmd = "sinfo"
-    # $ sinfo -s -h -o="%C"
-    #   allocated/idle/other/total
-    #   =960/18144/192/19296
-    # 0 1 2 3
-    args = ["-s", "-h", "-o=\"%C\"\\"]
-    env = {}.merge(env.to_h)
-    o, e, s = Open3.capture3(env, cmd, *args)
-    raise(CommandFailed, e) unless s.success?
-
-    lines = o.split("/")
-    lines[3].to_i
-  end
-
-  # Return total CPU cores 
-  def used_cpu_cores
-    cmd = "sinfo"
-    # $ sinfo -s -h -o="%C"
-    #   allocated/idle/other/total
-    #   =960/18144/192/19296
-    # 0 1 2 3
-    args = ["-s", "-h", "-o=\"%C\"\\"]
-    env = {}.merge(env.to_h)
-    o, e, s = Open3.capture3(env, cmd, *args)
-    raise(CommandFailed, e) unless s.success?
-
-    lines = o.split("/")
-    lines.each{ |line|
-      # Strip extra chars returned by Slurm
-      line.gsub!('"', '')
-      line.gsub!('=', '')
-    }
-    lines[0].to_i
-  end
 
   # Return the active jobs as percent of available jobs
   #
