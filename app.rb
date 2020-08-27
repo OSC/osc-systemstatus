@@ -9,14 +9,17 @@ require_relative 'lib/gpu_cluster_status'
 require_relative 'lib/gpu_cluster_status_not_available'
 require_relative 'lib/moab_showq_client_not_available'
 require_relative 'lib/ganglia'
+require_relative 'lib/gpu_cluster_status_slurm'
+require_relative 'lib/slurm_squeue_client'
 
 # more details see ood_appkit lib/ood_appkit/configuration.rb
 begin
   CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
-            .select { |c| c.custom_config[:moab] }
-            .select { |c| c.custom_config[:ganglia] || c.custom_config[:grafana] }
-            .reject { |c| c.metadata.hidden }
-          )
+    .select { |c| c.custom_config[:ganglia] || c.custom_config[:grafana] }
+    .reject { |c| c.metadata.hidden }
+    #.select { |c| c.custom_config[:moab] }
+    #.select { |c| c.custom_config[:ganglia] || c.custom_config[:grafana] }
+  )
 rescue OodCore::ConfigurationNotFound
   CLUSTERS = OodCore::Clusters.new([])
 end
@@ -88,18 +91,36 @@ end
 
 # redirect to /clusters/:id/hour/report_moab_nodes page
 get '/clusters/:id*' do
-  redirect(url("/clusters/#{params[:id]}/hour/report_moab_nodes"))
+  redirect(to("/clusters/#{params[:id]}/hour/report_moab_nodes"))
 end
 
 # redirect to /clusters page
 get '/' do
-  redirect(url('/clusters'))
+  redirect(to('/clusters'))
 end
 
 get '/clusters' do
-  @clusters = CLUSTERS.map { |cluster| MoabShowqClient.new(cluster).setup }
+  #@clusters = CLUSTERS.map { |cluster| MoabShowqClient.new(cluster).setup }
+  #@error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact
+  #@gpustats = CLUSTERS.map { |cluster| GPUClusterStatus.new(cluster) }
+  #erb :index
+
+  @clusters = CLUSTERS.map { |cluster|
+    if cluster.custom_config[:moab]
+      MoabShowqClient.new(cluster).setup
+    else
+      SlurmSqueueClient.new(cluster).setup
+    end
+  }
+  @gpustats = CLUSTERS.map { |cluster|
+    if cluster.custom_config[:moab]
+      GPUClusterStatus.new(cluster)
+    else
+      GPUClusterStatusSlurm.new(cluster)
+    end
+  }
   @error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact
-  @gpustats = CLUSTERS.map { |cluster| GPUClusterStatus.new(cluster) }
+
   erb :index
 end
 

@@ -18,7 +18,12 @@ class MoabShowqClient
     end
     @cluster_id = cluster.id
     @cluster_title = cluster.metadata.title || cluster.id.titleize
+    @job_scheduler = cluster.job_config[:adapter]
     self
+  end
+
+  def job_scheduler_name
+    return @job_scheduler
   end
 
   def setup

@@ -11,6 +11,7 @@
     <%= (showqer.procs_percent).round(2) %>%
   </div>
 </div>
+<% if showqer.job_scheduler_name != "slurm" %>
 <div>
   <span>
     <%= gpustats.total_gpus - gpustats.full_nodes_available %> of <%= gpustats.total_gpus %> GPU Nodes Active (<%= gpustats.full_nodes_available %> Node(s) Free)
@@ -21,10 +22,15 @@
     <%= (gpustats.gpus_percent).round(2) %>%
   </div>
 </div>
+<% end %>
 <hr>
-<div><h4><%= showqer.available_jobs %> Running or Queued Jobs <br><small>(and <%= showqer.blocked_jobs %> blocked jobs)</small></h4></div>
-
-
+<div>
+  <% if showqer.cluster_title != "Pitzer Expansion" %>
+    <h4><%= showqer.available_jobs %> Running or Queued Jobs <br><small>(and <%= showqer.blocked_jobs %> blocked jobs)</small></h4>
+  <% else %>
+    <h4><%= showqer.available_jobs %> Running or Queued Jobs</h4>
+  <% end %>
+</div>
 <div class="row" style="background-color: #e0f2fa">
   <div class="col-md-2 col-xs-12">
     Running
@@ -50,8 +56,11 @@
         <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= gpustats.percent_of_queued_jobs_not_requesting_gpus(showqer.available_jobs, showqer.eligible_jobs) %>%"></div>
         <div class="progress-bar progress-bar-secondary" role="progressbar" style="width:<%= gpustats.percent_of_queued_jobs_requesting_gpus(showqer.available_jobs) %>%"></div>
       </div>
-      <div class="col-md-6 col-xs-12" style="padding-left: 5px; text-align: left"><span><%= showqer.eligible_jobs %><span class="text-secondary" style="padding-left: 5px;">(<%= gpustats.queued_jobs_requesting_gpus %> requesting GPU)</span></span>
-      </div>
+      <% if showqer.job_scheduler_name != "slurm" %>
+        <div class="col-md-6 col-xs-12" style="padding-left: 5px; text-align: left"><span><%= showqer.eligible_jobs %><span class="text-secondary" style="padding-left: 5px;">(<%= gpustats.queued_jobs_requesting_gpus %> requesting GPU)</span></span></div>
+      <% else %>
+        <div class="col-md-6 col-xs-12" style="padding-left: 5px; text-align: left"><span><%= showqer.eligible_jobs %></div>
+      <% end %>
     </div>
   </div>
 </div>
