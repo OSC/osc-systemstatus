@@ -28,32 +28,38 @@ class SlurmSqueueClient
 
   # Get pending jobs
   def squeue_jobs_pending
+    return @squeue_jobs_pending if defined?(@squeue_jobs_pending)
+
     cmd = '/usr/bin/squeue'
     args = ["-h", "--all", "--states=PENDING"]
   
     o, e, s = Open3.capture3({}, cmd, *args)
     
-    s.success? ? o : raise(CommandFailed, e)
+    s.success? ? @squeue_jobs_pending = o : raise(CommandFailed, e)
   end
 
   # Get running jobs
   def squeue_jobs_running
+    return @squeue_jobs_running if defined?(@squeue_jobs_running)
+
     cmd = '/usr/bin/squeue'
     args = ["-h", "--all", "--states=RUNNING"]
   
     o, e, s = Open3.capture3({}, cmd, *args)
     
-    s.success? ? o : raise(CommandFailed, e)
+    s.success? ? @squeue_jobs_running = o : raise(CommandFailed, e)
   end
 
   # Get cluster info (node count, core count, etc.)
   def sinfo
+    return @sinfo if defined?(@sinfo)
+
     cmd = '/usr/bin/sinfo'
     args = ["-s", "-h", "-o=\"%C/%A\""]
   
     o, e, s = Open3.capture3({}, cmd, *args)
     
-    s.success? ? o : raise(CommandFailed, e)
+    s.success? ? @sinfo = o : raise(CommandFailed, e)
   end
   
   def cluster_info
