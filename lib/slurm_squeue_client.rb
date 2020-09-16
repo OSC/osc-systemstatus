@@ -55,7 +55,7 @@ class SlurmSqueueClient
     return @sinfo if defined?(@sinfo)
 
     cmd = '/usr/bin/sinfo'
-    args = ["-s", "-h", "-o=\"%C/%A\""]
+    args = ["-a", "-h", "-o=\"%C/%A/%D\""]
   
     o, e, s = Open3.capture3({}, cmd, *args)
     
@@ -80,6 +80,7 @@ class SlurmSqueueClient
       procs_avail:    sinfo_out[1].to_i,
       nodes_used:     sinfo_out[4].to_i,
       nodes_idle:     sinfo_out[5].to_i,
+      nodes_avail:    sinfo_out[6].to_i,
       available_jobs: running_jobs.to_i,
       pending_jobs:   pending_jobs.to_i,
     }
@@ -93,7 +94,7 @@ class SlurmSqueueClient
     self.procs_used    = cluster_info[:procs_used]
     self.procs_avail   = cluster_info[:procs_avail]
     self.nodes_used    = cluster_info[:nodes_used]
-    self.nodes_avail   = cluster_info[:nodes_idle]
+    self.nodes_avail   = cluster_info[:nodes_avail]
 
     self
   rescue => e
@@ -126,7 +127,7 @@ class SlurmSqueueClient
   #
   # @return [Integer] the total number of idle/used jobs
   def available_nodes
-    nodes_avail + nodes_used
+    nodes_avail
   end
 
   # Total number of available and in use procs
