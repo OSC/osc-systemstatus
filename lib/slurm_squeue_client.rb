@@ -120,20 +120,35 @@ class SlurmSqueueClient
   # @return [Integer] the total number of active/eligible jobs
   def available_jobs
     active_jobs + eligible_jobs
+  end 
+
+  # Total nodes available (idle) and total nodes used
+  #
+  # @return [Integer] the total number of idle/used jobs
+  def available_nodes
+    nodes_avail + nodes_used
+  end
+
+  # Total number of available and in use procs
+  #
+  # @return [Integer] the total number of procs 
+  def available_procs
+    procs_used + procs_avail
   end
 
   # Return the processor usage as percent
   #
   # @return [Float] The number of processors used as float
   def procs_percent
-    (procs_used.to_f / procs_avail.to_f) * 100
+    (procs_used.to_f / available_procs.to_f) * 100
   end
 
   # Return the node usage as percent
   #
   # @return [Float] The number of nodes used as float
   def nodes_percent
-    (nodes_used.to_f / nodes_avail.to_f) * 100
+    # (nodes_used.to_f / nodes_avail.to_f) * 100
+    (nodes_used.to_f / available_nodes.to_f) * 100
   end
   
   # Return cluster title + error message

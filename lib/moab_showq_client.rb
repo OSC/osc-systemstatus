@@ -42,6 +42,20 @@ class MoabShowqClient
     MoabShowqClientNotAvailable.new(cluster_id, cluster_title, e)
   end
   
+  # Total nodes available
+  #
+  # @return [Integer] the total number of nodes up
+  def available_nodes
+    nodes_avail
+  end
+
+  # Total number of processors
+  #
+  # @return [Integer] the total number of processors
+  def available_procs
+    procs_avail
+  end
+
   # Return moab lib pathname
   def moab_lib
     Pathname.new(@server['lib'].to_s)
@@ -110,7 +124,7 @@ class MoabShowqClient
   #
   # @return nil or constructed error message
   def friendly_error_message
-      error_message.nil? ? nil : "#{cluster_title} Cluster: #{error_message}"
+    error_message.nil? ? nil : "#{cluster_title} Cluster: #{error_message}"
   end
 
   private
