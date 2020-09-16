@@ -147,7 +147,6 @@ class SlurmSqueueClient
   #
   # @return [Float] The number of nodes used as float
   def nodes_percent
-    # (nodes_used.to_f / nodes_avail.to_f) * 100
     (nodes_used.to_f / available_nodes.to_f) * 100
   end
   
