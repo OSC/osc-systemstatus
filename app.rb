@@ -99,11 +99,6 @@ get '/' do
 end
 
 get '/clusters' do
-  #@clusters = CLUSTERS.map { |cluster| MoabShowqClient.new(cluster).setup }
-  #@error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact
-  #@gpustats = CLUSTERS.map { |cluster| GPUClusterStatus.new(cluster) }
-  #erb :index
-
   @clusters = CLUSTERS.map { |cluster|
     if cluster.custom_config[:moab]
       MoabShowqClient.new(cluster).setup
