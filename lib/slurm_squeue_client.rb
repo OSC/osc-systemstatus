@@ -55,7 +55,7 @@ class SlurmSqueueClient
     return @sinfo if defined?(@sinfo)
 
     cmd = '/usr/bin/sinfo'
-    args = ["-s", "-h", "-o=\"%C/%A\""]
+    args = ["-a", "-h", "-o=\"%C/%A/%D\""]
   
     o, e, s = Open3.capture3({}, cmd, *args)
     
@@ -77,9 +77,10 @@ class SlurmSqueueClient
 
     {
       procs_used:     sinfo_out[0].to_i,
-      procs_avail:    sinfo_out[1].to_i,
+      procs_avail:    sinfo_out[3].to_i,
       nodes_used:     sinfo_out[4].to_i,
       nodes_idle:     sinfo_out[5].to_i,
+      nodes_avail:    sinfo_out[6].to_i,
       available_jobs: running_jobs.to_i,
       pending_jobs:   pending_jobs.to_i,
     }
@@ -93,7 +94,7 @@ class SlurmSqueueClient
     self.procs_used    = cluster_info[:procs_used]
     self.procs_avail   = cluster_info[:procs_avail]
     self.nodes_used    = cluster_info[:nodes_used]
-    self.nodes_avail   = cluster_info[:nodes_idle]
+    self.nodes_avail   = cluster_info[:nodes_avail]
 
     self
   rescue => e
@@ -120,20 +121,34 @@ class SlurmSqueueClient
   # @return [Integer] the total number of active/eligible jobs
   def available_jobs
     active_jobs + eligible_jobs
+  end 
+
+  # Total nodes available (idle) and total nodes used
+  #
+  # @return [Integer] the total number of idle/used jobs
+  def available_nodes
+    nodes_avail
+  end
+
+  # Total number of available and in use procs
+  #
+  # @return [Integer] the total number of procs 
+  def available_procs
+    procs_avail
   end
 
   # Return the processor usage as percent
   #
   # @return [Float] The number of processors used as float
   def procs_percent
-    (procs_used.to_f / procs_avail.to_f) * 100
+    (procs_used.to_f / available_procs.to_f) * 100
   end
 
   # Return the node usage as percent
   #
   # @return [Float] The number of nodes used as float
   def nodes_percent
-    (nodes_used.to_f / nodes_avail.to_f) * 100
+    (nodes_used.to_f / available_nodes.to_f) * 100
   end
   
   # Return cluster title + error message
