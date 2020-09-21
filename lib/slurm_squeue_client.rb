@@ -61,7 +61,49 @@ class SlurmSqueueClient
     
     s.success? ? @sinfo = o : raise(CommandFailed, e)
   end
-  
+
+  # Parse and return total number of GPU nodes in a SLURM cluster.
+  # @return [Integer] number of GPU nodes
+  def gpu_nodes
+    return @available_gpu_nodes if defined?(@available_gpu_nodes)
+
+    Open3.pipeline_rw "sinfo -N -h --states=allocated,idle --Format='nodehost,gres:100,gresused:100'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
+      stdin.write stdout
+      stdin.close
+      @available_gpu_nodes = stdout.read.to_i
+    end
+  end
+
+  # Return number of jobs requesting GPU nodes
+  # @return [Integer] number of GPU nodes with status mixed (some CPUs allocated)
+  def gpu_nodes_active
+    return @gpu_nodes_active if defined?(@gpu_nodes_active)
+
+    Open3.pipeline_rw "sinfo -a -h --states=mixed --Node --Format='nodehost,gres:100,gresused:100'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
+      stdin.write stdout
+      stdin.close
+      @gpu_nodes_active = stdout.read.to_i
+    end
+  end
+
+  # Returns percentage of GPU nodes that are available
+  # @return [Float] percentage gpu nodes available
+  def gpu_nodes_available_percent
+    (@gpu_nodes_active.to_f / @available_gpu_nodes.to_f) * 100
+  end
+
+  # Number of pending jobs requesting GPUs
+  # @return [Integer] number of pending jobs requesting GPUs
+  def gpu_jobs_pending
+    return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
+
+    Open3.pipeline_rw "squeue --states=PENDING -O 'jobid,tres-per-job:100,tres-per-node:100,tres-per-socket:100,tres-per-task:100' -h", "grep gpu", "wc -l" do |stdin, stdout|
+      stdin.write stdout
+      stdin.close
+      @gpu_jobs_pending = stdout.read.to_i
+    end
+  end
+
   def cluster_info
     sinfo_out               = sinfo.split('/')
     running_jobs            = 0
@@ -128,6 +170,10 @@ class SlurmSqueueClient
   # @return [Integer] the total number of idle/used jobs
   def available_nodes
     nodes_avail
+  end
+
+  def available_gpu_nodes
+    gpu_nodes
   end
 
   # Total number of available and in use procs
