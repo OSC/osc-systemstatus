@@ -79,7 +79,7 @@ class SlurmSqueueClient
   def gpu_nodes_active
     return @gpu_nodes_active if defined?(@gpu_nodes_active)
 
-    Open3.pipeline_rw "sinfo -a -h --states=mixed,allocated --Node --Format='nodehost,gres:100'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
+    Open3.pipeline_rw "sinfo -a -h --states=mixed --Node --Format='nodehost,gres:100'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
       stdin.write stdout
       stdin.close
       @gpu_nodes_active = stdout.read.to_i
