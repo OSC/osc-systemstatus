@@ -121,7 +121,7 @@ class SlurmSqueueClient
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
 
-    Open3.pipeline_rw "squeue --states=PENDING -O 'jobid,tres-per-job:100,tres-per-node:100,tres-per-socket:100,tres-per-task:100' -h", "grep gpu", "wc -l" do |stdin, stdout|
+    Open3.pipeline_rw "squeue --states=PENDING -O 'jobid,tres-per-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h", "grep gpu", "wc -l" do |stdin, stdout|
       stdin.write stdout
       stdin.close
       @gpu_jobs_pending = stdout.read.to_i
