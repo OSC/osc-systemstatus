@@ -105,7 +105,7 @@ class SlurmSqueueClient
   def gpu_nodes_active
     return @gpu_nodes_active if defined?(@gpu_nodes_active)
 
-    @gpu_nodes_active = @available_gpu_nodes - @gpu_nodes_free
+    @gpu_nodes_active = available_gpu_nodes - gpu_nodes_free
   end
 
   # Returns percentage of GPU nodes that are available
