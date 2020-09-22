@@ -62,7 +62,7 @@ class SlurmSqueueClient
     s.success? ? @sinfo = o : raise(CommandFailed, e)
   end
 
-  # Return length of GRES field from SLURM.
+  # Return length of GRES field from SLURM
   # @return [Integer] gres length
   def gres_length
     return @gres_length if definde?(@gres_length)
@@ -74,7 +74,7 @@ class SlurmSqueueClient
     end
   end
 
-  # Parse and return total number of GPU nodes in a SLURM cluster.
+  # Parse and return total number of GPU nodes in a SLURM cluster
   # @return [Integer] number of GPU nodes
   def gpu_nodes
     return @available_gpu_nodes if defined?(@available_gpu_nodes)
@@ -87,26 +87,36 @@ class SlurmSqueueClient
   end
 
   # Return number of GPU nodes with mixed or idle status
+  # 
   # @return [Integer] number of GPU nodes with status mixed (some CPUs allocated)
-  def gpu_nodes_idle
-    return @gpu_nodes_idle if defined?(@gpu_nodes_idle)
+  def gpu_nodes_free
+    return @gpu_nodes_free if defined?(@gpu_nodes_free)
 
     Open3.pipeline_rw "sinfo -a -h --states=mixed,idle --Node --Format='nodehost,gres:#{@gres_length}'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
       stdin.write stdout
       stdin.close
-      @gpu_nodes_idle = stdout.read.to_i
+      @gpu_nodes_free = stdout.read.to_i
     end
   end
 
+  # Return number of GPU nodes in use
+  # 
+  # @return [Integer] gpu nodes in use
+  def gpu_nodes_active
+    return @gpu_nodes_active if defined?(@gpu_nodes_active)
+
+    @gpu_nodes_active = @available_gpu_nodes - @gpu_nodes_free
+  end
+
   # Returns percentage of GPU nodes that are available
+  # 
   # @return [Float] percentage gpu nodes available
   def gpu_nodes_available_percent
-    gpus_in_use = @available_gpu_nodes - @gpu_nodes_idle
-
-    (gpus_in_use.to_f / @available_gpu_nodes.to_f) * 100
+    ((gpu_nodes - gpu_nodes_free).to_f / gpu_nodes.to_f) * 100
   end
 
   # Number of pending jobs requesting GPUs
+  # 
   # @return [Integer] number of pending jobs requesting GPUs
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
@@ -184,11 +194,6 @@ class SlurmSqueueClient
   # @return [Integer] the total number of idle/used jobs
   def available_nodes
     nodes_avail
-  end
-
-  def available_gpu_nodes
-    gpus_in_use = @available_gpu_nodes - @gpu_nodes_idle
-    @available_gpu_nodes - gpus_in_use
   end
 
   # Total number of available and in use procs
