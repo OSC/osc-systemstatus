@@ -133,7 +133,6 @@
               <li class="<%= 'active' if @ganglia && @ganglia.server_id == cluster.id %>">
                 <% if cluster.custom_config.key?(:ganglia) %>
                   <a href="<%= url("/clusters/#{cluster.id}/hour/report_moab_nodes") %>"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
-                  <%# FIXME: remove duplicate links, instead of the if slurm statement %>
                 <% elsif cluster.custom_config.key?(:grafana) && cluster.job_config %>
                   <a href="<%= url("/clusters/#{cluster.id}/grafana") %>" target="_blank"><span><i class="fa fa-chart-area"></i></span>  <%=cluster.metadata.title %> Cluster</a>
                 <% end %>
