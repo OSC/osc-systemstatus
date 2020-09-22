@@ -79,7 +79,7 @@ class SlurmSqueueClient
   def gpu_nodes
     return @available_gpu_nodes if defined?(@available_gpu_nodes)
 
-    Open3.pipeline_rw "sinfo -N -h -a --Format='nodehost,gres:#{@gres_length}'", 'uniq', 'grep gpu:', 'wc -l' do |stdin, stdout|
+    Open3.pipeline_rw "sinfo -N -h -a --Format='nodehost,gres:#{gres_length}'", 'uniq', 'grep gpu:', 'wc -l' do |stdin, stdout|
       stdin.write stdout
       stdin.close
       @available_gpu_nodes = stdout.read.to_i
@@ -92,7 +92,7 @@ class SlurmSqueueClient
   def gpu_nodes_free
     return @gpu_nodes_free if defined?(@gpu_nodes_free)
 
-    Open3.pipeline_rw "sinfo -a -h --Node --Format='nodehost,gres:#{@gres_length}',statelong", 'uniq', 'grep gpu:', 'egrep "idle"', 'wc -l' do |stdin, stdout|
+    Open3.pipeline_rw "sinfo -a -h --Node --Format='nodehost,gres:#{gres_length}',statelong", 'uniq', 'grep gpu:', 'egrep "idle"', 'wc -l' do |stdin, stdout|
       stdin.write stdout
       stdin.close
       @gpu_nodes_free = stdout.read.to_i
