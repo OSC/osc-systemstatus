@@ -67,29 +67,31 @@ class SlurmSqueueClient
   def gpu_nodes
     return @available_gpu_nodes if defined?(@available_gpu_nodes)
 
-    Open3.pipeline_rw "sinfo -N -h --states=allocated,idle --Format='nodehost,gres:100'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
+    Open3.pipeline_rw "sinfo -N -h -a --Format='nodehost,gres:105 available'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
       stdin.write stdout
       stdin.close
       @available_gpu_nodes = stdout.read.to_i
     end
   end
 
-  # Return number of jobs requesting GPU nodes
+  # Return number of GPU nodes with mixed or idle status
   # @return [Integer] number of GPU nodes with status mixed (some CPUs allocated)
-  def gpu_nodes_active
-    return @gpu_nodes_active if defined?(@gpu_nodes_active)
+  def gpu_nodes_idle
+    return @gpu_nodes_idle if defined?(@gpu_nodes_idle)
 
-    Open3.pipeline_rw "sinfo -a -h --states=mixed --Node --Format='nodehost,gres:100'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
+    Open3.pipeline_rw "sinfo -a -h --states=mixed,idle --Node --Format='nodehost,gres:105'", 'uniq', 'grep gpu:v', 'wc -l' do |stdin, stdout|
       stdin.write stdout
       stdin.close
-      @gpu_nodes_active = stdout.read.to_i
+      @gpu_nodes_idle = stdout.read.to_i
     end
   end
 
   # Returns percentage of GPU nodes that are available
   # @return [Float] percentage gpu nodes available
   def gpu_nodes_available_percent
-    (@gpu_nodes_active.to_f / @available_gpu_nodes.to_f) * 100
+    gpus_in_use = @available_gpu_nodes - @gpu_nodes_idle
+
+    (gpus_in_use.to_f / @available_gpu_nodes.to_f) * 100
   end
 
   # Number of pending jobs requesting GPUs
@@ -173,7 +175,8 @@ class SlurmSqueueClient
   end
 
   def available_gpu_nodes
-    gpu_nodes
+    gpus_in_use = @available_gpu_nodes - @gpu_nodes_idle
+    @available_gpu_nodes - gpus_in_use
   end
 
   # Total number of available and in use procs

@@ -14,7 +14,7 @@
 <% if showqer.job_scheduler_name == "slurm" %>
 <div>
   <span>
-    <%= showqer.gpu_nodes_active %> of <%= showqer.gpu_nodes %> GPU Nodes Active (<%= showqer.gpu_nodes - showqer.gpu_nodes_active %> Node(s) Free)
+    <%= (showqer.gpu_nodes - showqer.gpu_nodes_idle) %> of <%= showqer.gpu_nodes %> GPU Nodes Active (<%= showqer.gpu_nodes - showqer.gpu_nodes_idle %> Node(s) Free)
   </span>
 </div>
 <div class="progress">
