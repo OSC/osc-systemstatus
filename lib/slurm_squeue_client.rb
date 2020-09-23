@@ -61,7 +61,82 @@ class SlurmSqueueClient
     
     s.success? ? @sinfo = o : raise(CommandFailed, e)
   end
-  
+
+  # Return length of GRES field from SLURM
+  # @return [Integer] gres length
+  def gres_length
+    return @gres_length if defined?(@gres_length)
+
+    o, e, s = Open3.capture3("sinfo -o '%G' | awk '{ print length }' | sort -n | tail -1")
+
+    if s.success?
+      @gres_length = o.to_i
+    else
+      # Return stderr as error message
+      @error_message = "An error occurred when retrieving GRES lsength from SLURM. Exit status #{s.exitstatus}: #{e.to_s}"
+    end
+  end
+
+  # Parse and return total number of GPU nodes in a SLURM cluster
+  # @return [Integer] number of GPU nodes
+  def gpu_nodes
+    return @available_gpu_nodes if defined?(@available_gpu_nodes)
+
+    o, e, s = Open3.capture3("sinfo -N -h -a --Format='nodehost,gres:#{gres_length}' | uniq | grep gpu: | wc -l")
+
+    if s.success?
+      @available_gpu_nodes = o.to_i
+    else
+      # Return stderr as error message
+      @error_message = "An error occurred when retrieving available GPU nodes. Exit status #{s.exitstatus}: #{e.to_s}"
+    end
+  end
+
+  # Return number of GPU nodes with mixed or idle status
+  # 
+  # @return [Integer] number of GPU nodes with status mixed (some CPUs allocated)
+  def gpu_nodes_free
+    return @gpu_nodes_free if defined?(@gpu_nodes_free)
+
+    o, e, s = Open3.capture3("sinfo -a -h --Node --Format='nodehost,gres:#{gres_length},statelong' | uniq | grep gpu: | egrep 'idle' | wc -l")
+
+    if s.success?
+      @gpu_nodes_free = o.to_i
+    else
+      # Return stderr as error message
+      @error_message = "An error occurred when retrieving free GPU nodes. Exit status #{s.exitstatus}: #{o.to_s}"
+    end
+  end
+
+  # Return number of GPU nodes in use
+  # 
+  # @return [Integer] gpu nodes in use
+  def gpu_nodes_active
+    return @gpu_nodes_active if defined?(@gpu_nodes_active)
+
+    @gpu_nodes_active = available_gpu_nodes - gpu_nodes_free
+  end
+
+  # Returns percentage of GPU nodes that are available
+  # 
+  # @return [Float] percentage gpu nodes available
+  def gpu_nodes_available_percent
+    ((gpu_nodes - gpu_nodes_free).to_f / gpu_nodes.to_f) * 100
+  end
+
+  # Number of pending jobs requesting GPUs
+  # 
+  # @return [Integer] number of pending jobs requesting GPUs
+  def gpu_jobs_pending
+    return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
+
+    Open3.pipeline_rw "squeue --states=PENDING -O 'jobid,tres-per-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h", "grep gpu:", "wc -l" do |stdin, stdout|
+      stdin.write stdout
+      stdin.close
+      @gpu_jobs_pending = stdout.read.to_i
+    end
+  end
+
   def cluster_info
     sinfo_out               = sinfo.split('/')
     running_jobs            = 0
