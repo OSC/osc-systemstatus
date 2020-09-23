@@ -67,10 +67,13 @@ class SlurmSqueueClient
   def gres_length
     return @gres_length if defined?(@gres_length)
 
-    Open3.pipeline_rw "sinfo -o '%G' | awk '{ print length }'", "sort -n", "tail -1" do |stdin,stdout|
-      stdin.write stdout
-      stdin.close
-      @gres_length = stdout.read.to_i
+    o, e, s = Open3.capture3("sinfo -o '%G' | awk '{ print length }' | sort -n | tail -1")
+
+    if s.success?
+      @gres_length = o.to_i
+    else
+      # Return stderr as error message
+      @error_message = "An error occurred when retrieving GRES lsength from SLURM. Exit status #{s.exitstatus}: #{e.to_s}"
     end
   end
 
@@ -79,10 +82,13 @@ class SlurmSqueueClient
   def gpu_nodes
     return @available_gpu_nodes if defined?(@available_gpu_nodes)
 
-    Open3.pipeline_rw "sinfo -N -h -a --Format='nodehost,gres:#{gres_length}'", 'uniq', 'grep gpu:', 'wc -l' do |stdin, stdout|
-      stdin.write stdout
-      stdin.close
-      @available_gpu_nodes = stdout.read.to_i
+    o, e, s = Open3.capture3("sinfo -N -h -a --Format='nodehost,gres:#{gres_length}' | uniq | grep gpu: | wc -l")
+
+    if s.success?
+      @available_gpu_nodes = o.to_i
+    else
+      # Return stderr as error message
+      @error_message = "An error occurred when retrieving available GPU nodes. Exit status #{s.exitstatus}: #{e.to_s}"
     end
   end
 
@@ -92,10 +98,13 @@ class SlurmSqueueClient
   def gpu_nodes_free
     return @gpu_nodes_free if defined?(@gpu_nodes_free)
 
-    Open3.pipeline_rw "sinfo -a -h --Node --Format='nodehost,gres:#{gres_length}',statelong", 'uniq', 'grep gpu:', 'egrep "idle"', 'wc -l' do |stdin, stdout|
-      stdin.write stdout
-      stdin.close
-      @gpu_nodes_free = stdout.read.to_i
+    o, e, s = Open3.capture3("sinfo -a -h --Node --Format='nodehost,gres:#{gres_length},statelong' | uniq | grep gpu: | egrep 'idle' | wc -l")
+
+    if s.success?
+      @gpu_nodes_free = o.to_i
+    else
+      # Return stderr as error message
+      @error_message = "An error occurred when retrieving free GPU nodes. Exit status #{s.exitstatus}: #{o.to_s}"
     end
   end
 
