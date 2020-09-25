@@ -12,6 +12,8 @@ class SlurmSqueueClient
   
     if cluster.custom_config.key?(:grafana)
       @dashboard_url = "/clusters/#{cluster.id}/grafana"
+    elsif cluster.custom_config.key?(:ganglia)
+      @dashboard_url = "/clusters/#{cluster.id}/hour/report_moab_nodes"
     end
   
     @cluster_id = cluster.id

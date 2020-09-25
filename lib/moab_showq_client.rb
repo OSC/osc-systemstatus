@@ -15,6 +15,8 @@ class MoabShowqClient
     @server = cluster.custom_config[:moab]
     if cluster.custom_config.key?(:grafana)
       @dashboard_url = "/clusters/#{cluster.id}/grafana"
+    elsif cluster.custom_config.key?(:ganglia)
+      @dashboard_url = "/clusters/#{cluster.id}/hour/report_moab_nodes"
     end
     @cluster_id = cluster.id
     @cluster_title = cluster.metadata.title || cluster.id.titleize
