@@ -15,7 +15,6 @@ require_relative 'lib/slurm_squeue_client'
 # more details see ood_appkit lib/ood_appkit/configuration.rb
 begin
   CLUSTERS = OodCore::Clusters.new(OodCore::Clusters.load_file(ENV['OOD_CLUSTERS'] || '/etc/ood/config/clusters.d').select(&:job_allow?)
-    .select { |c| c.custom_config[:ganglia] || c.custom_config[:grafana] }
     .select { |c| c.custom_config[:moab] || c.job_config[:adapter] == "slurm" }
     .reject { |c| c.metadata.hidden }
   )
