@@ -130,10 +130,13 @@ class SlurmSqueueClient
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
 
-    Open3.pipeline_rw "squeue --states=PENDING -O 'jobid,tres-per-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h", "grep gpu:", "wc -l" do |stdin, stdout|
-      stdin.write stdout
-      stdin.close
-      @gpu_jobs_pending = stdout.read.to_i
+    o, e, s = Open3.capture3("squeue --states=PENDING -O 'jobid,tres-per-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
+
+    if s.success?
+      @gpu_jobs_pending = o.to_i
+    else
+      # Return stderr as error message
+      @error_message = "An error occurred when retrieving pending jobs requesting GPUs. Exit status #{s.exitstatus}: #{o.to_s}"
     end
   end
 
