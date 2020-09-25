@@ -74,6 +74,7 @@ class SlurmSqueueClient
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving GRES lsength from SLURM. Exit status #{s.exitstatus}: #{e.to_s}"
+      0
     end
   end
 
@@ -89,6 +90,7 @@ class SlurmSqueueClient
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving available GPU nodes. Exit status #{s.exitstatus}: #{e.to_s}"
+      0
     end
   end
 
@@ -105,6 +107,7 @@ class SlurmSqueueClient
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving free GPU nodes. Exit status #{s.exitstatus}: #{o.to_s}"
+      0
     end
   end
 
@@ -130,13 +133,14 @@ class SlurmSqueueClient
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
 
-    o, e, s = Open3.capture3("squeue --states=PENDING -O 'jobid,tres-per-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("squeue --states=PgfENDING -O 'jfobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
 
     if s.success?
       @gpu_jobs_pending = o.to_i
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving pending jobs requesting GPUs. Exit status #{s.exitstatus}: #{o.to_s}"
+      0
     end
   end
 
