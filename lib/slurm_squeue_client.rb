@@ -8,7 +8,7 @@ class SlurmSqueueClient
   #
   # @return [SlurmSqueueClient] self
   def initialize(cluster)
-    @server = cluster.job_config[:bin]
+    @bin = cluster.job_config[:bin]
   
     if cluster.custom_config.key?(:grafana)
       @dashboard_url = "/clusters/#{cluster.id}/grafana"
@@ -21,6 +21,14 @@ class SlurmSqueueClient
     self
   end
 
+  def squeue_cmd
+    File.join(@bin, 'squeue')
+  end
+
+  def sinfo_cmd
+    File.join(@bin, 'sinfo')
+  end
+
   # Return job scheduler type from config
   def job_scheduler_name
     @job_scheduler
@@ -30,10 +38,7 @@ class SlurmSqueueClient
   def squeue_jobs_pending
     return @squeue_jobs_pending if defined?(@squeue_jobs_pending)
 
-    cmd = '/usr/bin/squeue'
-    args = ["-h", "--all", "--states=PENDING"]
-  
-    o, e, s = Open3.capture3({}, cmd, *args)
+    o, e, s = Open3.capture3({}, squeue_cmd, '-h', '--all', '--states=PENDING')
     
     s.success? ? @squeue_jobs_pending = o : raise(CommandFailed, e)
   end
@@ -42,10 +47,7 @@ class SlurmSqueueClient
   def squeue_jobs_running
     return @squeue_jobs_running if defined?(@squeue_jobs_running)
 
-    cmd = '/usr/bin/squeue'
-    args = ["-h", "--all", "--states=RUNNING"]
-  
-    o, e, s = Open3.capture3({}, cmd, *args)
+    o, e, s = Open3.capture3({}, squeue_cmd, '-h', '--all', '--states=RUNNING')
     
     s.success? ? @squeue_jobs_running = o : raise(CommandFailed, e)
   end
@@ -57,7 +59,7 @@ class SlurmSqueueClient
     cmd = '/usr/bin/sinfo'
     args = ["-a", "-h", "-o=\"%C/%A/%D\""]
   
-    o, e, s = Open3.capture3({}, cmd, *args)
+    o, e, s = Open3.capture3({}, sinfo_cmd, *%w[-a -h -o="%C/%A/%D"])
     
     s.success? ? @sinfo = o : raise(CommandFailed, e)
   end
@@ -67,7 +69,7 @@ class SlurmSqueueClient
   def gres_length
     return @gres_length if defined?(@gres_length)
 
-    o, e, s = Open3.capture3("sinfo -o '%G' | awk '{ print length }' | sort -n | tail -1")
+    o, e, s = Open3.capture3("#{sinfo_cmd} -o '%G' | awk '{ print length }' | sort -n | tail -1")
 
     if s.success?
       @gres_length = o.to_i
@@ -83,7 +85,7 @@ class SlurmSqueueClient
   def gpu_nodes
     return @available_gpu_nodes if defined?(@available_gpu_nodes)
 
-    o, e, s = Open3.capture3("sinfo -N -h -a --Format='nodehost,gres:#{gres_length}' | uniq | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("#{sinfo_cmd} -N -h -a --Format='nodehost,gres:#{gres_length}' | uniq | grep gpu: | wc -l")
 
     if s.success?
       @available_gpu_nodes = o.to_i
@@ -100,7 +102,7 @@ class SlurmSqueueClient
   def gpu_nodes_free
     return @gpu_nodes_free if defined?(@gpu_nodes_free)
 
-    o, e, s = Open3.capture3("sinfo -a -h --Node --Format='nodehost,gres:#{gres_length},statelong' | uniq | grep gpu: | egrep 'idle' | wc -l")
+    o, e, s = Open3.capture3("#{sinfo_cmd} -a -h --Node --Format='nodehost,gres:#{gres_length},statelong' | uniq | grep gpu: | egrep 'idle' | wc -l")
 
     if s.success?
       @gpu_nodes_free = o.to_i
@@ -133,7 +135,7 @@ class SlurmSqueueClient
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
 
-    o, e, s = Open3.capture3("squeue --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("#{squeue_cmd} --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
 
     if s.success?
       @gpu_jobs_pending = o.to_i
