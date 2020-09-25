@@ -124,7 +124,7 @@ class SlurmSqueueClient
   # 
   # @return [Float] percentage gpu nodes available
   def gpu_nodes_available_percent
-    ((gpu_nodes - gpu_nodes_free).to_f / gpu_nodes.to_f) * 100
+    gpu_nodes > 0 ? ((gpu_nodes - gpu_nodes_free).to_f / gpu_nodes.to_f) * 100 : 0
   end
 
   # Number of pending jobs requesting GPUs
@@ -133,7 +133,7 @@ class SlurmSqueueClient
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
 
-    o, e, s = Open3.capture3("squeue --states=PgfENDING -O 'jfobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("squeue --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
 
     if s.success?
       @gpu_jobs_pending = o.to_i
@@ -188,14 +188,14 @@ class SlurmSqueueClient
   #
   # @return [Float] The percentage active as float
   def active_percent
-    (active_jobs.to_f / available_jobs.to_f) * 100
+    available_jobs > 0 ? (active_jobs.to_f / available_jobs.to_f) * 100 : 0
   end
 
   # Return the eligible jobs as percent of available jobs
   #
   # @return [Float] The percentage eligible as float
   def eligible_percent
-    (eligible_jobs.to_f / available_jobs.to_f) * 100
+    available_jobs > 0 ? (eligible_jobs.to_f / available_jobs.to_f) * 100 : 0
   end
 
   # Total active + eligible
@@ -223,14 +223,14 @@ class SlurmSqueueClient
   #
   # @return [Float] The number of processors used as float
   def procs_percent
-    (procs_used.to_f / available_procs.to_f) * 100
+    available_procs > 0 ? (procs_used.to_f / available_procs.to_f) * 100 : 0
   end
 
   # Return the node usage as percent
   #
   # @return [Float] The number of nodes used as float
   def nodes_percent
-    (nodes_used.to_f / available_nodes.to_f) * 100
+    available_nodes > 0 ? (nodes_used.to_f / available_nodes.to_f) * 100 : 0
   end
   
   # Return cluster title + error message
