@@ -3,6 +3,7 @@ require 'ood_core'
 require 'rexml/document'
 require 'open3'
 require 'pathname'
+require 'chartkick'
 
 require_relative 'lib/moab_showq_client'
 require_relative 'lib/gpu_cluster_status'

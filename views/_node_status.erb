@@ -77,5 +77,15 @@
         <div class="col-md-6 col-xs-12" style="padding-left: 5px; text-align: left"><span><%= showqer.eligible_jobs %><span class="text-secondary" style="padding-left: 5px;">(<%= showqer.gpu_jobs_pending %> requesting GPU)</span></span></div>
       <% end %>
     </div>
+
+    <%= line_chart [[1,2],[2,2], [3,5], [4,0]] %>
+    <%= bar_chart({:name  => "Jobs", data: {"Jobs" => 50, "GPU Jobs" => 30}, :stack => "jobs"}, stacked: true) %>
+    <%# stacked: percent for highcharts %>
+    <%= bar_chart([
+       {name: "Non GPU Jobs", data: {"Jobs": 50}},
+      {name: "GPU Jobs", data: {"Jobs": 14}},
+    ], stacked: true, height: '50px') %>
+
+  <%= pie_chart({"Non GPU Jobs"=> 50, "GPU Jobs"=> 14}, donut: true, height: '100px', library: {circumference: Math::PI, rotation: Math::PI}) %>
   </div>
 </div>
