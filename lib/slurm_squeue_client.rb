@@ -17,7 +17,7 @@ class SlurmSqueueClient
     end
   
     @cluster_id = cluster.id
-    @canonical_cluster_id = @cluster_id.to_s.partition('-').first
+    @canonical_cluster_id = cluster.job_config[:cluster]
     @cluster_title = cluster.metadata.title || cluster.id.titleize
     @job_scheduler = cluster.job_config[:adapter]
 
@@ -138,7 +138,7 @@ class SlurmSqueueClient
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
 
-    o, e, s = Open3.capture3("#{squeue_cmd} --clusters=\"#{@canonical_cluster_id}\" --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("#{squeue_cmd} #{ "--clusters=\"#{@canonical_cluster_id}\"" if @canonical_cluster_id } --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
 
     if s.success?
       @gpu_jobs_pending = o.to_i
