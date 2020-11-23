@@ -17,6 +17,7 @@ class SlurmSqueueClient
     end
   
     @cluster_id = cluster.id
+    @canonical_cluster_id = @cluster_id.to_s.partition('-').first
     @cluster_title = cluster.metadata.title || cluster.id.titleize
     @job_scheduler = cluster.job_config[:adapter]
 
@@ -40,7 +41,7 @@ class SlurmSqueueClient
   def squeue_jobs_pending
     return @squeue_jobs_pending if defined?(@squeue_jobs_pending)
 
-    o, e, s = Open3.capture3({}, squeue_cmd, '-h', '--all', '--states=PENDING')
+    o, e, s = Open3.capture3({}, squeue_cmd, '-h', '--all', '--states=PENDING', "--clusters=\"#{@canonical_cluster_id}\"")
     
     s.success? ? @squeue_jobs_pending = o : raise(CommandFailed, e)
   end
@@ -49,7 +50,7 @@ class SlurmSqueueClient
   def squeue_jobs_running
     return @squeue_jobs_running if defined?(@squeue_jobs_running)
 
-    o, e, s = Open3.capture3({}, squeue_cmd, '-h', '--all', '--states=RUNNING')
+    o, e, s = Open3.capture3({}, squeue_cmd, '-h', '--all', '--states=RUNNING', "--clusters=\"#{@canonical_cluster_id}\"")
     
     s.success? ? @squeue_jobs_running = o : raise(CommandFailed, e)
   end
@@ -59,9 +60,9 @@ class SlurmSqueueClient
     return @sinfo if defined?(@sinfo)
 
     cmd = '/usr/bin/sinfo'
-    args = ["-a", "-h", "-o=\"%C/%A/%D\""]
-  
-    o, e, s = Open3.capture3({}, sinfo_cmd, *%w[-a -h -o="%C/%A/%D"])
+    args = ["-a", "-h", "-o=\"%C/%A/%D\"", "--clusters=\"#{@canonical_cluster_id}\""]
+
+    o, e, s = Open3.capture3({}, sinfo_cmd, *args)
     
     s.success? ? @sinfo = o : raise(CommandFailed, e)
   end
@@ -71,7 +72,7 @@ class SlurmSqueueClient
   def gres_length
     return @gres_length if defined?(@gres_length)
 
-    o, e, s = Open3.capture3("#{sinfo_cmd} -o '%G' | awk '{ print length }' | sort -n | tail -1")
+    o, e, s = Open3.capture3("#{sinfo_cmd} --clusters=\"#{@canonical_cluster_id}\" -o '%G' | awk '{ print length }' | sort -n | tail -1")
 
     if s.success?
       @gres_length = o.to_i
@@ -87,7 +88,7 @@ class SlurmSqueueClient
   def gpu_nodes
     return @available_gpu_nodes if defined?(@available_gpu_nodes)
 
-    o, e, s = Open3.capture3("#{sinfo_cmd} -N -h -a --Format='nodehost,gres:#{gres_length}' | uniq | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("#{sinfo_cmd} --clusters=\"#{@canonical_cluster_id}\" -N -h -a --Format='nodehost,gres:#{gres_length}' | uniq | grep gpu: | wc -l")
 
     if s.success?
       @available_gpu_nodes = o.to_i
@@ -104,7 +105,7 @@ class SlurmSqueueClient
   def gpu_nodes_free
     return @gpu_nodes_free if defined?(@gpu_nodes_free)
 
-    o, e, s = Open3.capture3("#{sinfo_cmd} -a -h --Node --Format='nodehost,gres:#{gres_length},statelong' | uniq | grep gpu: | egrep 'idle' | wc -l")
+    o, e, s = Open3.capture3("#{sinfo_cmd} --clusters=\"#{@canonical_cluster_id}\" -a -h --Node --Format='nodehost,gres:#{gres_length},statelong' | uniq | grep gpu: | egrep 'idle' | wc -l")
 
     if s.success?
       @gpu_nodes_free = o.to_i
@@ -137,7 +138,7 @@ class SlurmSqueueClient
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
 
-    o, e, s = Open3.capture3("#{squeue_cmd} --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("#{squeue_cmd} --clusters=\"#{@canonical_cluster_id}\" --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
 
     if s.success?
       @gpu_jobs_pending = o.to_i
