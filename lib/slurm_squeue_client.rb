@@ -90,10 +90,15 @@ class SlurmSqueueClient
   def gres_length
     return @gres_length if defined?(@gres_length)
 
-    o, e, s = Open3.capture3("#{sinfo_cmd} #{cluster_args} -o '%G' | awk '{ print length }' | sort -n | tail -1")
+    args = ["-o %G"]
+    args.push(cluster_args)
+
+    o, e, s = Open3.capture3(sinfo_cmd, *args)
 
     if s.success?
-      @gres_length = o.to_i
+      # For each line returned from the command output, calculate the length of each newline,
+      # and finally return the maximum line length found.
+      @gres_length = o.lines.map(&:strip).map(&:length).max
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving GRES lsength from SLURM. Exit status #{s.exitstatus}: #{e.to_s}"
