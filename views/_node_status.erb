@@ -69,7 +69,6 @@
         <div class="progress-bar progress-bar-secondary" role="progressbar" style="width:<%= gpustats.percent_of_queued_jobs_requesting_gpus(showqer.available_jobs) %>%"></div>
       <% else %>
         <div class="progress-bar progress-bar-info" role="progressbar" style="width:<%= showqer.eligible_percent %>%"></div>
-        <div class="progress-bar progress-bar-secondary" role="progressbar" style="width:<%= showqer.gpu_jobs_pending %>%"></div>
       <% end %>
       </div>
       <% if showqer.job_scheduler_name != "slurm" %>
