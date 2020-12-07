@@ -17,19 +17,31 @@ class SlurmSqueueClient
     end
   
     @cluster_id = cluster.id
-    @canonical_cluster_id = @cluster_id.to_s.partition('-').first
+    @canonical_cluster_id = cluster.job_config[:cluster]
     @cluster_title = cluster.metadata.title || cluster.id.titleize
     @job_scheduler = cluster.job_config[:adapter]
 
     self
   end
 
+  # Define path to squeue command
   def squeue_cmd
     File.join(@bin, 'squeue')
   end
 
+  # Define path to sinfo command
   def sinfo_cmd
     File.join(@bin, 'sinfo')
+  end
+
+  # Define command line arguments used to filter results from SLURM, this
+  # is passed to sinfo and squeue commands.
+  #
+  # @return [String] command line flags
+  def cluster_args
+    return @cluster_args if defined?(@cluster_args)
+
+    @cluster_args ||= "--clusters=#{@canonical_cluster_id}"
   end
 
   # Return job scheduler type from config
@@ -41,7 +53,10 @@ class SlurmSqueueClient
   def squeue_jobs_pending
     return @squeue_jobs_pending if defined?(@squeue_jobs_pending)
 
-    o, e, s = Open3.capture3({}, squeue_cmd, '-h', '--all', '--states=PENDING', "--clusters=\"#{@canonical_cluster_id}\"")
+    args = ["-h", "--all", "--states=PENDING"]
+    args.push(cluster_args)
+
+    o, e, s = Open3.capture3({}, squeue_cmd, *args)
     
     s.success? ? @squeue_jobs_pending = o : raise(CommandFailed, e)
   end
@@ -50,7 +65,10 @@ class SlurmSqueueClient
   def squeue_jobs_running
     return @squeue_jobs_running if defined?(@squeue_jobs_running)
 
-    o, e, s = Open3.capture3({}, squeue_cmd, '-h', '--all', '--states=RUNNING', "--clusters=\"#{@canonical_cluster_id}\"")
+    args = ["-h", "--all", "--states=RUNNING"]
+    args.push(cluster_args)
+
+    o, e, s = Open3.capture3({}, squeue_cmd, *args)
     
     s.success? ? @squeue_jobs_running = o : raise(CommandFailed, e)
   end
@@ -59,8 +77,8 @@ class SlurmSqueueClient
   def sinfo
     return @sinfo if defined?(@sinfo)
 
-    cmd = '/usr/bin/sinfo'
-    args = ["-a", "-h", "-o=\"%C/%A/%D\"", "--clusters=\"#{@canonical_cluster_id}\""]
+    args = ["-a", "-h", "-o=\"%C/%A/%D\""]
+    args.push(cluster_args)
 
     o, e, s = Open3.capture3({}, sinfo_cmd, *args)
     
@@ -72,10 +90,15 @@ class SlurmSqueueClient
   def gres_length
     return @gres_length if defined?(@gres_length)
 
-    o, e, s = Open3.capture3("#{sinfo_cmd} --clusters=\"#{@canonical_cluster_id}\" -o '%G' | awk '{ print length }' | sort -n | tail -1")
+    args = ["-o %G"]
+    args.push(cluster_args)
+
+    o, e, s = Open3.capture3(sinfo_cmd, *args)
 
     if s.success?
-      @gres_length = o.to_i
+      # For each line returned from the command output, calculate the length of each newline,
+      # and finally return the maximum line length found.
+      @gres_length = o.lines.map(&:strip).map(&:length).max
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving GRES lsength from SLURM. Exit status #{s.exitstatus}: #{e.to_s}"
@@ -88,10 +111,10 @@ class SlurmSqueueClient
   def gpu_nodes
     return @available_gpu_nodes if defined?(@available_gpu_nodes)
 
-    o, e, s = Open3.capture3("#{sinfo_cmd} --clusters=\"#{@canonical_cluster_id}\" -N -h -a --Format='nodehost,gres:#{gres_length}' | uniq | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("#{sinfo_cmd} #{cluster_args} -N -h -a --Format='nodehost,gres:#{gres_length}'")
 
     if s.success?
-      @available_gpu_nodes = o.to_i
+      @available_gpu_nodes = o.lines.uniq.grep(/gpu:/).count
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving available GPU nodes. Exit status #{s.exitstatus}: #{e.to_s}"
@@ -105,10 +128,10 @@ class SlurmSqueueClient
   def gpu_nodes_free
     return @gpu_nodes_free if defined?(@gpu_nodes_free)
 
-    o, e, s = Open3.capture3("#{sinfo_cmd} --clusters=\"#{@canonical_cluster_id}\" -a -h --Node --Format='nodehost,gres:#{gres_length},statelong' | uniq | grep gpu: | egrep 'idle' | wc -l")
+    o, e, s = Open3.capture3("#{sinfo_cmd} #{cluster_args} -a -h --Node --Format='nodehost,gres:#{gres_length},statelong'")
 
     if s.success?
-      @gpu_nodes_free = o.to_i
+      @gpu_nodes_free = o.lines.uniq.grep(/gpu:/).grep(/idle/).count
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving free GPU nodes. Exit status #{s.exitstatus}: #{o.to_s}"
@@ -138,10 +161,10 @@ class SlurmSqueueClient
   def gpu_jobs_pending
     return @gpu_jobs_pending if defined?(@gpu_jobs_pending)
 
-    o, e, s = Open3.capture3("#{squeue_cmd} --clusters=\"#{@canonical_cluster_id}\" --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h | grep gpu: | wc -l")
+    o, e, s = Open3.capture3("#{squeue_cmd} #{cluster_args} --states=PENDING -O 'jobid,tres-pefr-job:#{gres_length},tres-per-node:#{gres_length},tres-per-socket:#{gres_length},tres-per-task:#{gres_length}' -h")
 
     if s.success?
-      @gpu_jobs_pending = o.to_i
+      @gpu_jobs_pending = o.lines.grep(/gpu:/).count
     else
       # Return stderr as error message
       @error_message = "An error occurred when retrieving pending jobs requesting GPUs. Exit status #{s.exitstatus}: #{o.to_s}"
