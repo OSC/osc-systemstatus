@@ -4,17 +4,13 @@ This app displays the current system status of available system clusters.
 
 ### Installation using OnDemand 1.8+
 
-1. Git clone this repository
-2. Run setup to verify app install
+1. Ensure you have the right ruby module with `module list` for `ruby/2.7.3` or higher.
+2. Git clone this repository
+3. Run setup to verify app install
 
     ```bash
-    scl enable ondemand -- bin/setup
-    ```
-
-3. If error, install gem dependencies in app directory
-
-    ```bash
-    scl enable ondemand -- bin/bundle install --path vendor/bundle
+    bin/bundle config --local --path vendor/bundle
+    bin/setup
     ```
 
 ### Deployment at OSC
