@@ -8,7 +8,7 @@ variables:
 before_script:
   - docker info
   - '[ -d tmp ] || mkdir tmp'
-  - git clone --branch main https://github.com/OSC/ondemand-packaging.git tmp/ondemand-packaging
+  - git clone --branch 2.0 https://github.com/OSC/ondemand-packaging.git tmp/ondemand-packaging
 stages:
   - build
   - deploy
