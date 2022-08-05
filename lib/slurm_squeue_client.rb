@@ -17,7 +17,7 @@ class SlurmSqueueClient
     end
   
     @cluster_id = cluster.id
-    @canonical_cluster_id = cluster.job_config[:cluster]
+    @canonical_cluster_id = cluster.id
     @cluster_title = cluster.metadata.title || cluster.id.titleize
     @job_scheduler = cluster.job_config[:adapter]
 
