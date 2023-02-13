@@ -4,11 +4,12 @@ variables:
   OOD_PACKAGING_DEBUG: 'true'
   OOD_PACKAGING_GPG_PRIVATE_KEY: /systems/osc_certs/gpg/ondemand/ondemand.sec
   OOD_PACKAGING_GPG_PASSPHRASE: /systems/osc_certs/gpg/ondemand/.gpgpass
+  OOD_PACKAGING_RELEASE: '2.1'
 
 before_script:
   - docker info
   - '[ -d tmp ] || mkdir tmp'
-  - git clone --branch 2.0 https://github.com/OSC/ondemand-packaging.git tmp/ondemand-packaging
+  - git clone --single-branch --branch $OOD_PACKAGING_RELEASE https://github.com/OSC/ondemand-packaging.git tmp/ondemand-packaging
 stages:
   - build
   - deploy
