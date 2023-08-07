@@ -4,7 +4,7 @@ variables:
   OOD_PACKAGING_DEBUG: 'true'
   OOD_PACKAGING_GPG_PRIVATE_KEY: /systems/osc_certs/gpg/ondemand/ondemand.sec
   OOD_PACKAGING_GPG_PASSPHRASE: /systems/osc_certs/gpg/ondemand/.gpgpass
-  OOD_PACKAGING_RELEASE: '2.1'
+  OOD_PACKAGING_RELEASE: '3.0'
 
 before_script:
   - docker info
