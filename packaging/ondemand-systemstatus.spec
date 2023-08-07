@@ -3,7 +3,7 @@
 %global repo_name osc-systemstatus
 %global app_name systemstatus
 %global with_passenger 1
-%define ondemand_gems_ver %(rpm --qf "%%{version}" -q ondemand-gems)
+%define ondemand_gems_ver %(rpm --qf "%%{version}" -q ondemand-gems)-1
 %global gem_home %{scl_ondemand_apps_gem_home}/%{app_name}
 
 %if 0%{?with_passenger}
