@@ -4,7 +4,7 @@ variables:
   OOD_PACKAGING_DEBUG: 'true'
   OOD_PACKAGING_GPG_PRIVATE_KEY: /systems/osc_certs/gpg/ondemand/ondemand.sec
   OOD_PACKAGING_GPG_PASSPHRASE: /systems/osc_certs/gpg/ondemand/.gpgpass
-  OOD_PACKAGING_RELEASE: '3.0'
+  OOD_PACKAGING_RELEASE: '3.1'
 
 before_script:
   - docker info
@@ -23,7 +23,7 @@ rpm-build:
     - ./tmp/ondemand-packaging/bin/ood_packaging -w $CI_PROJECT_DIR/tmp/work -o $CI_PROJECT_DIR/tmp/output -V $CI_COMMIT_TAG -T $CI_PROJECT_DIR
   parallel:
     matrix:
-      - OOD_PACKAGING_DIST: [el7, el8]
+      - OOD_PACKAGING_DIST: [el8]
   artifacts:
     paths:
       - tmp/output
