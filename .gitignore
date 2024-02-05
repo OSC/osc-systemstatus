@@ -25,3 +25,5 @@
 /.env.local*
 /vendor/bundle
 
+# do not version lock file as we will use ondemand-gems
+Gemfile.lock
