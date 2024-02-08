@@ -3,7 +3,7 @@
 %global repo_name osc-systemstatus
 %global app_name systemstatus
 %global with_passenger 1
-
+%global _build_id_links none
 
 %if 0%{?with_passenger}
 %bcond_without passenger
