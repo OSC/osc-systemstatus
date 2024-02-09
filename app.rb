@@ -98,20 +98,22 @@ get '/' do
 end
 
 get '/clusters' do
-  @clusters = CLUSTERS.map { |cluster|
+  @clusters = CLUSTERS.map do |cluster|
     if cluster.custom_config[:moab]
       MoabShowqClient.new(cluster).setup
     else
       SlurmSqueueClient.new(cluster).setup
     end
-  }
-  @gpustats = CLUSTERS.map { |cluster|
+  end.compact
+
+  @gpustats = CLUSTERS.map do |cluster|
     if cluster.custom_config[:moab]
       GPUClusterStatus.new(cluster)
     else
       GPUClusterStatusSlurm.new(cluster)
     end
-  }
+  end.compact
+
   @error_messages = (@clusters.map{ |cluster| cluster.friendly_error_message}).compact
 
   erb :index
