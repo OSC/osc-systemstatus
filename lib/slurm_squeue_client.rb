@@ -173,11 +173,11 @@ class SlurmSqueueClient
   end
 
   def cluster_info
-    sinfo_out               = sinfo.split('/')
+    sinfo_out               = sinfo.to_s.force_encoding('UTF-8').split('/')
     running_jobs            = 0
     pending_jobs            = 0
-    squeue_jobs_running.split("\n").each{ |line| running_jobs += 1 }
-    squeue_jobs_pending.split("\n").each{ |line| pending_jobs += 1 }
+    squeue_jobs_running.to_s.force_encoding('UTF-8').split("\n").each{ |line| running_jobs += 1 }
+    squeue_jobs_pending.to_s.force_encoding('UTF-8').split("\n").each{ |line| pending_jobs += 1 }
 
     sinfo_out.each{ |line|
       # Strip extra chars returned by Slurm
@@ -210,6 +210,8 @@ class SlurmSqueueClient
   rescue => e
     # TODO Add logging and a flash message that was removed from the controller
     # SlurmSqueueClientNotAvailable.new(cluster_id, cluster_title, e)
+    warn("error occured #{e}:#{e.message}")
+    warn(e.backtrace.join("\n"))
   end
 
   # Return the active jobs as percent of available jobs
